@@ -3,7 +3,35 @@
     IMPORT MODULES / SUBWORKFLOWS / FUNCTIONS
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
-include { FASTQC                 } from '../modules/nf-core/fastqc/main'
+
+//This optionally tabix and bgzip the input VCF file [input_check]
+include { TABIX_TABIX as TABIX_INPUT_VCF      } from '../../modules/nf-core/tabix/tabix/main'
+include { TABIX_BGZIPTABIX as BGZIP_INPUT_VCF } from '../../modules/nf-core/tabix/bgziptabix/main'
+
+//This reformat the input VCF file [format_files]
+include { BCFTOOLS_NORM as NORMALISE_VARIANTS } from '../../modules/nf-core/bcftools/norm/main'
+include { BCFTOOLS_FILTER as FILTER_VARIANTS  } from '../../modules/nf-core/bcftools/filter/main'
+include { TABIX_TABIX as TABIX_FILTERED       } from '../../modules/nf-core/tabix/tabix/main'
+//include { REFORMAT_VCF                      } from '../../modules/local/pcgr_reformat'
+//include { REFORMAT_CNA                      } from '../../modules/local/pcgr_reformat'
+//include { REFORMAT_PON                      } from '../../modules/local/pcgr_reformat' 
+
+//This merge the files [merge_vcfs]
+include { TABIX_BGZIPTABIX as BGZIPTABIX_CPSR               } from '../../modules/nf-core/tabix/bgziptabix/main'
+include { BCFTOOLS_CONCAT                                   } from '../../modules/nf-core/bcftools/concat/main'
+include { TABIX_TABIX as TABIX_CONCAT                       } from '../../modules/nf-core/tabix/tabix/main'
+//include { ISEC_SOMATIC_VCFS as INTERSECT_SOMATIC_VARIANTS } from '../../modules/local/isec_vcfs'
+//include { PCGR_VCF as PCGR_READY_VCF                      } from '../../modules/local/pcgr_vcf'
+
+//This will run the PCGR
+//include { PCGR as RUN_PCGR } from '../modules/local/pcgr'
+
+//We'll leave CPSR for the future
+//include { CPSR as RUN_CPSR       } from '../modules/local/cpsr'
+//include { CPSR_VALIDATE_INPUT    } from '../../modules/local/validate_input'
+
+
+//include { FASTQC                 } from '../modules/nf-core/fastqc/main'
 include { MULTIQC                } from '../modules/nf-core/multiqc/main'
 include { paramsSummaryMap       } from 'plugin/nf-schema'
 include { paramsSummaryMultiqc   } from '../subworkflows/nf-core/utils_nfcore_pipeline'
@@ -27,11 +55,11 @@ workflow NFPGCRDEV {
     //
     // MODULE: Run FastQC
     //
-    FASTQC (
+    /*FASTQC (
         ch_samplesheet
     )
     ch_multiqc_files = ch_multiqc_files.mix(FASTQC.out.zip.collect{it[1]})
-    ch_versions = ch_versions.mix(FASTQC.out.versions.first())
+    ch_versions = ch_versions.mix(FASTQC.out.versions.first())*/
 
     //
     // Collate and save software versions
