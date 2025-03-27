@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+#!/usr/bin/env python3
+
 from pysam import VariantFile
 import os
 import argparse
@@ -10,6 +12,60 @@ import sys
 # https://github.com/sigven/pcgr/issues/136#issuecomment-919273152
 # Built upon by @BarryDigby to handle Strelka, Freebayes, Mutect2 VCF files.
 #####################################################################################################################
+def mutect2_vaf(record, sample_idx):
+    VAF = record.samples[sample_idx]["AF"][0]
+    VAF = VAF if VAF is not None else 0
+    return VAF
+
+
+def freebayes_vaf(record, sample_idx):
+    AO = record.samples[sample_idx]["AO"][0]
+    RO = record.samples[sample_idx]["RO"]
+    AO = AO if AO is not None else 0
+    RO = RO if RO is not None else 0
+    if (AO + RO) == 0:
+        VAF = 0
+    else:
+        VAF = AO / (AO + RO)
+    return VAF
+
+# Strelka VCF format:    
+def strelka_snv_vaf(record, sample_idx):
+    ref = str(record.ref + "U")
+    alt = str(record.alts[0] + "U")
+    tier1RefCounts = record.samples[sample_idx][ref][0]
+    tier1AltCounts = record.samples[sample_idx][alt][0]
+    tier1RefCounts = tier1RefCounts if tier1RefCounts is not None else 0
+    tier1AltCounts = tier1AltCounts if tier1AltCounts is not None else 0
+    if (tier1AltCounts + tier1RefCounts) == 0:
+        VAF = 0
+    else:
+        VAF = tier1AltCounts / (tier1AltCounts + tier1RefCounts)
+    record.samples[sample_idx]["AD"] = [0, tier1AltCounts]
+    return VAF
+
+
+def strelka_indel_vaf(record, sample_idx):
+    tier1RefCounts = record.samples[sample_idx]["TAR"][0]
+    tier1AltCounts = record.samples[sample_idx]["TIR"][0]
+    tier1RefCounts = tier1RefCounts if tier1RefCounts is not None else 0
+    tier1AltCounts = tier1AltCounts if tier1AltCounts is not None else 0
+    if (tier1AltCounts + tier1RefCounts) == 0:
+        VAF = 0
+    else:
+        VAF = tier1AltCounts / (tier1AltCounts + tier1RefCounts)
+    record.samples[sample_idx]["AD"] = [0, tier1AltCounts]
+    return VAF
+
+def strelka_variants_vaf(record, sample_idx):
+    AD = record.samples[sample_idx]["AD"]
+    ref = AD[0]
+    alt = AD[1]
+    if ( ref + alt ) == 0:
+        VAF = 0
+    else:
+        VAF = alt / (ref + alt)
+    return VAF
 
 ## Strelka TAL = alternative allele, usually the reference
 ## Strelka TIL = Indel i.e the 'ALT'.
