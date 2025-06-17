@@ -1,16 +1,13 @@
-repository_type: pipeline
-
-nf_core_version: 3.2.0
-
 lint: {}
-
+nf_core_version: 3.3.1
+repository_type: pipeline
 template:
-  org: nf-core
-  name: nfpgcrdev
+  author: "@yussab"
   description: pgcr pipeline in dev
-  author: '@yussab'
-  version: 1.0.0dev
-  force: true
+  force: false
+  is_nfcore: true
+  name: nfpgcrdev
+  org: nf-core
   outdir: .
   skip_features: []
-  is_nfcore: true
+  version: 1.0.0dev
