@@ -17,7 +17,7 @@ workflow VCF_PREPROCESSING {
 
     take:
     ch_samplesheet // channel: samplesheet read in from --input and processed by PIPELINE_INITIALISATION
-   
+
     main:
     ch_versions = Channel.empty()
 
