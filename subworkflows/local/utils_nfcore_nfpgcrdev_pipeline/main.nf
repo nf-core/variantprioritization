@@ -195,7 +195,7 @@ def processSamplesheet(row) {
     meta.id = "${meta.patient}_${meta.sample}_${meta.tool}"
 
     // Check if the VCF file is bgzipped
-    if (!vcf.toString().endsWith('.gz') && vcf.toString().endsWith('.vcf')) {
+    if (vcf.toString().endsWith('.gz')) {
         meta.bgzip_vcf = true
     } else {
         meta.bgzip_vcf = false
