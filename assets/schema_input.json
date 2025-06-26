@@ -36,7 +36,7 @@
                 "type": "string",
                 "format": "file-path",
                 "exists": true,
-                "pattern": "^\\S+\\.cns$",
+                "pattern": "^\\S+\\.(cns|txt)$",
                 "errorMessage": "CNA file cannot contain spaces and must have extension '.cns'"
             }
         },
