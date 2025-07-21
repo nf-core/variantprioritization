@@ -20,6 +20,8 @@ workflow NFPGCRDEV {
 
     take:
     ch_samplesheet // channel: samplesheet read in from --input
+    fasta
+
     main:
 
     ch_versions = Channel.empty()
@@ -29,7 +31,8 @@ workflow NFPGCRDEV {
     // SUBWORKFLOW: Preprocess VCF files
     //
     VCF_PREPROCESSING (
-        ch_samplesheet
+        ch_samplesheet,
+        fasta
     )
 
     //
