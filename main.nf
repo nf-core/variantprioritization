@@ -30,6 +30,7 @@ include { getGenomeAttribute      } from './subworkflows/local/utils_nfcore_nfpg
 //   This is an example of how to use getGenomeAttribute() to fetch parameters
 //   from igenomes.config using `--genome`
 params.fasta = getGenomeAttribute('fasta')
+fasta = params.fasta ? Channel.fromPath(params.fasta).map{ it -> [ [id:it.baseName], it ] }.collect() : Channel.empty()
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -44,6 +45,7 @@ workflow NFCORE_NFPGCRDEV {
 
     take:
     samplesheet // channel: samplesheet read in from --input
+    fasta
 
     main:
 
@@ -51,7 +53,8 @@ workflow NFCORE_NFPGCRDEV {
     // WORKFLOW: Run pipeline
     //
     NFPGCRDEV (
-        samplesheet
+        samplesheet,
+        fasta
     )
     emit:
     multiqc_report = NFPGCRDEV.out.multiqc_report // channel: /path/to/multiqc_report.html
@@ -81,7 +84,8 @@ workflow {
     // WORKFLOW: Run main workflow
     //
     NFCORE_NFPGCRDEV (
-        PIPELINE_INITIALISATION.out.samplesheet
+        PIPELINE_INITIALISATION.out.samplesheet,
+        fasta
     )
     //
     // SUBWORKFLOW: Run completion tasks
