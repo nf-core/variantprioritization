@@ -9,7 +9,6 @@ include { TABIX_TABIX      } from '../../modules/nf-core/tabix/tabix/main'
 
 include { BCFTOOLS_NORM                  } from '../../modules/nf-core/bcftools/norm/main'
 include { BCFTOOLS_FILTER                } from '../../modules/nf-core/bcftools/filter/main'
-include { TABIX_TABIX as TABIX_FILTERED  } from '../../modules/nf-core/tabix/tabix/main'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -34,7 +33,7 @@ workflow VCF_PREPROCESSING {
 
     // simplify metadata in CNA channels for re-merging to processed VCF files.
     vcf_files = files.vcf_files
-    ch_cna_files = files.cna_files.map{ meta, cna -> var = [:]; var.patient = meta.patient; var.status = meta.status; var.sample = meta.sample; return [ meta, cna ] }
+    ch_cna_files = files.cna_files.map{ meta, cna -> var = [:]; var.patient = meta.patient; var.status = meta.status; var.sample = meta.sample; return [ var, cna ] }.distinct()
 
     // Create subchannels for files that need bgzipping and tabix indexing
 
@@ -82,9 +81,6 @@ workflow VCF_PREPROCESSING {
     BCFTOOLS_FILTER ( norm_ch )
     filtered_ch = BCFTOOLS_FILTER.out.vcf.join(BCFTOOLS_FILTER.out.tbi)
 
-    //VCF PARSING
-    //... next branch
-
     ch_versions = ch_versions.mix( TABIX_BGZIPTABIX.out.versions )
     ch_versions = ch_versions.mix( TABIX_TABIX.out.versions )
     ch_versions = ch_versions.mix( BCFTOOLS_NORM.out.versions )
@@ -92,6 +88,7 @@ workflow VCF_PREPROCESSING {
 
     emit:
     filtered_ch                                   // channel: [ meta, path(vcf_file), path(tbi_file), path(cna_file) ]
+    ch_cna_files
     versions       = ch_versions                    // channel: [ path(versions.yml) ]
 
 }
