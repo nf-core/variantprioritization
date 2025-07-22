@@ -192,7 +192,7 @@ def processSamplesheet(row) {
     if ( meta.tool == 'strelka' ) { meta.tool = vcf.toString().tokenize('.')[1,2].join('.') }
 
     // meta.id for process tags
-    meta.id = "${meta.patient}_${meta.sample}_${meta.tool}"
+    meta.id = "${meta.patient}.${meta.sample}.${meta.tool}"
 
     // Check if the VCF file is bgzipped
     if (vcf.toString().endsWith('.gz')) {
