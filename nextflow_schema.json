@@ -55,16 +55,6 @@
                     "fa_icon": "fas fa-book",
                     "help_text": "If using a reference genome configured in the pipeline using iGenomes, use this parameter to give the ID for the reference. This is then used to build the full paths for all required reference genome files e.g. `--genome GRCh38`. \n\nSee the [nf-core website docs](https://nf-co.re/usage/reference_genomes) for more details."
                 },
-                "fasta": {
-                    "type": "string",
-                    "format": "file-path",
-                    "exists": true,
-                    "mimetype": "text/plain",
-                    "pattern": "^\\S+\\.fn?a(sta)?(\\.gz)?$",
-                    "description": "Path to FASTA genome file.",
-                    "help_text": "This parameter is *mandatory* if `--genome` is not specified. If you don't have a BWA index available this will be generated for you automatically. Combine with `--save_reference` to save BWA index for future runs.",
-                    "fa_icon": "far fa-file-code"
-                },
                 "igenomes_ignore": {
                     "type": "boolean",
                     "description": "Do not load the iGenomes reference config.",
@@ -253,5 +243,225 @@
         {
             "$ref": "#/$defs/generic_options"
         }
-    ]
+    ],
+    "properties": {
+        "save_intermediates": {
+            "type": "boolean"
+        },
+        "database": {
+            "type": "string"
+        },
+        "vep_cache": {
+            "type": "string"
+        },
+        "panel_id": {
+            "type": "integer",
+            "default": 0
+        },
+        "diagnostic_grade_only": {
+            "type": "boolean"
+        },
+        "ignore_noncoding": {
+            "type": "boolean"
+        },
+        "pop_gnomad": {
+            "type": "string",
+            "default": "nfe"
+        },
+        "maf_upper_threshold": {
+            "type": "number",
+            "default": 0.9
+        },
+        "classify_all": {
+            "type": "boolean"
+        },
+        "clinvar_ignore_noncancer": {
+            "type": "boolean"
+        },
+        "vcf2maf": {
+            "type": "boolean"
+        },
+        "assay": {
+            "type": "string"
+        },
+        "cpsr_report": {
+            "type": "string"
+        },
+        "tumor_site": {
+            "type": "integer",
+            "default": 0
+        },
+        "tumor_purity": {
+            "type": "string"
+        },
+        "tumor_ploidy": {
+            "type": "string"
+        },
+        "cna_analysis": {
+            "type": "boolean"
+        },
+        "cna_overlap_pct": {
+            "type": "integer",
+            "default": 50
+        },
+        "effective_target_size_mb": {
+            "type": "integer",
+            "default": 34
+        },
+        "estimate_tmb": {
+            "type": "boolean"
+        },
+        "estimate_msi": {
+            "type": "boolean"
+        },
+        "tmb_display": {
+            "type": "string",
+            "default": "coding_and_silent"
+        },
+        "estimate_signatures": {
+            "type": "boolean"
+        },
+        "min_mutations_signatures": {
+            "type": "integer",
+            "default": 200
+        },
+        "all_reference_signatures": {
+            "type": "boolean"
+        },
+        "include_artefact_signatures": {
+            "type": "boolean"
+        },
+        "prevalence_reference_signatures": {
+            "type": "integer",
+            "default": 5
+        },
+        "include_trials": {
+            "type": "boolean",
+            "default": true
+        },
+        "tumor_dp_min": {
+            "type": "integer",
+            "default": 0
+        },
+        "tumor_af_min": {
+            "type": "integer",
+            "default": 0
+        },
+        "control_dp_min": {
+            "type": "integer",
+            "default": 0
+        },
+        "control_af_max": {
+            "type": "integer",
+            "default": 1
+        },
+        "tumor_only": {
+            "type": "boolean"
+        },
+        "pon_vcf": {
+            "type": "string"
+        },
+        "exclude_pon": {
+            "type": "boolean"
+        },
+        "exclude_likely_hom_germline": {
+            "type": "boolean"
+        },
+        "exclude_likely_het_germline": {
+            "type": "boolean"
+        },
+        "exclude_dbsnp_nonsomatic": {
+            "type": "boolean"
+        },
+        "exclude_nonexonic": {
+            "type": "boolean"
+        },
+        "maf_gnomad_nfe": {
+            "type": "number",
+            "default": 0.002
+        },
+        "maf_gnomad_fin": {
+            "type": "number",
+            "default": 0.002
+        },
+        "maf_gnomad_asj": {
+            "type": "number",
+            "default": 0.002
+        },
+        "maf_gnomad_oth": {
+            "type": "number",
+            "default": 0.002
+        },
+        "maf_gnomad_amr": {
+            "type": "number",
+            "default": 0.002
+        },
+        "maf_gnomad_afr": {
+            "type": "number",
+            "default": 0.002
+        },
+        "maf_gnomad_eas": {
+            "type": "number",
+            "default": 0.002
+        },
+        "maf_gnomad_sas": {
+            "type": "number",
+            "default": 0.002
+        },
+        "maf_gnomad_global": {
+            "type": "number",
+            "default": 0.002
+        },
+        "filter_haplotypecaller": {
+            "type": "string",
+            "default": "-i\\'FORMAT/DP>10\\"
+        },
+        "filter_deepvariant": {
+            "type": "string",
+            "default": "-i\\'FORMAT/DP>10\\"
+        },
+        "filter_strelka_variants": {
+            "type": "string",
+            "default": "-i\\'FORMAT/DP>10\\"
+        },
+        "filter_freebayes_germline": {
+            "type": "string",
+            "default": "-i\\'FORMAT/DP>10\\"
+        },
+        "filter_mutect2": {
+            "type": "string",
+            "default": "-i\\'FORMAT/DP>10\\"
+        },
+        "filter_freebayes_somatic": {
+            "type": "string",
+            "default": "-i\\'FORMAT/DP>10\\"
+        },
+        "filter_strelka_indels": {
+            "type": "string",
+            "default": "-i\\'FORMAT/DP>10\\"
+        },
+        "filter_strelka_snvs": {
+            "type": "string",
+            "default": "-i\\'FORMAT/DP>10\\"
+        },
+        "vep_n_forks": {
+            "type": "integer",
+            "default": 4
+        },
+        "vep_buffer_size": {
+            "type": "integer",
+            "default": 500
+        },
+        "vep_gencode_all": {
+            "type": "boolean",
+            "default": true
+        },
+        "vep_pick_order": {
+            "type": "string",
+            "default": "mane_select,mane_plus_clinical,canonical,biotype,ccds,rank,tsl,appris,length"
+        },
+        "vep_no_intergenic": {
+            "type": "boolean"
+        }
+    }
 }
