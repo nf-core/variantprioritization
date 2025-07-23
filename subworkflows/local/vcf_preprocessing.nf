@@ -64,7 +64,7 @@ workflow VCF_PREPROCESSING {
 
     TABIX_TABIX( ch_vcf_to_tabix )
 
-    ch_vcf_to_tabix 
+    ch_vcf_to_tabix
         .join(TABIX_TABIX.out.tbi)
         .set{ ch_vcf_with_tabix }
 
@@ -77,7 +77,7 @@ workflow VCF_PREPROCESSING {
     //VCF_PREPROCESSING
     BCFTOOLS_NORM   ( ch_vcf, fasta  )
     norm_ch = BCFTOOLS_NORM.out.vcf.join(BCFTOOLS_NORM.out.tbi)
-    
+
     BCFTOOLS_FILTER ( norm_ch )
     filtered_ch = BCFTOOLS_FILTER.out.vcf.join(BCFTOOLS_FILTER.out.tbi)
 

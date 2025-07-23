@@ -27,7 +27,7 @@ def freebayes_vaf(record, sample_idx):
         VAF = AO / (AO + RO)
     return VAF
 
-# Strelka VCF format:    
+# Strelka VCF format:
 def strelka_snv_vaf(record, sample_idx):
     ref = str(record.ref + "U")
     alt = str(record.alts[0] + "U")
@@ -211,9 +211,9 @@ def main():
     parser = argparse.ArgumentParser(description="Reformat VCF files for tumor-normal or tumor-only VCF processing.")
     parser.add_argument("-i", "--input", required=True, help="Input VCF file.")
     parser.add_argument("-o", "--output", required=True, help="Output file name.")
-    
+
     args = parser.parse_args()
-    
+
     # Check if input file exists
     if not os.path.exists(args.input):
         print(f"Error: Input file '{args.input}' does not exist.")

@@ -11,7 +11,7 @@ process PCGR {
     tuple val(meta), path(vcf), path(tbi), path(cna)
     path(pcgr_dir), stageAs: "PCGR/data/${params.genome.toLowerCase()}"
     //path pon
-    path vep_cache 
+    path vep_cache
 
     output:
     tuple val(meta), path("${prefix}"), emit: pcgr_reports
@@ -27,7 +27,7 @@ process PCGR {
     prefix       = task.ext.prefix ?: "${meta.id}"
     def cna      = params.cna_analysis ? "--input_cna $cna" : ''
     """
-    export XDG_CACHE_HOME=/tmp  
+    export XDG_CACHE_HOME=/tmp
     export XDG_DATA_HOME=/tmp
     export QUARTO_PRINT_STACK=true
 

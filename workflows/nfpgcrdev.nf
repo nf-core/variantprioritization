@@ -40,7 +40,7 @@ workflow NFPGCRDEV {
 
     take:
     ch_samplesheet // channel: samplesheet read in from --input
-    
+
 
     main:
 
@@ -59,11 +59,11 @@ workflow NFPGCRDEV {
         .set { vcf_files }
 
     VCF_PREPROCESSING.out.ch_cna_files
-        .set { cna_files } 
+        .set { cna_files }
 
     //
     // SUBWORKFLOW: Format input files
-    //    
+    //
 
     //vcf_files.view()
     //cna_files.view()
@@ -75,15 +75,15 @@ workflow NFPGCRDEV {
 
     //
     // SUBWORKFLOW: pcgr
-    //    
-    
+    //
+
     FORMAT_FILES.out.pcgr_ready_vcf.view()
-    
+
     RUN_PCGR (
         FORMAT_FILES.out.pcgr_ready_vcf,
         ch_pcgr_dir.collect(),
         //FORMAT_FILES.out.pon_vcf,
-        vep_cache.collect() 
+        vep_cache.collect()
     )
 
     //
