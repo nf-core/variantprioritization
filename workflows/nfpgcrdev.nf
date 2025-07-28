@@ -4,11 +4,31 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 include { VCF_PREPROCESSING      } from '../subworkflows/local/vcf_preprocessing'
+include { FORMAT_FILES           } from '../subworkflows/local/format_files'
+include { PCGR as RUN_PCGR       } from '../modules/local/pcgr/main'
+
+include { getGenomeAttribute     } from '../subworkflows/local/utils_nfcore_nfpgcrdev_pipeline'
 include { MULTIQC                } from '../modules/nf-core/multiqc/main'
 include { paramsSummaryMap       } from 'plugin/nf-schema'
 include { paramsSummaryMultiqc   } from '../subworkflows/nf-core/utils_nfcore_pipeline'
 include { softwareVersionsToYAML } from '../subworkflows/nf-core/utils_nfcore_pipeline'
 include { methodsDescriptionText } from '../subworkflows/local/utils_nfcore_nfpgcrdev_pipeline'
+
+
+/*
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    GENOME PARAMETER VALUES
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*/
+
+// TODO nf-core: Remove this line if you don't need a FASTA file
+//   This is an example of how to use getGenomeAttribute() to fetch parameters
+//   from igenomes.config using `--genome`
+params.fasta = getGenomeAttribute('fasta')
+fasta = params.fasta ? Channel.fromPath(params.fasta).map{ it -> [ [id:it.baseName], it ] }.collect() : Channel.empty()
+if (params.database) { ch_pcgr_dir = Channel.fromPath("${params.database}/data/${params.genome.toLowerCase()}") } else { exit 1, "Please provide a path to the PCGR annotation database." }
+vep_cache               = Channel.fromPath(params.vep_cache        )
+
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -20,7 +40,7 @@ workflow NFPGCRDEV {
 
     take:
     ch_samplesheet // channel: samplesheet read in from --input
-    fasta
+
 
     main:
 
@@ -35,6 +55,37 @@ workflow NFPGCRDEV {
         fasta
     )
 
+    VCF_PREPROCESSING.out.filtered_ch
+        .set { vcf_files }
+
+    VCF_PREPROCESSING.out.ch_cna_files
+        .set { cna_files }
+
+    //
+    // SUBWORKFLOW: Format input files
+    //
+
+    //vcf_files.view()
+    //cna_files.view()
+
+    FORMAT_FILES (
+        vcf_files,
+        cna_files
+    )
+
+    //
+    // SUBWORKFLOW: pcgr
+    //
+
+    FORMAT_FILES.out.pcgr_ready_vcf.view()
+
+    RUN_PCGR (
+        FORMAT_FILES.out.pcgr_ready_vcf,
+        ch_pcgr_dir.collect(),
+        //FORMAT_FILES.out.pon_vcf,
+        vep_cache.collect()
+    )
+
     //
     // Collate and save software versions
     //
@@ -45,7 +96,6 @@ workflow NFPGCRDEV {
             sort: true,
             newLine: true
         ).set { ch_collated_versions }
-
 
     //
     // MODULE: MultiQC

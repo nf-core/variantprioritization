@@ -3,6 +3,5 @@
 channels:
   - conda-forge
   - bioconda
-
 dependencies:
-  - bioconda::htslib=1.21
+  - bioconda::fastqc=0.12.1
