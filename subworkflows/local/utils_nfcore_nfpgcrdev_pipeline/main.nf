@@ -159,8 +159,8 @@ def processSamplesheet(row) {
     meta.status = meta.status == 1 ? 'somatic' : 'germline'
 
     // Extract tool name from vcf file name
-    meta.tool = vcf.toString().tokenize('.')[1]
-    if ( meta.tool == 'strelka' ) { meta.tool = vcf.toString().tokenize('.')[1,2].join('.') }
+    meta.tool = vcf.getFileName().toString().tokenize('.')[1]
+    if ( meta.tool == 'strelka' ) { meta.tool = vcf.getFileName().toString().tokenize('.')[1,2].join('.') }
 
     // meta.id for process tags
     meta.id = "${meta.patient}.${meta.sample}.${meta.tool}"
