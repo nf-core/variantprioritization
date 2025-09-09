@@ -10,14 +10,14 @@ process REFORMAT_CNA {
     tuple val(meta), path(cna)
 
     output:
-    tuple val(meta), path("${meta.id}.*.tsv"), emit: cna
+    tuple val(meta), path("${prefix}.*.tsv"), emit: cna
     path "versions.yml"                      , emit: versions
 
     when:
     task.ext.when == null || task.ext.when
 
     script:
-    def prefix = task.ext.prefix ?: "${meta.id}"
+    prefix = task.ext.prefix ?: "${meta.sample}"
     """
     reformat_cna.py \\
         --input $cna \\
