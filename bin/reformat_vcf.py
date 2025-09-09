@@ -118,7 +118,7 @@ def tumor_normal(out):
         if found_key is None:
             raise ValueError(f"FORMAT combination {list(formats)} not recognized.")
         fnc_str = found_key
-        #end 
+        #end
         header.formats.add("AL", number=".", type="Integer", description="Codes for algorithms that produced the somatic call (1 = freebayes, 2 = mutect2, 3 = strelka)")
         if "strelka" in fnc_str:
             header.formats.add("AD", number=2, type="Integer", description="AD flag for Strelka. Output as tuple so index rule for TAF does not need to be modified.")
