@@ -8,9 +8,7 @@
         "type": "object",
         "properties": {
             "patient": {
-                "type": "string",
                 "pattern": "^\\S+$",
-                "errorMessage": "Patient name must be provided and cannot contain spaces",
                 "meta": ["patient"]
             },
             "status": {

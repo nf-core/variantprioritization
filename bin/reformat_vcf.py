@@ -105,7 +105,20 @@ def tumor_normal(out):
         header.info.add("TAL", number=".", type="String", description="Algorithms that called the somatic mutation")
         samples = list(header.samples)
         formats = list(header.formats)
-        fnc_str = list(vcf_formats.keys())[list(vcf_formats.values()).index(list(formats))]
+        #fnc_str = list(vcf_formats.keys())[list(vcf_formats.values()).index(list(formats))]
+        #start
+        formats_set = set(formats)
+        found_key = None
+
+        for key, value in vcf_formats.items():
+            if set(value) == formats_set:
+                found_key = key
+                break
+
+        if found_key is None:
+            raise ValueError(f"FORMAT combination {list(formats)} not recognized.")
+        fnc_str = found_key
+        #end 
         header.formats.add("AL", number=".", type="Integer", description="Codes for algorithms that produced the somatic call (1 = freebayes, 2 = mutect2, 3 = strelka)")
         if "strelka" in fnc_str:
             header.formats.add("AD", number=2, type="Integer", description="AD flag for Strelka. Output as tuple so index rule for TAF does not need to be modified.")
