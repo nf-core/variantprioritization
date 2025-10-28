@@ -62,6 +62,9 @@ workflow {
         args,
         params.outdir,
         params.input,
+        params.help,
+        params.help_full,
+        params.show_hidden,
     )
 
     //
@@ -70,7 +73,7 @@ workflow {
     NFCORE_VARIANTPRIORITIZATION(
         PIPELINE_INITIALISATION.out.samplesheet
     )
-
+    
     //
     // SUBWORKFLOW: Run completion tasks
     //

@@ -6,11 +6,12 @@ lint:
     - assets/nf-core-variantprioritization_logo_light.png
     - docs/images/nf-core-variantprioritization_logo_dark.png
     - docs/images/nf-core-variantprioritization_logo_light.png
-nf_core_version: 3.3.2
+nf_core_version: 3.4.1
 repository_type: pipeline
 template:
   author: "@yussab"
-  description: pipeline for the functional annotation and translation of somatic SNVs/InDels and copy number abberations for precision cancer medicine
+  description: pipeline for the functional annotation and translation of somatic SNVs/InDels
+    and copy number abberations for precision cancer medicine
   force: false
   is_nfcore: true
   name: variantprioritization
