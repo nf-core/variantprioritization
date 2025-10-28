@@ -3,16 +3,16 @@
     IMPORT MODULES / SUBWORKFLOWS / FUNCTIONS
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
-include { VCF_PREPROCESSING      } from '../subworkflows/local/vcf_preprocessing'
-include { FORMAT_FILES           } from '../subworkflows/local/format_files'
-include { PCGR as RUN_PCGR       } from '../modules/local/pcgr/main'
+include { VCF_PREPROCESSING      } from '../../subworkflows/local/vcf_preprocessing'
+include { FORMAT_FILES           } from '../../subworkflows/local/format_files'
+include { PCGR as RUN_PCGR       } from '../../modules/local/pcgr/main'
 
-include { getGenomeAttribute     } from '../subworkflows/local/utils_nfcore_nfpgcrdev_pipeline'
-include { MULTIQC                } from '../modules/nf-core/multiqc/main'
+include { getGenomeAttribute     } from '../../subworkflows/local/utils_nfcore_variantprioritization_pipeline'
+include { MULTIQC                } from '../../modules/nf-core/multiqc/main'
 include { paramsSummaryMap       } from 'plugin/nf-schema'
-include { paramsSummaryMultiqc   } from '../subworkflows/nf-core/utils_nfcore_pipeline'
-include { softwareVersionsToYAML } from '../subworkflows/nf-core/utils_nfcore_pipeline'
-include { methodsDescriptionText } from '../subworkflows/local/utils_nfcore_nfpgcrdev_pipeline'
+include { paramsSummaryMultiqc   } from '../../subworkflows/nf-core/utils_nfcore_pipeline'
+include { softwareVersionsToYAML } from '../../subworkflows/nf-core/utils_nfcore_pipeline'
+include { methodsDescriptionText } from '../../subworkflows/local/utils_nfcore_variantprioritization_pipeline'
 
 
 /*
@@ -25,10 +25,6 @@ include { methodsDescriptionText } from '../subworkflows/local/utils_nfcore_nfpg
 //   This is an example of how to use getGenomeAttribute() to fetch parameters
 //   from igenomes.config using `--genome`
 params.fasta = getGenomeAttribute('fasta')
-fasta = params.fasta ? Channel.fromPath(params.fasta).map{ it -> [ [id:it.baseName], it ] }.collect() : Channel.empty()
-if (params.database) { ch_pcgr_dir = Channel.fromPath("${params.database}/data/${params.genome.toLowerCase()}") } else { exit 1, "Please provide a path to the PCGR annotation database." }
-vep_cache               = Channel.fromPath(params.vep_cache        )
-
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -36,13 +32,17 @@ vep_cache               = Channel.fromPath(params.vep_cache        )
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-workflow NFPGCRDEV {
+workflow VARIANTPRIORITIZATION {
 
     take:
     ch_samplesheet // channel: samplesheet read in from --input
 
 
     main:
+
+    fasta = params.fasta ? Channel.fromPath(params.fasta).map{ it -> [ [id:it.baseName], it ] }.collect() : Channel.empty()
+    if (params.database) { ch_pcgr_dir = Channel.fromPath("${params.database}/data/${params.genome.toLowerCase()}") } else { exit 1, "Please provide a path to the PCGR annotation database." }
+    vep_cache               = Channel.fromPath(params.vep_cache)
 
     ch_versions = Channel.empty()
     ch_multiqc_files = Channel.empty()
@@ -92,7 +92,7 @@ workflow NFPGCRDEV {
     softwareVersionsToYAML(ch_versions)
         .collectFile(
             storeDir: "${params.outdir}/pipeline_info",
-            name: 'nf_core_'  +  'nfpgcrdev_software_'  + 'mqc_'  + 'versions.yml',
+            name: 'nf_core_'  +  'variantprioritization_software_'  + 'mqc_'  + 'versions.yml',
             sort: true,
             newLine: true
         ).set { ch_collated_versions }

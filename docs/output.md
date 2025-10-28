@@ -1,4 +1,4 @@
-# nf-core/nfpgcrdev: Output
+# nf-core/variantprioritization: Output
 
 ## Introduction
 
