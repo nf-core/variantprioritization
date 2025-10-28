@@ -22,11 +22,9 @@
 
 > Sigve Nakken, Ghislain Fournous, Daniel Vodák, Lars Birger Aaasheim, Ola Myklebost, and Eivind Hovig. Personal Cancer Genome Reporter: variant interpretation report for precision oncology (2017). Bioinformatics. 34(10):1778–1780. doi:10.1093/bioinformatics/btx817
 
-
 - [Tabix](https://academic.oup.com/bioinformatics/article/27/5/718/262743?login=false)
 
 > Li H, Tabix: fast retrieval of sequence features from generic TAB-delimited files, Bioinformatics, Volume 27, Issue 5, 1 March 2011, Pages 718–719, doi: 10.1093/bioinformatics/btq671. PubMed PMID: 21208982. PubMed Central PMCID: PMC3042176.
-
 
 ## Software packaging/containerisation tools
 
