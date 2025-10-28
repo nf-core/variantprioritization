@@ -73,7 +73,7 @@ workflow {
     NFCORE_VARIANTPRIORITIZATION(
         PIPELINE_INITIALISATION.out.samplesheet
     )
-    
+
     //
     // SUBWORKFLOW: Run completion tasks
     //
