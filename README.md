@@ -1,7 +1,7 @@
 <h1>
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/nf-core-variantprioritization_logo_dark.png">
-    <img alt="nf-core/variantprioritization" src="assets/nf-core-variantprioritization_logo_light.png">
+    <source media="(prefers-color-scheme: dark)" srcset="docs/images/nf-core-variantprioritization_logo_dark.png">
+    <img alt="nf-core/variantprioritization" src="docs/images/nf-core-variantprioritization_logo_light.png">
   </picture>
 </h1>
 
