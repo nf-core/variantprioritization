@@ -28,7 +28,7 @@ jobs:
           message: |
             Pipeline release! ${{ github.repository }} v${{ github.event.release.tag_name }} - ${{ github.event.release.name }}!
 
-            ${{ steps.get_topics.outputs.description }}
+            ${{ steps.get_description.outputs.description }}
 
             Please see the changelog: ${{ github.event.release.html_url }}
 
