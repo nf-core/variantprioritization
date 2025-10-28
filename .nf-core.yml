@@ -17,5 +17,6 @@ template:
   name: variantprioritization
   org: nf-core
   outdir: .
-  skip_features: []
+  skip_features:
+    - fastqc
   version: 1.0.0dev
