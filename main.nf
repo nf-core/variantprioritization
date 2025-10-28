@@ -1,11 +1,11 @@
 #!/usr/bin/env nextflow
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    nf-core/nfpgcrdev
+    nf-core/variantprioritization
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    Github : https://github.com/nf-core/nfpgcrdev
-    Website: https://nf-co.re/nfpgcrdev
-    Slack  : https://nfcore.slack.com/channels/nfpgcrdev
+    Github : https://github.com/nf-core/variantprioritization
+    Website: https://nf-co.re/variantprioritization
+    Slack  : https://nfcore.slack.com/channels/variantprioritization
 ----------------------------------------------------------------------------------------
 */
 
@@ -15,9 +15,21 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { NFPGCRDEV  } from './workflows/nfpgcrdev'
-include { PIPELINE_INITIALISATION } from './subworkflows/local/utils_nfcore_nfpgcrdev_pipeline'
-include { PIPELINE_COMPLETION     } from './subworkflows/local/utils_nfcore_nfpgcrdev_pipeline'
+include { VARIANTPRIORITIZATION  } from './workflows/variantprioritization'
+include { PIPELINE_INITIALISATION } from './subworkflows/local/utils_nfcore_variantprioritization_pipeline'
+include { PIPELINE_COMPLETION     } from './subworkflows/local/utils_nfcore_variantprioritization_pipeline'
+include { getGenomeAttribute      } from './subworkflows/local/utils_nfcore_variantprioritization_pipeline'
+
+/*
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    GENOME PARAMETER VALUES
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*/
+
+// TODO nf-core: Remove this line if you don't need a FASTA file
+//   This is an example of how to use getGenomeAttribute() to fetch parameters
+//   from igenomes.config using `--genome`
+params.fasta = getGenomeAttribute('fasta')
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -28,7 +40,7 @@ include { PIPELINE_COMPLETION     } from './subworkflows/local/utils_nfcore_nfpg
 //
 // WORKFLOW: Run main analysis pipeline depending on type of input
 //
-workflow NFCORE_NFPGCRDEV {
+workflow NFCORE_VARIANTPRIORITIZATION {
 
     take:
     samplesheet // channel: samplesheet read in from --input
@@ -38,14 +50,12 @@ workflow NFCORE_NFPGCRDEV {
     //
     // WORKFLOW: Run pipeline
     //
-    NFPGCRDEV (
+    VARIANTPRIORITIZATION (
         samplesheet
     )
-
     emit:
-    multiqc_report = NFPGCRDEV.out.multiqc_report // channel: /path/to/multiqc_report.html
+    multiqc_report = VARIANTPRIORITIZATION.out.multiqc_report // channel: /path/to/multiqc_report.html
 }
-
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     RUN MAIN WORKFLOW
@@ -70,10 +80,9 @@ workflow {
     //
     // WORKFLOW: Run main workflow
     //
-    NFCORE_NFPGCRDEV (
+    NFCORE_VARIANTPRIORITIZATION (
         PIPELINE_INITIALISATION.out.samplesheet
     )
-
     //
     // SUBWORKFLOW: Run completion tasks
     //
@@ -84,7 +93,7 @@ workflow {
         params.outdir,
         params.monochrome_logs,
         params.hook_url,
-        NFCORE_NFPGCRDEV.out.multiqc_report
+        NFCORE_VARIANTPRIORITIZATION.out.multiqc_report
     )
 }
 
