@@ -6,7 +6,7 @@ template:
   description: pgcr pipeline in dev
   force: false
   is_nfcore: true
-  name: nfpgcrdev
+  name: variantprioritization
   org: nf-core
   outdir: .
   skip_features: []
