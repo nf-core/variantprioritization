@@ -11,7 +11,7 @@ Initial release of nf-core/variantprioritization, created with the [nf-core](htt
 
 ### `Fixed`
 
-- Rename to nf-core/variantprioritization
+- [#32](https://github.com/nf-core/variantprioritization/pull/32) - Rename to nf-core/variantprioritization
 
 ### `Dependencies`
 
