@@ -1,6 +1,6 @@
 {
-    "name": "nf-core/nfpgcrdev",
-    "homePage": "https://github.com/nf-core/nfpgcrdev",
+    "name": "nf-core/variantprioritization",
+    "homePage": "https://github.com/nf-core/variantprioritization",
     "repos": {
         "https://github.com/nf-core/modules.git": {
             "modules": {

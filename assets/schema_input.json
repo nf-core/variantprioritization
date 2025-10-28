@@ -1,7 +1,7 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://raw.githubusercontent.com/nf-core/nfpgcrdev/master/assets/schema_input.json",
-    "title": "nf-core/nfpgcrdev pipeline - params.input schema",
+    "$id": "https://raw.githubusercontent.com/nf-core/variantprioritization/master/assets/schema_input.json",
+    "title": "nf-core/variantprioritization pipeline - params.input schema",
     "description": "Schema for the file provided with params.input",
     "type": "array",
     "items": {

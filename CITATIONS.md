@@ -1,4 +1,4 @@
-# nf-core/nfpgcrdev: Citations
+# nf-core/variantprioritization: Citations
 
 ## [nf-core](https://pubmed.ncbi.nlm.nih.gov/32055031/)
 
