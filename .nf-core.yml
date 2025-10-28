@@ -6,10 +6,6 @@ lint:
     - assets/nf-core-variantprioritization_logo_light.png
     - docs/images/nf-core-variantprioritization_logo_dark.png
     - docs/images/nf-core-variantprioritization_logo_light.png
-  modules_config: false
-  nf_test_content: false
-  schema_params: false
-  template_strings: false
 nf_core_version: 3.3.2
 repository_type: pipeline
 template:
