@@ -8,32 +8,37 @@
                     "bcftools/filter": {
                         "branch": "master",
                         "git_sha": "41dfa3f7c0ffabb96a6a813fe321c6d1cc5b6e46",
-                        "installed_by": ["modules"]
+                        "installed_by": [
+                            "modules"
+                        ]
                     },
                     "bcftools/norm": {
                         "branch": "master",
                         "git_sha": "41dfa3f7c0ffabb96a6a813fe321c6d1cc5b6e46",
-                        "installed_by": ["modules"]
-                    },
-                    "fastqc": {
-                        "branch": "master",
-                        "git_sha": "41dfa3f7c0ffabb96a6a813fe321c6d1cc5b6e46",
-                        "installed_by": ["modules"]
+                        "installed_by": [
+                            "modules"
+                        ]
                     },
                     "multiqc": {
                         "branch": "master",
                         "git_sha": "c9a31c472ef2d86802eb44f27322955849859361",
-                        "installed_by": ["modules"]
+                        "installed_by": [
+                            "modules"
+                        ]
                     },
                     "tabix/bgziptabix": {
                         "branch": "master",
                         "git_sha": "f2cfcf9d3f6a2d123e6c44aefa788aa232204a7a",
-                        "installed_by": ["modules"]
+                        "installed_by": [
+                            "modules"
+                        ]
                     },
                     "tabix/tabix": {
                         "branch": "master",
                         "git_sha": "f2cfcf9d3f6a2d123e6c44aefa788aa232204a7a",
-                        "installed_by": ["modules"]
+                        "installed_by": [
+                            "modules"
+                        ]
                     }
                 }
             },
@@ -42,17 +47,23 @@
                     "utils_nextflow_pipeline": {
                         "branch": "master",
                         "git_sha": "c2b22d85f30a706a3073387f30380704fcae013b",
-                        "installed_by": ["subworkflows"]
+                        "installed_by": [
+                            "subworkflows"
+                        ]
                     },
                     "utils_nfcore_pipeline": {
                         "branch": "master",
                         "git_sha": "51ae5406a030d4da1e49e4dab49756844fdd6c7a",
-                        "installed_by": ["subworkflows"]
+                        "installed_by": [
+                            "subworkflows"
+                        ]
                     },
                     "utils_nfschema_plugin": {
                         "branch": "master",
                         "git_sha": "2fd2cd6d0e7b273747f32e465fdc6bcc3ae0814e",
-                        "installed_by": ["subworkflows"]
+                        "installed_by": [
+                            "subworkflows"
+                        ]
                     }
                 }
             }
