@@ -3,6 +3,8 @@
     IMPORT MODULES / SUBWORKFLOWS / FUNCTIONS
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
+include { PREPARE_PCGRREF        } from '../../modules/local/prepare/pcgrref/main'
+
 include { VCF_PREPROCESSING      } from '../../subworkflows/local/vcf_preprocessing'
 include { FORMAT_FILES           } from '../../subworkflows/local/format_files'
 include { PCGR as RUN_PCGR       } from '../../modules/local/pcgr/main'
@@ -43,6 +45,15 @@ workflow VARIANTPRIORITIZATION {
     fasta = params.fasta ? Channel.fromPath(params.fasta).map{ it -> [ [id:it.baseName], it ] }.collect() : Channel.empty()
     if (params.database) { ch_pcgr_dir = Channel.fromPath("${params.database}/data/${params.genome.toLowerCase()}") } else { exit 1, "Please provide a path to the PCGR annotation database." }
     vep_cache               = Channel.fromPath(params.vep_cache)
+
+    pcgr_bundle_version = params.pcgr_bundle_version ?: '20250314'
+
+    //
+    // GET REFERENCE DATA FOR PCGR
+    //
+    PREPARE_PCGRREF( [id:'pcgr_reference'], pcgr_bundle_version, params.genome )
+
+    ch_pcgr_dir = PREPARE_PCGRREF.out.pcgrref.map { _meta, pcgrref -> pcgrref }
 
     ch_versions = Channel.empty()
     ch_multiqc_files = Channel.empty()
