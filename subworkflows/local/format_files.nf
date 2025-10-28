@@ -7,6 +7,7 @@
 include { REFORMAT_VCF                        } from '../../modules/local/reformat_input/reformat_vcf'
 include { REFORMAT_CNA                        } from '../../modules/local/reformat_input/reformat_cna'
 include { INTERSECT_SOMATIC_VARIANTS          } from '../../modules/local/reformat_input/isec_vcf'
+include { BCFTOOLS_ISEC                       } from '../../modules/nf-core/bcftools/isec/main'
 include { PCGR_VCF                            } from '../../modules/local/reformat_input/pcgr_vcf'
 
 /*
@@ -55,6 +56,41 @@ workflow FORMAT_FILES {
             keepHeader: true,
             skip: 1
         )*/
+
+
+
+    per_sample_somatic_vcfs = per_sample_somatic_vcfs.map{ 
+        meta, vcfs, tbis ->
+        [meta, vcfs, tbis, (1..vcfs.size()).toList()]
+    }.branch {
+        meta, vcfs, tbis, vcf_size ->
+            single: vcf_size < 2
+            multiple: vcf_size > 1
+    }
+    per_sample_somatic_vcfs_multiple = per_sample_somatic_vcfs.multiple.transpose(by: 3).map{
+        meta, vcfs, tbis, vcf_size ->
+        [ meta + ['vcf_size': vcf_size], vcfs, tbis ]
+    }
+
+
+    per_sample_somatic_vcfs_multiple.dump(tag: 'per_sample_somatic_vcfs')
+    BCFTOOLS_ISEC ( per_sample_somatic_vcfs_multiple )
+    
+    // TODO : per_sample_somatic_vcfs.single have to go to BCFTOOLS VIEW process to retrieve create the sites.txt files
+    
+    BCFTOOLS_ISEC.out.results.dump(tag: 'BCFTOOLS_ISEC_out_results')
+
+
+    ch_isec_somatic_postprocess = BCFTOOLS_ISEC.out.results.map {
+        meta, results ->
+        [ meta.subMap([ 'patient', 'status', 'sample']), results ]
+    }.groupTuple()
+
+    ch_isec_somatic_postprocess.dump(tag: 'ch_isec_somatic_postprocess')
+    
+    INTERSECT_SOMATIC_VARIANTS( ch_isec_somatic_postprocess ) 
+
+    BCFTOOLS_ISEC ( per_sample_somatic_vcfs )
 
     INTERSECT_SOMATIC_VARIANTS( per_sample_somatic_vcfs )
 
