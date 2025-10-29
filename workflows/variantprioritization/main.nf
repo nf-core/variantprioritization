@@ -3,14 +3,14 @@
     IMPORT MODULES / SUBWORKFLOWS / FUNCTIONS
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
-include { PREPARE_PCGRREF        } from '../../modules/local/prepare/pcgrref/main'
+include { PCGR_GETREF            } from '../../modules/local/pcgr/getref'
 
 include { VCF_PREPROCESSING      } from '../../subworkflows/local/vcf_preprocessing'
 include { FORMAT_FILES           } from '../../subworkflows/local/format_files'
-include { PCGR as RUN_PCGR       } from '../../modules/local/pcgr/main'
+include { PCGR as RUN_PCGR       } from '../../modules/local/pcgr'
 
 include { getGenomeAttribute     } from '../../subworkflows/local/utils_nfcore_variantprioritization_pipeline'
-include { MULTIQC                } from '../../modules/nf-core/multiqc/main'
+include { MULTIQC                } from '../../modules/nf-core/multiqc'
 include { paramsSummaryMap       } from 'plugin/nf-schema'
 include { paramsSummaryMultiqc   } from '../../subworkflows/nf-core/utils_nfcore_pipeline'
 include { softwareVersionsToYAML } from '../../subworkflows/nf-core/utils_nfcore_pipeline'
@@ -51,9 +51,9 @@ workflow VARIANTPRIORITIZATION {
     //
     // GET REFERENCE DATA FOR PCGR
     //
-    PREPARE_PCGRREF( [id:'pcgr_reference'], pcgr_bundle_version, params.genome )
+    PCGR_GETREF([[id:'pcgr_reference'], pcgr_bundle_version, params.genome] )
 
-    ch_pcgr_dir = PREPARE_PCGRREF.out.pcgrref.map { _meta, pcgrref -> pcgrref }
+    ch_pcgr_dir = PCGR_GETREF.out.pcgrref.map { _meta, pcgrref -> pcgrref }
 
     ch_versions = Channel.empty()
     ch_multiqc_files = Channel.empty()
