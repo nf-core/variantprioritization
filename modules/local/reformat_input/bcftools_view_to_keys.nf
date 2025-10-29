@@ -2,7 +2,7 @@ process BCFTOOLS_VIEW_TO_KEYS {
     tag "$meta.id"
     label 'process_medium'
 
-    conda "${moduleDir}/environment.yml"
+    conda "bioconda::bcftools=1.21"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
         'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/5a/5acacb55c52bec97c61fd34ffa8721fce82ce823005793592e2a80bf71632cd0/data':
         'community.wave.seqera.io/library/bcftools:1.21--4335bec1d7b44d11' }"
