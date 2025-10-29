@@ -9,6 +9,8 @@ Initial release of nf-core/variantprioritization, created with the [nf-core](htt
 
 ### `Added`
 
+- [#47](https://github.com/nf-core/variantprioritization/pull/47) - Use bcftools/isec nf-core module for computing VCF intersection between multiple callers
+
 ### `Fixed`
 
 - [#32](https://github.com/nf-core/variantprioritization/pull/32) - Rename to nf-core/variantprioritization

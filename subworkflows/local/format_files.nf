@@ -66,9 +66,9 @@ workflow FORMAT_FILES {
     }.groupTuple().map {
         meta, tool_names, vcfs, tbis ->
         [ meta + ['tools': tool_names] , vcfs, tbis ]
-    }.set { per_sample_somatic_vcfs } 
-    
-    per_sample_somatic_vcfs.map{ 
+    }.set { per_sample_somatic_vcfs }
+
+    per_sample_somatic_vcfs.map{
         meta, vcfs, tbis ->
         [meta, vcfs, tbis, (1..vcfs.size()).toList()]
     }.branch {
@@ -89,7 +89,7 @@ workflow FORMAT_FILES {
 
 
     BCFTOOLS_ISEC ( per_sample_somatic_vcfs_multiple )
-    
+
     ch_isec_somatic_postprocess = BCFTOOLS_ISEC.out.results.map {
         meta, results ->
         [ meta.subMap([ 'patient', 'status', 'sample', 'tools']), results ]
@@ -97,8 +97,8 @@ workflow FORMAT_FILES {
 
     BCFTOOLS_VIEW_TO_KEYS ( per_sample_somatic_vcfs_single )
 
-    
-    INTERSECT_SOMATIC_VARIANTS( ch_isec_somatic_postprocess ) 
+
+    INTERSECT_SOMATIC_VARIANTS( ch_isec_somatic_postprocess )
 
     INTERSECT_SOMATIC_VARIANTS.out.variant_tool_map.mix(
         BCFTOOLS_VIEW_TO_KEYS.out.variant_tool_map
