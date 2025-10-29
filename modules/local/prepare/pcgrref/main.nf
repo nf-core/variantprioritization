@@ -4,8 +4,8 @@ process PREPARE_PCGRREF {
 
     conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/YOUR-TOOL-HERE':
-        'community.wave.seqera.io/library/coreutils_grep_gzip_tar_wget:5509a0d21b41d5be' }"
+        'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/b6/b6d21ecd9fb81d5efb452bbcd06a72a23bb7dcc215610d1f92bf55dfe5a4eeee/data':
+        'community.wave.seqera.io/library/coreutils_gzip_tar_wget:7fb7ade7a5b63d7a' }"
 
     input:
     tuple val(meta), val(bundleversion), val(genome)
