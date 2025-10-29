@@ -95,6 +95,8 @@ workflow FORMAT_FILES {
         [ meta.subMap([ 'patient', 'status', 'sample', 'tools']), results ]
     }.groupTuple()
 
+    BCFTOOLS_VIEW_TO_KEYS ( per_sample_somatic_vcfs_single )
+
     
     INTERSECT_SOMATIC_VARIANTS( ch_isec_somatic_postprocess ) 
 
