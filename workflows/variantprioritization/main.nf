@@ -4,6 +4,7 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 include { PCGR_GETREF            } from '../../modules/local/pcgr/getref'
+include { ENSEMBLVEP_DOWNLOAD    } from '../../modules/nf-core/ensemblvep/download'    
 
 include { VCF_PREPROCESSING      } from '../../subworkflows/local/vcf_preprocessing'
 include { FORMAT_FILES           } from '../../subworkflows/local/format_files'
@@ -54,6 +55,11 @@ workflow VARIANTPRIORITIZATION {
     PCGR_GETREF([[id:'pcgr_reference'], pcgr_bundle_version, params.genome.toLowerCase()] )
 
     ch_pcgr_dir = PCGR_GETREF.out.pcgrref.map { _meta, pcgrref -> pcgrref }
+
+    ENSEMBLVEP_DOWNLOAD([[id:'vep_cache'], params.genome, 'homo_sapiens', '113'])
+
+    vep_cache = ENSEMBLVEP_DOWNLOAD.out.cache.map { _meta, cache -> cache}
+
 
     ch_versions = Channel.empty()
     ch_multiqc_files = Channel.empty()
