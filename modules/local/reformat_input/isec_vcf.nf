@@ -7,7 +7,7 @@ process INTERSECT_SOMATIC_VARIANTS {
         'docker.io/barryd237/pysam-xcmds:latest' }"
 
     input:
-    tuple val(meta), path(vcf), path(tbi)
+    tuple val(meta), path(isec_results)
 
     output:
     tuple val(meta), path("${prefix}_keys.txt"), emit: variant_tool_map
@@ -21,6 +21,7 @@ process INTERSECT_SOMATIC_VARIANTS {
     prefix = task.ext.prefix ?: "${meta.id}" // meta.sample, toggle using modules.config
     """
     isec_vcfs.py \
+        --tool_order ${meta.tools.join(",")} \
         --sample ${prefix}
 
     cat <<-END_VERSIONS > versions.yml

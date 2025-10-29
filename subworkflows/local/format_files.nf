@@ -7,9 +7,8 @@
 include { REFORMAT_VCF                        } from '../../modules/local/reformat_input/reformat_vcf'
 include { REFORMAT_CNA                        } from '../../modules/local/reformat_input/reformat_cna'
 include { INTERSECT_SOMATIC_VARIANTS          } from '../../modules/local/reformat_input/isec_vcf'
-include { BCFTOOLS_ISEC                       } from '../../modules/nf-core/bcftools/isec/main'
 include { PCGR_VCF                            } from '../../modules/local/reformat_input/pcgr_vcf'
-
+include { BCFTOOLS_ISEC                       } from '../../modules/nf-core/bcftools/isec/main'
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     RUN MAIN WORKFLOW
@@ -57,45 +56,45 @@ workflow FORMAT_FILES {
             skip: 1
         )*/
 
-
-
-    per_sample_somatic_vcfs = per_sample_somatic_vcfs.map{ 
+    // This could be refactored with the .collect() groovy list method.
+    per_sample_somatic_vcfs.transpose().map {
+        meta, vcf, tbis ->
+        def tool_name = vcf.toString().tokenize('.')[2]
+        [ meta , tool_name, vcf, tbis ]
+    }.groupTuple().map {
+        meta, tool_names, vcfs, tbis ->
+        [ meta + ['tools': tool_names] , vcfs, tbis ]
+    }.set { per_sample_somatic_vcfs } 
+    
+    per_sample_somatic_vcfs.map{ 
         meta, vcfs, tbis ->
         [meta, vcfs, tbis, (1..vcfs.size()).toList()]
     }.branch {
         meta, vcfs, tbis, vcf_size ->
-            single: vcf_size < 2
-            multiple: vcf_size > 1
-    }
-    per_sample_somatic_vcfs_multiple = per_sample_somatic_vcfs.multiple.transpose(by: 3).map{
+            single: vcfs.size() < 2
+            multiple: vcfs.size() > 1
+    }.set { per_sample_somatic_vcfs }
+
+    per_sample_somatic_vcfs.multiple.transpose(by: 3).map{
         meta, vcfs, tbis, vcf_size ->
         [ meta + ['vcf_size': vcf_size], vcfs, tbis ]
-    }
+    }.set { per_sample_somatic_vcfs_multiple }
 
 
-    per_sample_somatic_vcfs_multiple.dump(tag: 'per_sample_somatic_vcfs')
     BCFTOOLS_ISEC ( per_sample_somatic_vcfs_multiple )
     
-    // TODO : per_sample_somatic_vcfs.single have to go to BCFTOOLS VIEW process to retrieve create the sites.txt files
-    
-    BCFTOOLS_ISEC.out.results.dump(tag: 'BCFTOOLS_ISEC_out_results')
-
-
     ch_isec_somatic_postprocess = BCFTOOLS_ISEC.out.results.map {
         meta, results ->
-        [ meta.subMap([ 'patient', 'status', 'sample']), results ]
+        [ meta.subMap([ 'patient', 'status', 'sample', 'tools']), results ]
     }.groupTuple()
 
-    ch_isec_somatic_postprocess.dump(tag: 'ch_isec_somatic_postprocess')
     
     INTERSECT_SOMATIC_VARIANTS( ch_isec_somatic_postprocess ) 
 
-    BCFTOOLS_ISEC ( per_sample_somatic_vcfs )
 
-    INTERSECT_SOMATIC_VARIANTS( per_sample_somatic_vcfs )
 
     // merge mapping key back with sample VCFs, produce PCGR ready VCFs.
-    sample_vcfs_keys = INTERSECT_SOMATIC_VARIANTS.out.variant_tool_map.join(per_sample_somatic_vcfs)
+    sample_vcfs_keys = INTERSECT_SOMATIC_VARIANTS.out.variant_tool_map.join(per_sample_somatic_vcfs_multiple)
 
     /*sample_vcfs_keys.map{ it ->
             "My values are:\n$it\n"
