@@ -51,7 +51,7 @@ workflow VARIANTPRIORITIZATION {
     //
     // GET REFERENCE DATA FOR PCGR
     //
-    PCGR_GETREF([[id:'pcgr_reference'], pcgr_bundle_version, params.genome] )
+    PCGR_GETREF([[id:'pcgr_reference'], pcgr_bundle_version, params.genome.toLowerCase()] )
 
     ch_pcgr_dir = PCGR_GETREF.out.pcgrref.map { _meta, pcgrref -> pcgrref }
 
