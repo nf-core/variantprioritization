@@ -4,7 +4,7 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 include { PCGR_GETREF            } from '../../modules/local/pcgr/getref'
-include { ENSEMBLVEP_DOWNLOAD    } from '../../modules/nf-core/ensemblvep/download'    
+include { ENSEMBLVEP_DOWNLOAD    } from '../../modules/nf-core/ensemblvep/download'
 
 include { VCF_PREPROCESSING      } from '../../subworkflows/local/vcf_preprocessing'
 include { FORMAT_FILES           } from '../../subworkflows/local/format_files'
