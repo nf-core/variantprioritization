@@ -3,7 +3,7 @@
     IMPORT MODULES / SUBWORKFLOWS / FUNCTIONS
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
-include { PCGR_GETREF            } from '../../modules/local/pcgr/getref'
+include { PCGR_GETREF            } from '../../modules/nf-core/pcgr/getref'
 include { ENSEMBLVEP_DOWNLOAD    } from '../../modules/nf-core/ensemblvep/download'
 
 include { VCF_PREPROCESSING      } from '../../subworkflows/local/vcf_preprocessing'
@@ -44,9 +44,7 @@ workflow VARIANTPRIORITIZATION {
     main:
 
     fasta = params.fasta ? Channel.fromPath(params.fasta).map{ it -> [ [id:it.baseName], it ] }.collect() : Channel.empty()
-    if (params.database) { ch_pcgr_dir = Channel.fromPath("${params.database}/data/${params.genome.toLowerCase()}") } else { exit 1, "Please provide a path to the PCGR annotation database." }
-    vep_cache               = Channel.fromPath(params.vep_cache)
-
+    vep_cache = params.vep_cache ? Channel.fromPath(params.vep_cache).map{ it -> [ [id:'vep_cache'], it ] }.collect() : Channel.empty()
     pcgr_bundle_version = params.pcgr_bundle_version ?: '20250314'
 
     //
@@ -56,9 +54,10 @@ workflow VARIANTPRIORITIZATION {
 
     ch_pcgr_dir = PCGR_GETREF.out.pcgrref.map { _meta, pcgrref -> pcgrref }
 
-    ENSEMBLVEP_DOWNLOAD([[id:'vep_cache'], params.genome, 'homo_sapiens', '113'])
-
-    vep_cache = ENSEMBLVEP_DOWNLOAD.out.cache.map { _meta, cache -> cache}
+    if (!vep_cache.isEmpty()) {
+        ENSEMBLVEP_DOWNLOAD([[id:'vep_cache'], params.genome, 'homo_sapiens', '113'])
+        vep_cache = ENSEMBLVEP_DOWNLOAD.out.cache.map { _meta, cache -> cache}
+    }
 
 
     ch_versions = Channel.empty()
