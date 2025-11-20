@@ -1,13 +1,22 @@
-lint: {}
-nf_core_version: 3.4.1
+lint:
+  files_exist:
+    - .github/workflows/ci.yml
+  files_unchanged:
+    - .gitignore
+    - assets/nf-core-variantprioritization_logo_light.png
+    - docs/images/nf-core-variantprioritization_logo_dark.png
+    - docs/images/nf-core-variantprioritization_logo_light.png
+nf_core_version: 3.5.1
 repository_type: pipeline
 template:
   author: "@yussab"
-  description: pgcr pipeline in dev
+  description: pipeline for the functional annotation and translation of somatic SNVs/InDels
+    and copy number abberations for precision cancer medicine
   force: false
   is_nfcore: true
-  name: nfpgcrdev
+  name: variantprioritization
   org: nf-core
   outdir: .
-  skip_features: []
+  skip_features:
+    - fastqc
   version: 1.0.0dev
