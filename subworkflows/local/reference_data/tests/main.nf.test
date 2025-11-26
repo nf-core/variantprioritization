@@ -1,0 +1,36 @@
+nextflow_workflow {
+
+    name "Test Subworkflow REFERENCE_DATA"
+    script "../main.nf"
+    workflow "REFERENCE_DATA"
+
+    tag "subworkflows"
+    tag "subworkflows_"
+    tag "subworkflows/reference_data"
+    tag "pcgr/getref"
+
+    test("20250314 - 113") {
+
+        when {
+            workflow {
+                """
+                input[0] = 'GRCh38'
+                input[1] = true
+                input[2] = '20250314'
+                input[3] = []
+                input[4] = 's3://annotation-cache/vep_cache/'
+                input[5] = '113'
+                input[6] = 'homo_sapiens'
+                """
+            }
+        }
+        then {
+            assert workflow.success
+            assertAll(
+                { assert snapshot(
+                    workflow.out
+                ).match() }
+            )
+        }
+    }
+}

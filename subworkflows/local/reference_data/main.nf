@@ -1,0 +1,50 @@
+include { PCGR_GETREF } from '../../../modules/nf-core/pcgr/getref'
+
+workflow REFERENCE_DATA {
+    take:
+    genome
+    pcgr_download
+    pcgr_bundleversion
+    pcgr_database_dir
+    vep_cache
+    vep_cache_version
+    vep_species
+
+    main:
+    ch_versions = channel.empty()
+
+    if (pcgr_download) {
+        def pcgr_genome = genome.toLowerCase()
+        PCGR_GETREF([[id: 'pcgr_reference'], pcgr_bundleversion, pcgr_genome])
+        ch_pcgr_dir = PCGR_GETREF.out.pcgrref.map { _meta, pcgrref -> pcgrref }
+
+        ch_versions = ch_versions.mix(PCGR_GETREF.out.versions)
+    }
+    else {
+        ch_pcgr_dir = channel.fromPath(pcgr_database_dir, checkIfExists: true).collect()
+    }
+
+    def vep_genome = genome
+    def vep_annotation_cache_key = isCloudUrl(vep_cache) ? "${vep_cache_version}_${vep_genome}/" : ""
+    def vep_cache_dir = "${vep_annotation_cache_key}${vep_species}/${vep_cache_version}_${vep_genome}"
+    def vep_cache_path_full = file("${vep_cache}/${vep_cache_dir}", type: 'dir')
+    if (!vep_cache_path_full.exists() || !vep_cache_path_full.isDirectory()) {
+        if (vep_cache == "s3://annotation-cache/vep_cache/") {
+            error("This path is not available within annotation-cache.\nPlease check https://annotation-cache.github.io/ to create a request for it.")
+        }
+        else {
+            error("Path provided with VEP cache is invalid.\nMake sure there is a directory named ${vep_cache_dir} in ${vep_cache}.")
+        }
+    }
+    ch_ensemblvep_cache = channel.fromPath(file("${vep_cache}/${vep_annotation_cache_key}"), checkIfExists: true).collect()
+
+    emit:
+    pcgr_dir              = ch_pcgr_dir
+    vep_cache             = ch_ensemblvep_cache
+    versions              = ch_versions // channel: [ versions.yml ]
+}
+
+// Helper function to check if cache path is from any cloud provider
+def isCloudUrl(cache_url) {
+    return cache_url.startsWith("s3://") || cache_url.startsWith("gs://") || cache_url.startsWith("az://")
+}
