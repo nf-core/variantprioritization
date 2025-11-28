@@ -15,7 +15,7 @@ workflow REFERENCE_DATA {
 
     if (pcgr_download) {
         def pcgr_genome = genome.toLowerCase()
-        PCGR_GETREF([[id: 'pcgr_reference'], pcgr_bundleversion, 'grch38'])
+        PCGR_GETREF([[id: 'pcgr_reference'], pcgr_bundleversion, pcgr_genome])
         ch_pcgr_dir = PCGR_GETREF.out.pcgrref.map { _meta, pcgrref -> pcgrref }
 
         ch_versions = ch_versions.mix(PCGR_GETREF.out.versions)
