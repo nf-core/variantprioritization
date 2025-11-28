@@ -14,7 +14,8 @@ workflow REFERENCE_DATA {
     ch_versions = channel.empty()
 
     if (pcgr_download) {
-        def pcgr_genome = genome.toLowerCase()
+        //def pcgr_genome = genome.toLowerCase()
+        def pcgr_genome = 'GRCh38'.toLowerCase
         PCGR_GETREF([[id: 'pcgr_reference'], pcgr_bundleversion, pcgr_genome])
         ch_pcgr_dir = PCGR_GETREF.out.pcgrref.map { _meta, pcgrref -> pcgrref }
 
