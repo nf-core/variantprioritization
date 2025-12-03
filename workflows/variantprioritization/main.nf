@@ -16,18 +16,6 @@ include { paramsSummaryMultiqc   } from '../../subworkflows/nf-core/utils_nfcore
 include { softwareVersionsToYAML } from '../../subworkflows/nf-core/utils_nfcore_pipeline'
 include { methodsDescriptionText } from '../../subworkflows/local/utils_nfcore_variantprioritization_pipeline'
 
-
-/*
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    GENOME PARAMETER VALUES
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-*/
-
-// TODO nf-core: Remove this line if you don't need a FASTA file
-//   This is an example of how to use getGenomeAttribute() to fetch parameters
-//   from igenomes.config using `--genome`
-params.fasta = getGenomeAttribute('fasta')
-
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     RUN MAIN WORKFLOW
@@ -37,6 +25,7 @@ params.fasta = getGenomeAttribute('fasta')
 workflow VARIANTPRIORITIZATION {
     take:
     ch_samplesheet // channel: samplesheet read in from --input
+    params
 
     main:
     def ch_versions = channel.empty()
@@ -89,6 +78,8 @@ workflow VARIANTPRIORITIZATION {
         ch_pcgr_dir.collect(),
         ch_vep_cache.collect(),
     )
+
+    ch_versions = ch_versions.mix(RUN_PCGR.out.versions)
 
     //
     // Collate and save software versions
