@@ -39,7 +39,8 @@ workflow VARIANTPRIORITIZATION {
     ch_samplesheet // channel: samplesheet read in from --input
 
     main:
-
+    def ch_versions = channel.empty()
+    def ch_multiqc_files = channel.empty()
     def fasta = params.fasta ? channel.fromPath(params.fasta, checkIfExists: true).map { it -> [[id: it.baseName], it] }.collect() : channel.empty()
 
     REFERENCE_DATA(
@@ -55,8 +56,7 @@ workflow VARIANTPRIORITIZATION {
     def ch_pcgr_dir = REFERENCE_DATA.out.pcgr_dir
     def ch_vep_cache = REFERENCE_DATA.out.vep_cache
 
-    def ch_versions = channel.empty()
-    def ch_multiqc_files = channel.empty()
+    ch_versions = ch_versions.mix(REFERENCE_DATA.out.versions)
 
     //
     // SUBWORKFLOW: Preprocess VCF files

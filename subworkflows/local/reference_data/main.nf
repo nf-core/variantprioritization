@@ -28,6 +28,8 @@ workflow REFERENCE_DATA {
     if (file("${vep_cache}").exists()) {
         UNTAR_VEP_CACHE([[id: 'vep_cache'], file("${vep_cache}")])
         ch_ensemblvep_cache = UNTAR_VEP_CACHE.out.untar.map { _meta, vep_cache_files -> vep_cache_files }.collect()
+
+        ch_versions = ch_versions.mix(UNTAR_VEP_CACHE.out.versions)
     }
     else {
         def vep_genome = genome

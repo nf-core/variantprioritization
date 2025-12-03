@@ -18,7 +18,7 @@ nextflow_workflow {
                 input[1] = true
                 input[2] = '20250314'
                 input[3] = []
-                input[4] = 's3://annotation-cache/vep_cache/'
+                input[4] = 'https://github.com/nf-core/test-datasets/raw/refs/heads/variantprioritization/reference/vep_cache_113_GRCh38_chr22.tar.gz'
                 input[5] = '113'
                 input[6] = 'homo_sapiens'
                 """
