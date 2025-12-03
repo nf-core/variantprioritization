@@ -14,11 +14,9 @@ nextflow_pipeline {
 
         then {
             // stable_name: All files + folders in ${params.outdir}/ with a stable name
-            def stable_name = getAllFilesFromDir(params.outdir, relative: true, ignore: ['pipeline_info/*.{html,json,txt}', 'reference/{pcgr,vep_cache}/**/*.{tsv,html,fa,fai,gzi,rds,tbi,gz,csi,txt}'])
+            def stable_name = getAllFilesFromDir(params.outdir, relative: true, ignore: ['pipeline_info/*.{html,json,txt}'])
             // stable_path: All files in ${params.outdir}/ with stable content
             def stable_path = getAllFilesFromDir(params.outdir, ignoreFile: 'tests/.nftignore')
-            // vcf_files: All vcf files
-            //def vcf_files = getAllFilesFromDir(params.outdir, include: ['**/*.vcf{,.gz}'])
             assert workflow.success
             assertAll(
                 { assert snapshot(
@@ -28,8 +26,6 @@ nextflow_pipeline {
                     stable_name,
                     // All files with stable contents
                     stable_path.isEmpty() ? 'No stable content' : stable_path,
-                    // All vcf files
-                    //vcf_files.isEmpty() ? 'No VCF files' : vcf_files.collect { file -> file.getName() + ":md5," + path(file.toString()).vcf.variantsMD5 }
                 ).match() }
             )
         }
