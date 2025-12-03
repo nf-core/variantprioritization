@@ -10,7 +10,7 @@ multiqc/multiqc_data/multiqc_sources.txt
 multiqc/multiqc_plots/{svg,pdf,png}/*.{svg,pdf,png}
 multiqc/multiqc_report.html
 pipeline_info/*.{html,json,txt,yml}
-reference/**/{expression,misc,variant}/**/*.{tsv.gz,tsv,html,fa.gz,fa.gz.fai,fa.gz.gzi,rds,vcf.gz.vcf.gz.tbi}
+reference/{pcgr,vep_cache}/**/*.{tsv,html,fa,fai,gzi,rds,tbi,gz,csi,txt}
 bcftools/**/*.vcf.{,gz,gz.tbi,gz.csi}
 custom/**/*.vcf.{,gz,gz.tbi,gz.csi}
 tabix/**/*.vcf.{,gz,gz.tbi,gz.csi}
