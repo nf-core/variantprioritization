@@ -10,9 +10,6 @@ class UTILS {
         // It will disable all assertions but versions and stable_name
         def stub = args.stub
 
-        // Use this args to include muse txt files in the assertion
-        // It will skip the first line of the txt file
-        def include_muse_txt = args.include_muse_txt
 
         // Will print the summary instead of the md5sum for vcf files
         def no_vcf_md5sum = args.no_vcf_md5sum
