@@ -1,17 +1,17 @@
 process REFORMAT_VCF {
-    tag "$meta.id"
+    tag "${meta.id}"
     label 'process_low'
 
-    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'docker.io/barryd237/pysam-xcmds:latest' :
-        'docker.io/barryd237/pysam-xcmds:latest' }"
+    container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
+        ? 'docker.io/barryd237/pysam-xcmds:latest'
+        : 'docker.io/barryd237/pysam-xcmds:latest'}"
 
     input:
     tuple val(meta), path(vcf), path(tbi)
 
     output:
     tuple val(meta), path("${prefix}.vcf.gz"), path("${prefix}.vcf.gz.tbi"), emit: vcf
-    path "versions.yml"                                                    , emit: versions
+    path "versions.yml", emit: versions
 
     when:
     task.ext.when == null || task.ext.when
@@ -20,7 +20,7 @@ process REFORMAT_VCF {
     prefix = task.ext.prefix ?: "${meta.id}"
     """
     reformat_vcf.py \\
-        --input $vcf \\
+        --input ${vcf} \\
         --output ${prefix}.vcf
 
     cat <<-END_VERSIONS > versions.yml

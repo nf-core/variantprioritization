@@ -2,16 +2,16 @@ process REFORMAT_CNA {
     tag "${meta.patient}:${meta.sample}:${cna}"
     label 'process_low'
 
-    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'docker.io/barryd237/pysam-xcmds:latest' :
-        'docker.io/barryd237/pysam-xcmds:latest' }"
+    container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
+        ? 'docker.io/barryd237/pysam-xcmds:latest'
+        : 'docker.io/barryd237/pysam-xcmds:latest'}"
 
     input:
     tuple val(meta), path(cna)
 
     output:
     tuple val(meta), path("${prefix}.*.tsv"), emit: cna
-    path "versions.yml"                      , emit: versions
+    path "versions.yml", emit: versions
 
     when:
     task.ext.when == null || task.ext.when
@@ -20,8 +20,8 @@ process REFORMAT_CNA {
     prefix = task.ext.prefix ?: "${meta.sample}"
     """
     reformat_cna.py \\
-        --input $cna \\
-        --sample $prefix
+        --input ${cna} \\
+        --sample ${prefix}
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
