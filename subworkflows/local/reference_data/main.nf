@@ -1,4 +1,5 @@
 include { PCGR_GETREF              } from '../../../modules/nf-core/pcgr/getref'
+include { UNTAR as UNTAR_PCGR_DB   } from '../../../modules/nf-core/untar'
 include { UNTAR as UNTAR_VEP_CACHE } from '../../../modules/nf-core/untar'
 
 workflow REFERENCE_DATA {
@@ -22,7 +23,15 @@ workflow REFERENCE_DATA {
         ch_versions = ch_versions.mix(PCGR_GETREF.out.versions)
     }
     else {
-        ch_pcgr_dir = channel.fromPath(pcgr_database_dir, checkIfExists: true).collect()
+        if (file("${pcgr_database_dir}").exists()) {
+            UNTAR_PCGR_DB([[id: 'pcgr_db'], file("${pcgr_database_dir}")])
+            ch_pcgr_dir = UNTAR_PCGR_DB.out.untar.map { _meta, pcgr_db_files -> pcgr_db_files }.collect()
+
+            ch_versions = ch_versions.mix(UNTAR_PCGR_DB.out.versions)
+        }
+        else {
+            ch_pcgr_dir = channel.fromPath(pcgr_database_dir, checkIfExists: true).collect()
+        }
     }
 
     if (file("${vep_cache}").exists()) {
