@@ -1,5 +1,4 @@
 // Helper functions for pipeline tests
-
 class UTILS {
 
     public static def get_assertion = { Map args ->
@@ -10,10 +9,8 @@ class UTILS {
         // It will disable all assertions but versions and stable_name
         def stub = args.stub
 
-
         // Will print the summary instead of the md5sum for vcf files
         def no_vcf_md5sum = args.no_vcf_md5sum
-
 
         // stable_name: All files + folders in ${outdir}/ with a stable name
         def stable_name = getAllFilesFromDir(outdir, relative: true, includeDir: true, ignore: ['pipeline_info/*.{html,json,txt}'])
@@ -21,7 +18,6 @@ class UTILS {
         def stable_content = getAllFilesFromDir(outdir, ignoreFile: 'tests/.nftignore')
         // vcf_files: All vcf files
         def vcf_files = getAllFilesFromDir(outdir, include: ['**/*.vcf{,.gz}'])
-
 
         def assertion = []
 
@@ -49,12 +45,10 @@ class UTILS {
             if (scenario.stub) {
                 options "-stub"
             }
-
             // If a tag is provided, add it to the test
             if (scenario.tag) {
                 tag scenario.tag
             }
-
             when {
                 params {
                     // Mandatory, as we always need an outdir
