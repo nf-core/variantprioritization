@@ -11,3 +11,4 @@ multiqc/multiqc_plots/{svg,pdf,png}/*.{svg,pdf,png}
 multiqc/multiqc_report.html
 pipeline_info/*.{html,json,txt,yml}
 reference/**
+**/*.{vcf,vcf.gz,vcf.gz.tbi}
