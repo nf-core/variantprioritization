@@ -36,6 +36,7 @@ workflow VCF_PREPROCESSING {
     ch_cna_files = files.cna_files.map{ meta, cna -> var = [:]; var.patient = meta.patient; var.status = meta.status; var.sample = meta.sample; return [ var, cna ] }.distinct()
 
     // Create subchannels for files that need bgzipping and tabix indexing
+
     ch_vcf = vcf_files.branch {
         to_bgzip: it[0].bgzip_vcf == false
         to_tabix: it[0].tabix_vcf == false
@@ -73,10 +74,8 @@ workflow VCF_PREPROCESSING {
         .mix(ch_vcf_with_tabix)
         .set { ch_vcf }
 
-    ch_vcf.view()
-    fasta.view()
     //VCF_PREPROCESSING
-    BCFTOOLS_NORM( ch_vcf, fasta  )
+    BCFTOOLS_NORM   ( ch_vcf, fasta  )
     norm_ch = BCFTOOLS_NORM.out.vcf.join(BCFTOOLS_NORM.out.tbi)
 
     BCFTOOLS_FILTER ( norm_ch )
