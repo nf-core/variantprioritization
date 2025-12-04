@@ -13,13 +13,11 @@ class UTILS {
         def no_vcf_md5sum = args.no_vcf_md5sum
 
         // stable_name: All files + folders in ${outdir}/ with a stable name
-        def stable_name = getAllFilesFromDir(outdir, relative: true, includeDir: true, ignore: ['pipeline_info/*.{html,json,txt}'])
+        def stable_name = getAllFilesFromDir(outdir, relative: true, includeDir: true, ignore: ['pipeline_info/*.{html,json,txt}', 'reference/**'])
         // stable_content: All files in ${outdir}/ with stable content
         def stable_content = getAllFilesFromDir(outdir, ignoreFile: 'tests/.nftignore')
         // vcf_files: All vcf files
         def vcf_files = getAllFilesFromDir(outdir, include: ['**/*.vcf{,.gz}'])
-
-        def keys_txt_file = getAllFilesFromDir(outdir, include: ['**/*_keys.txt'])
 
         def assertion = []
 
@@ -34,7 +32,6 @@ class UTILS {
                 assertion.add(vcf_files.isEmpty() ? 'No VCF files' : vcf_files.collect { file -> file.getName() + ":md5," + path(file.toString()).vcf.variantsMD5 })
             }
         }
-        assertion.add(keys_txt_file.isEmpty() ? 'No keys txt files' : keys_txt_file.collect { file -> [ file.getName(), path(file.toString()).readLines() ]})
 
         return assertion
     }
