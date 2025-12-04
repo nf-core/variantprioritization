@@ -15,6 +15,7 @@ def intersect_variants(sample):
     sample_files = os.listdir("./")
     sample_files = list(filter(r.match, sample_files))
     sample_files = [file for file in sample_files if not file.endswith(suffixes)]
+    sample_files = sorted(sample_files)  # Sort for reproducible tool ordering
     print(sample_files)
 
     tool_names = {}
@@ -57,7 +58,7 @@ def intersect_variants(sample):
                 if val != "0":
                     grab_index.append(int(idx))
             bytes_2_tal = {k: tool_names[k] for k in grab_index if k in tool_names}
-            bytes_2_tal = ",".join(bytes_2_tal.values())
+            bytes_2_tal = ",".join(sorted(bytes_2_tal.values()))  # Sort tool names alphabetically
             convert_column.append(bytes_2_tal)
 
         assert len(convert_column) == len(frame), f"bytes to TAL section failed - length of list != length DF"
@@ -66,6 +67,8 @@ def intersect_variants(sample):
         # chr1    3866080 C       T       freebayes
         # chr1    3866080 C       T       freebayes
         frame = frame.drop_duplicates()
+        # Sort by chromosome and position for reproducible output
+        frame = frame.sort_values(by=[0, 1]).reset_index(drop=True)
         frame.to_csv(f"{sample}_keys.txt", sep="\t", index=None, header=None)
 
     else:
