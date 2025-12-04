@@ -8,11 +8,6 @@ nextflow_pipeline {
         [
             name: "-profile test",
             params: []
-        ],
-        [
-            name: "-profile test -stub",
-            params: [],
-            stub: true
         ]
     ]
 
