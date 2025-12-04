@@ -33,12 +33,12 @@ workflow NFCORE_VARIANTPRIORITIZATION {
     samplesheet // channel: samplesheet read in from --input
 
     main:
-
     //
     // WORKFLOW: Run pipeline
     //
     VARIANTPRIORITIZATION(
-        samplesheet
+        samplesheet,
+        params
     )
 
     emit:
