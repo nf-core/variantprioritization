@@ -28,6 +28,7 @@ workflow VARIANTPRIORITIZATION {
     params
 
     main:
+    params.fasta = getGenomeAttribute('fasta')
     def ch_versions = channel.empty()
     def ch_multiqc_files = channel.empty()
     def fasta = params.fasta ? channel.fromPath(params.fasta, checkIfExists: true).map { it -> [[id: it.baseName], it] }.collect() : channel.empty()

@@ -33,8 +33,6 @@ workflow NFCORE_VARIANTPRIORITIZATION {
     samplesheet // channel: samplesheet read in from --input
 
     main:
-    params.fasta = getGenomeAttribute('fasta')
-
     //
     // WORKFLOW: Run pipeline
     //
@@ -88,18 +86,4 @@ workflow {
         params.hook_url,
         NFCORE_VARIANTPRIORITIZATION.out.multiqc_report,
     )
-}
-
-
-//
-// Get attribute from genome config file e.g. fasta
-//
-
-def getGenomeAttribute(attribute) {
-    if (params.genomes && params.genome && params.genomes.containsKey(params.genome)) {
-        if (params.genomes[params.genome].containsKey(attribute)) {
-            return params.genomes[params.genome][attribute]
-        }
-    }
-    return null
 }
