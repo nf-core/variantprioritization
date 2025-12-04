@@ -9,7 +9,7 @@ process PCGR {
 
     input:
     tuple val(meta), path(vcf), path(tbi), path(cna)
-    path(pcgr_dir), stageAs: "PCGR/data/${params.genome.toLowerCase()}"
+    path(pcgr_dir)
     //path pon
     path vep_cache
 
@@ -22,7 +22,6 @@ process PCGR {
 
     script:
     def genome   = task.ext.genome ?: ''
-    def database = './PCGR'
     def args     = task.ext.args ?: ''
     prefix       = task.ext.prefix ?: "${meta.id}"
     def cna      = params.cna_analysis ? "--input_cna $cna" : ''
@@ -36,7 +35,7 @@ process PCGR {
     pcgr \\
         --input_vcf $vcf \\
         --vep_dir $vep_cache \\
-        --refdata_dir $database \\
+        --refdata_dir $pcgr_dir \\
         --output_dir $prefix \\
         --genome_assembly $genome \\
         --sample_id $prefix \\
