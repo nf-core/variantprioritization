@@ -31,7 +31,7 @@ class UTILS {
 
         def assertion = []
 
-        assertion.add(removeFromYamlMap("${outdir}/pipeline_info/nf_core_sarek_software_mqc_versions.yml", "Workflow"))
+        assertion.add(removeFromYamlMap("${outdir}/pipeline_info/nf_core_variantprioritization_software_mqc_versions.yml", "Workflow"))
         assertion.add(stable_name)
 
         if (!stub) {
