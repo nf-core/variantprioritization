@@ -14,9 +14,6 @@ class UTILS {
         // Will print the summary instead of the md5sum for vcf files
         def no_vcf_md5sum = args.no_vcf_md5sum
 
-        // Use this args to include varlociraptor vcf files in the assertion
-        // It will use the summary method to extract the vcf file content
-        def include_varlociraptor_vcf = args.include_varlociraptor_vcf
 
         // stable_name: All files + folders in ${outdir}/ with a stable name
         def stable_name = getAllFilesFromDir(outdir, relative: true, includeDir: true, ignore: ['pipeline_info/*.{html,json,txt}'])
