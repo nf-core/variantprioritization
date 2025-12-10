@@ -59,9 +59,9 @@ workflow REFERENCE_DATA {
     }
 
     emit:
-    pcgr_dir              = ch_pcgr_dir
-    vep_cache             = ch_ensemblvep_cache
-    versions              = ch_versions // channel: [ versions.yml ]
+    pcgr_dir  = ch_pcgr_dir
+    vep_cache = ch_ensemblvep_cache
+    versions  = ch_versions // channel: [ versions.yml ]
 }
 
 // Helper function to check if cache path is from any cloud provider
