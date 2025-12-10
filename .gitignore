@@ -11,3 +11,5 @@ projects/
 .nf-test.log
 .nf-test
 .nf-test*
+reference/*
+**/*.fa

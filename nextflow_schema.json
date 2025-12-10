@@ -72,6 +72,39 @@
                 }
             }
         },
+        "reference_database_options": {
+            "title": "Reference database options",
+            "type": "object",
+            "description": "",
+            "default": "",
+            "properties": {
+                "vep_cache": {
+                    "type": "string",
+                    "default": "s3://annotation-cache/vep_cache/"
+                },
+                "vep_cache_version": {
+                    "type": "integer",
+                    "default": 113
+                },
+                "vep_species": {
+                    "type": "string",
+                    "default": "homo_sapiens",
+                    "hidden": true
+                },
+                "pcgr_download": {
+                    "type": "boolean",
+                    "default": true
+                },
+                "pcgr_bundleversion": {
+                    "type": "integer",
+                    "default": 20250314
+                },
+                "pcgr_database_dir": {
+                    "type": "string"
+                }
+            },
+            "fa_icon": "fas fa-database"
+        },
         "institutional_config_options": {
             "title": "Institutional config options",
             "type": "object",
@@ -238,6 +271,9 @@
             "$ref": "#/$defs/reference_genome_options"
         },
         {
+            "$ref": "#/$defs/reference_database_options"
+        },
+        {
             "$ref": "#/$defs/institutional_config_options"
         },
         {
@@ -247,12 +283,6 @@
     "properties": {
         "save_intermediates": {
             "type": "boolean"
-        },
-        "database": {
-            "type": "string"
-        },
-        "vep_cache": {
-            "type": "string"
         },
         "panel_id": {
             "type": "integer",
