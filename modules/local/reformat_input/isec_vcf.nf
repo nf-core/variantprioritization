@@ -18,8 +18,8 @@ process INTERSECT_SOMATIC_VARIANTS {
 
     script:
     def args = task.ext.args ?: ''
-    prefix = task.ext.prefix ?: "${meta.id}"
     // meta.sample, toggle using modules.config
+    prefix = task.ext.prefix ?: "${meta.id}"
     """
     isec_vcfs.py \
         --sample ${prefix}
