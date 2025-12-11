@@ -24,7 +24,7 @@ workflow REFERENCE_DATA {
     }
     else {
         // This allows to use a tar.gz file which can also be downsampled for CI testing
-        if (file("${pcgr_database_dir}").exists()) {
+        if (file("${pcgr_database_dir}").exists() && pcgr_database_dir.endsWith('.tar.gz')) {
             UNTAR_PCGR_DB([[id: 'pcgr_db'], file("${pcgr_database_dir}")])
             ch_pcgr_dir = UNTAR_PCGR_DB.out.untar.map { _meta, pcgr_db_files -> pcgr_db_files }.collect()
 
@@ -36,7 +36,7 @@ workflow REFERENCE_DATA {
     }
 
     // This allows to use a tar.gz file which can also be downsampled for CI testing
-    if (file("${vep_cache}").exists()) {
+    if (file("${vep_cache}").exists() && vep_cache.endsWith('.tar.gz')) {
         UNTAR_VEP_CACHE([[id: 'vep_cache'], file("${vep_cache}")])
         ch_ensemblvep_cache = UNTAR_VEP_CACHE.out.untar.map { _meta, vep_cache_files -> vep_cache_files }.collect()
 
