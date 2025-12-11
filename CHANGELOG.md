@@ -10,7 +10,7 @@ Initial release of nf-core/variantprioritization, created with the [nf-core](htt
 ### `Added`
 
 - [#51](https://github.com/nf-core/variantprioritization/pull/51) - Automatic retrieval of VEP Cache and PCGR database + CI testing (@famosab, @georgiakes & @MaKuzman)
-- [#54](https://github.com/nf-core/variantprioritization/pull/54) - Move test data to repo and add full_size test config (@famosab)
+- [#54](https://github.com/nf-core/variantprioritization/pull/54) - Move test data to [nf-core/test-datasets](https://github.com/nf-core/test-datasets/tree/variantprioritization) repo and add full_size test config (@famosab)
 
 ### `Fixed`
 
