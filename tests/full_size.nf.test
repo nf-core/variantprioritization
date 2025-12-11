@@ -3,11 +3,10 @@ nextflow_pipeline {
     name "Test pipeline"
     script "../main.nf"
     tag "pipeline"
-    tag "ci_test"
 
     def test_scenario = [
         [
-            name: "-profile test",
+            name: "-profile test_full",
             params: []
         ]
     ]
