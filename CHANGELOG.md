@@ -17,6 +17,7 @@ Initial release of nf-core/variantprioritization, created with the [nf-core](htt
 - [#32](https://github.com/nf-core/variantprioritization/pull/32) - Rename to nf-core/variantprioritization (@famosab)
 - [#37](https://github.com/nf-core/variantprioritization/pull/37) - Template update to 3.4.1 (@famosab)
 - [#53](https://github.com/nf-core/variantprioritization/pull/53) - Template update to 3.5.1 (@famosab)
+- [#55](https://github.com/nf-core/variantprioritization/pull/55) - More changes to adhere to strict syntax (@famosab)
 
 ### `Dependencies`
 
