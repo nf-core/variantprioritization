@@ -7,12 +7,12 @@
                 "nf-core": {
                     "bcftools/filter": {
                         "branch": "master",
-                        "git_sha": "41dfa3f7c0ffabb96a6a813fe321c6d1cc5b6e46",
+                        "git_sha": "18ff8cc8d3914ad46131474e48609ad27b3b9825",
                         "installed_by": ["modules"]
                     },
                     "bcftools/norm": {
                         "branch": "master",
-                        "git_sha": "41dfa3f7c0ffabb96a6a813fe321c6d1cc5b6e46",
+                        "git_sha": "18ff8cc8d3914ad46131474e48609ad27b3b9825",
                         "installed_by": ["modules"]
                     },
                     "multiqc": {
