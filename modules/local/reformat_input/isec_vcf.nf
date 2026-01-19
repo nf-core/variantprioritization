@@ -17,7 +17,6 @@ process INTERSECT_SOMATIC_VARIANTS {
     task.ext.when == null || task.ext.when
 
     script:
-    def args = task.ext.args ?: ''
     // meta.sample, toggle using modules.config
     prefix = task.ext.prefix ?: "${meta.id}"
     """

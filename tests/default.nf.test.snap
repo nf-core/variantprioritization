@@ -4,10 +4,10 @@
             19,
             {
                 "BCFTOOLS_FILTER": {
-                    "bcftools": 1.21
+                    "bcftools": 1.22
                 },
                 "BCFTOOLS_NORM": {
-                    "bcftools": 1.21
+                    "bcftools": 1.22
                 },
                 "INTERSECT_SOMATIC_VARIANTS": {
                     "python": "3.6.15"

@@ -99,7 +99,7 @@ workflow PIPELINE_INITIALISATION {
     //
     // Create channel from input file provided through params.input
     //
-    Channel
+    channel
         .fromList(samplesheetToList(input, "${projectDir}/assets/schema_input.json"))
         .map { samplesheet ->
             processSamplesheet(samplesheet)
@@ -225,7 +225,7 @@ def validateInputSamplesheet(row) {
     // If user selects params.cna_analysis but the cna entries are empty, throw an error
     if (meta.status == 'somatic' && params.cna_analysis) {
         if (!cna) {
-            error("Please check input samplesheet -> CNA analysis selected but no copy number alteration files provided with somatic VCF files: ${metas[0].id}")
+            error("Please check input samplesheet -> CNA analysis selected but no copy number alteration files provided with somatic VCF files: ${meta[0].id}")
         }
     }
 
