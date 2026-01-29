@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Initial release of nf-core/variantprioritization, created with the [nf-core](https://nf-co.re/) template.
 
+Team from October 2025 nf-core Hackathon: @georgiakes, @petanska, @maxibor, @eolaniru, @colorstorm, @mkatsanto, @dhtt and @famosab.
+
 ### `Added`
 
 - [#51](https://github.com/nf-core/variantprioritization/pull/51) - Automatic retrieval of VEP Cache and PCGR database + CI testing (@famosab, @georgiakes & @MaKuzman)
