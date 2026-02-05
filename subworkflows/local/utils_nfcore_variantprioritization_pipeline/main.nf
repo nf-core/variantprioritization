@@ -1,6 +1,8 @@
 //
 // Subworkflow with functionality specific to the nf-core/variantprioritization pipeline
 //
+import java.util.zip.GZIPInputStream
+import groovy.transform.Field
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -183,10 +185,49 @@ def processSamplesheet(row) {
     // Re-encode status as a string variable
     meta.status = meta.status == 1 ? 'somatic' : 'germline'
 
-    // Extract tool name from vcf file name
-    meta.tool = vcf.getFileName().toString().tokenize('.')[1]
-    if (meta.tool == 'strelka') {
-        meta.tool = vcf.getFileName().toString().tokenize('.')[[1, 2]].join('.')
+    // Extract tool name from VCF header instead of filename
+
+    meta.tool = ''
+    if (vcf.toString().endsWith('.gz')) {
+        vcf.withInputStream { fis ->
+            def gzis = new GZIPInputStream(fis)
+            gzis.withReader { reader ->
+                reader.eachLine { line ->
+                    if (line.startsWith('##source=')) {
+                        meta.tool = line.tokenize('=')[1]
+                        return
+                    }
+                }
+            }
+        }
+    } else {
+        vcf.withReader { reader ->
+            reader.eachLine { line ->
+                if (line.startsWith('##source=')) {
+                    meta.tool = line.tokenize('=')[1]
+                    return
+                }
+            }
+        }
+    }
+
+    if (meta.tool.startsWith('strelka')) {
+        def isIndel = false
+        // Read the first variant line after headers
+        (vcf.toString().endsWith('.gz') ? new GZIPInputStream(vcf.newInputStream()) : vcf.newInputStream()).withReader { reader ->
+            reader.eachLine { line ->
+                if (!line.startsWith('#')) {
+                    def fields = line.tokenize('\t')
+                    def formatCol = fields[8]  // FORMAT is the 9th column
+                    // Strelka indels often have TIR/TAR fields
+                    if (formatCol.contains('TIR') || formatCol.contains('TAR')) {
+                        isIndel = true
+                    }
+                    return
+                }
+            }
+        }
+        meta.tool = isIndel ? 'strelka_indel' : 'strelka_snv'
     }
 
     // meta.id for process tags
