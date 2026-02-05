@@ -66,8 +66,6 @@ HCC1396,1,HCC1396T,HCC1396T_vs_HCC1396N.strelka.somatic_indels.vcf.gz,
 
 Now, you can run the pipeline using:
 
-<!-- TODO nf-core: update the following command to include all required parameters for a minimal example -->
-
 ```bash
 nextflow run nf-core/variantprioritization \
    -profile <docker/singularity/.../institute> \
@@ -80,55 +78,9 @@ nextflow run nf-core/variantprioritization \
 
 For more details and further functionality, please refer to the [usage documentation](https://nf-co.re/variantprioritization/usage) and the [parameter documentation](https://nf-co.re/variantprioritization/parameters).
 
-### Variant consolidation
-
-Somatic variants called by multiple tools are reformatted to match `PCGR` specifications making them easily searchable in the HTML ouput.
-
-Tumor sample depth (`TDP`), allele frequency (`TAF`) and allelic depths for the ref and alt (`ADT`) are manually calculated and when applicable, applied to the normal sample (`NDP`, `NAF`, `ADN`):
-
-```console
-HCC1395T_vs_HCC1395N.mutect2.vcf.gz
-#CHROM  POS     ID      REF     ALT     QUAL    FILTER  INFO    FORMAT  HCC1395_HCC1395N        HCC1395_HCC1395T
-chr1    1212740 .       A       C       .       PASS    AS_SB_TABLE=63,80|49,76;DP=282;ECNT=1;MBQ=20,20;MFRL=151,154;MMQ=60,60;MPOS=30;NALOD=1.94;NLOD=25.89;POPAF=6.00;TLOD=341.76     GT:AD:AF:DP:F1R2:F2R1:FAD:SB 0/0:143,0:0.011:143:36,0:36,0:86,0:63,80,0,0    0/1:0,125:0.988:125:0,28:0,37:0,78:0,0,49,76
-```
-
-```console
-TDP=125;NDP=143;TAF=0.988;NAF=0.011;ADT=0,125;ADN=143,0;TAL=mutect2
-```
-
-```console
-HCC1395T_vs_HCC1395N.strelka.somatic_snvs.vcf.gz
-#CHROM  POS     ID      REF     ALT     QUAL    FILTER  INFO    FORMAT  NORMAL  TUMOR
-chr1    1212740 .       A       C       .       PASS    DP=271;MQ=60.00;MQ0=0;NT=ref;QSS=790;QSS_NT=3070;ReadPosRankSum=0.00;SGT=AA->AC;SNVSB=0.00;SOMATIC;SomaticEVS=19.73;TQSS=1;TQSS_NT=1    DP:FDP:SDP:SUBDP:AU:CU:GU:TU 145:0:0:0:145,145:0,0:0,0:0,0   126:0:0:0:0,0:126,126:0,0:0,0
-```
-
-```console
-TDP=126;NDP=145;TAF=1;NAF=0;ADT=0,126;ADN=145,0;TAL=strelka
-```
-
-Finally, the maximum values for `TAF`, `TDP`, `NAF`, `NDP`, `ADT`, `ADN` are taken as outputs for the consolidate variant call. In addition, values present in the `ID` and `QUAL` column (i.e not `'.'`) are reported if present in any of the original calls:
-
-```console
-1       1212740 .       A       C       3793.8  PASS    NDP=145;NAF=0.011;TDP=126;TAF=1;TAL=mutect2,strelka
-```
-
-## Pipeline output
-
-### PCGR
-
-![PCGR](https://raw.githubusercontent.com/sigven/pcgr/master/pcgrr/pkgdown/assets/img/sc2.png)
-
-![PCGR](https://raw.githubusercontent.com/sigven/pcgr/master/pcgrr/pkgdown/assets/img/sc1.png)
-
-![PCGR](https://raw.githubusercontent.com/sigven/pcgr/master/pcgrr/pkgdown/assets/img/sc3.png)
-
-### CPSR
-
-![CPSR](https://raw.githubusercontent.com/sigven/cpsr/master/pkgdown/assets/img/cpsr_sc.png)
-
 ## Credits
 
-nf-core/variantprioritization was originally written by @barrydigby , @yussab and @matbonfanti .
+nf-core/variantprioritization was originally written by @barrydigby, @yussab and @matbonfanti. @famosab joined to adapt the pipeline to nf-core standards towards a first release.
 
 We thank the following people for their extensive assistance in the development of this pipeline:
 
