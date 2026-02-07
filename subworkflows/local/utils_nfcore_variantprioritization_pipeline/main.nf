@@ -230,6 +230,31 @@ def processSamplesheet(row) {
         meta.tool = isIndel ? 'strelka_indel' : 'strelka_snv'
     }
 
+    // If tool still empty, try DeepVariant-specific headers
+    if (!meta.tool) {
+        if (vcf.toString().endsWith('.gz')) {
+            vcf.withInputStream { fis ->
+                new GZIPInputStream(fis).withReader { reader ->
+                    reader.eachLine { line ->
+                        if (line.startsWith('##DeepVariant')) {
+                            meta.tool = 'deepvariant'
+                            return
+                        }
+                    }
+                }
+            }
+        } else {
+            vcf.withReader { reader ->
+                reader.eachLine { line ->
+                    if (line.startsWith('##DeepVariant')) {
+                        meta.tool = 'deepvariant'
+                        return
+                    }
+                }
+            }
+        }
+    }
+
     // meta.id for process tags
     meta.id = "${meta.patient}.${meta.sample}.${meta.tool}"
 
