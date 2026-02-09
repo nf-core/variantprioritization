@@ -2,6 +2,7 @@ process REFORMAT_CNA {
     tag "${meta.patient}:${meta.sample}:${cna}"
     label 'process_low'
 
+    conda "${moduleDir}/environment.yml"
     container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
         ? 'docker.io/barryd237/pysam-xcmds:latest'
         : 'docker.io/barryd237/pysam-xcmds:latest'}"
