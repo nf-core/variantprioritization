@@ -99,7 +99,7 @@
             },
             "mentions": [
                 {
-                    "@id": "#39884374-b8ff-4265-86d6-38c50c4709f0"
+                    "@id": "#5c141a97-a493-45da-a730-05e823c6fb08"
                 }
             ],
             "name": "nf-core/variantprioritization"
@@ -126,8 +126,13 @@
                 "SoftwareSourceCode",
                 "ComputationalWorkflow"
             ],
+            "creator": [
+                {
+                    "@id": "#"
+                }
+            ],
             "dateCreated": "",
-            "dateModified": "2025-07-24T11:10:42Z",
+            "dateModified": "2026-02-09T16:02:00Z",
             "dct:conformsTo": "https://bioschemas.org/profiles/ComputationalWorkflow/1.0-RELEASE/",
             "keywords": [
                 "nf-core",
@@ -163,14 +168,14 @@
             "url": {
                 "@id": "https://www.nextflow.io/"
             },
-            "version": "!>=24.10.5"
+            "version": "!>=25.04.0"
         },
         {
-            "@id": "#39884374-b8ff-4265-86d6-38c50c4709f0",
+            "@id": "#5c141a97-a493-45da-a730-05e823c6fb08",
             "@type": "TestSuite",
             "instance": [
                 {
-                    "@id": "#5c2c8077-16bf-4f05-b458-a9dcc45956f6"
+                    "@id": "#a684993e-fd42-4262-abb4-571ee37f6a89"
                 }
             ],
             "mainEntity": {
@@ -179,7 +184,7 @@
             "name": "Test suite for nf-core/variantprioritization"
         },
         {
-            "@id": "#5c2c8077-16bf-4f05-b458-a9dcc45956f6",
+            "@id": "#a684993e-fd42-4262-abb4-571ee37f6a89",
             "@type": "TestInstance",
             "name": "GitHub Actions workflow for testing nf-core/variantprioritization",
             "resource": "repos/nf-core/variantprioritization/actions/workflows/nf-test.yml",
@@ -306,6 +311,12 @@
             "@type": "Organization",
             "name": "nf-core",
             "url": "https://nf-co.re/"
+        },
+        {
+            "@id": "#",
+            "@type": "Person",
+            "email": "",
+            "name": "Famke Ba\u0308uerle"
         }
     ]
 }
