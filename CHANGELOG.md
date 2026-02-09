@@ -16,7 +16,6 @@ Team from October 2025 nf-core Hackathon: @georgiakes, @petanska, @maxibor, @eol
 - [#55](https://github.com/nf-core/variantprioritization/pull/55) - Expand and adapt documentation (@famosab)
 - [#58] (https://github.com/nf-core/variantprioritization/pull/58) - defined a function that extract the variantcaller from the vcf (@yussab)
 
-
 ### `Fixed`
 
 - [#32](https://github.com/nf-core/variantprioritization/pull/32) - Rename to nf-core/variantprioritization (@famosab)
