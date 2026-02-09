@@ -103,13 +103,8 @@ workflow PIPELINE_INITIALISATION {
         .map { samplesheet ->
             processSamplesheet(samplesheet)
         }
-        .groupTuple()
         .map { samplesheet ->
             validateInputSamplesheet(samplesheet)
-        }
-        .map {
-            meta, fastqs ->
-                return [ meta, fastqs.flatten() ]
         }
         .set { ch_samplesheet }
 
@@ -223,8 +218,8 @@ def processSamplesheet(row) {
 //
 // Validate channels from input samplesheet
 //
-def validateInputSamplesheet(input) {
-    def (metas, fastqs) = input[1..2]
+def validateInputSamplesheet(row) {
+    def (meta, _vcf, _tbi, cna) = row[0..3]
 
     // If user selects params.cna_analysis but the cna entries are empty, throw an error
     if (meta.status == 'somatic' && params.cna_analysis) {
@@ -233,8 +228,9 @@ def validateInputSamplesheet(input) {
         }
     }
 
-    return [ metas[0], fastqs ]
+    return row
 }
+
 //
 // Get attribute from genome config file e.g. fasta
 //
