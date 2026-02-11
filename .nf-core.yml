@@ -7,7 +7,7 @@ lint:
     - docs/images/nf-core-variantprioritization_logo_dark.png
     - docs/images/nf-core-variantprioritization_logo_light.png
   nf_test_content: false
-nf_core_version: 3.5.1
+nf_core_version: 3.5.2
 repository_type: pipeline
 template:
   author: "@yussab"

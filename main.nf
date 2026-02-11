@@ -83,7 +83,6 @@ workflow NFCORE_VARIANTPRIORITIZATION {
         samplesheet,
         params,
     )
-
     emit:
     multiqc_report = VARIANTPRIORITIZATION.out.multiqc_report // channel: /path/to/multiqc_report.html
 }

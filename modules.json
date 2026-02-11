@@ -17,7 +17,7 @@
                     },
                     "multiqc": {
                         "branch": "master",
-                        "git_sha": "9656d955b700a8707c4a67821ab056f8c1095675",
+                        "git_sha": "dfa7f1a33781e89f6efe727d371ed7ca9077059d",
                         "installed_by": ["modules"]
                     },
                     "pcgr/getref": {
