@@ -4,10 +4,10 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { REFORMAT_VCF               } from '../../modules/local/reformat_input/reformat_vcf'
-include { REFORMAT_CNA               } from '../../modules/local/reformat_input/reformat_cna'
-include { INTERSECT_SOMATIC_VARIANTS } from '../../modules/local/reformat_input/isec_vcf'
-include { PCGR_VCF                   } from '../../modules/local/reformat_input/pcgr_vcf'
+include { REFORMAT_VCF               } from '../../../modules/local/reformat_vcf'
+include { REFORMAT_CNA               } from '../../../modules/local/reformat_cna'
+include { INTERSECT_SOMATIC_VARIANTS } from '../../../modules/local/isec_vcf'
+include { PCGR_VCF                   } from '../../../modules/local/pcgr_vcf'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

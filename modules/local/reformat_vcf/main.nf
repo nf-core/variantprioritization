@@ -1,14 +1,14 @@
-process PCGR_VCF {
-    tag "${meta.patient}:${meta.sample}"
+process REFORMAT_VCF {
+    tag "${meta.id}"
     label 'process_low'
 
+    conda "${moduleDir}/environment.yml"
     container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
         ? 'docker.io/barryd237/pysam-xcmds:latest'
         : 'docker.io/barryd237/pysam-xcmds:latest'}"
 
     input:
-    tuple val(meta), path(keys), path(vcf), path(tbi)
-    path pcgr_header
+    tuple val(meta), path(vcf), path(tbi)
 
     output:
     tuple val(meta), path("${prefix}.vcf.gz"), path("${prefix}.vcf.gz.tbi"), emit: vcf
@@ -20,12 +20,13 @@ process PCGR_VCF {
     script:
     prefix = task.ext.prefix ?: "${meta.id}"
     """
-    pcgr_vcf.py \\
-        --sample ${prefix}
+    reformat_vcf.py \\
+        --input ${vcf} \\
+        --output ${prefix}.vcf
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        python: \$(echo \$( python --version | cut -d' ' -f2 ))
+        python: \$(python --version 2>&1 | cut -d ' ' -f 2)
     END_VERSIONS
     """
 }
