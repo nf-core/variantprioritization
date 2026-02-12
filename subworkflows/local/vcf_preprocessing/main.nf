@@ -21,9 +21,6 @@ workflow VCF_PREPROCESSING {
     fasta
 
     main:
-    ch_versions = channel.empty()
-
-
     ch_samplesheet
         .multiMap { meta, vcf, tbi, cna ->
             vcf_files: [meta, vcf, tbi]
@@ -59,7 +56,7 @@ workflow VCF_PREPROCESSING {
 
     TABIX_BGZIPTABIX(ch_vcf_to_bgzip)
 
-    TABIX_BGZIPTABIX.out.gz_tbi.set { ch_vcf_bgzipped }
+    TABIX_BGZIPTABIX.out.gz_index.set { ch_vcf_bgzipped }
 
     // Create index for files that need tabix
     ch_vcf.to_tabix
@@ -71,7 +68,7 @@ workflow VCF_PREPROCESSING {
     TABIX_TABIX(ch_vcf_to_tabix)
 
     ch_vcf_to_tabix
-        .join(TABIX_TABIX.out.tbi)
+        .join(TABIX_TABIX.out.index)
         .set { ch_vcf_with_tabix }
 
     // Combine all processed files into a final channel
@@ -87,13 +84,7 @@ workflow VCF_PREPROCESSING {
     BCFTOOLS_FILTER(norm_ch)
     filtered_ch = BCFTOOLS_FILTER.out.vcf.join(BCFTOOLS_FILTER.out.tbi)
 
-    ch_versions = ch_versions.mix(TABIX_BGZIPTABIX.out.versions)
-    ch_versions = ch_versions.mix(TABIX_TABIX.out.versions)
-    ch_versions = ch_versions.mix(BCFTOOLS_NORM.out.versions)
-    ch_versions = ch_versions.mix(BCFTOOLS_FILTER.out.versions)
-
     emit:
     filtered_ch // channel: [ meta, path(vcf_file), path(tbi_file), path(cna_file) ]
     ch_cna_files
-    versions     = ch_versions // channel: [ path(versions.yml) ]
 }

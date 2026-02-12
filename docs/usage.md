@@ -39,15 +39,9 @@ If you have multiple VCFs for the same sample (e.g. one per caller), provide one
 If you run with `--cna_analysis`, CNA segments are required for somatic (`status=1`) rows.
 The CNA file is expected to be either ASCAT-like or CNVkit-like and will be reformatted into the allele-specific schema required by PCGR.
 
-### VCF filename conventions (caller detection)
+### Caller detection
 
-The pipeline extracts the caller name from the VCF filename by splitting on dots (`.`) and taking the second field (e.g. `*.mutect2.*.vcf.gz`).
-For Strelka, it expects `strelka.somatic_snvs` or `strelka.somatic_indels` to appear as the second and third fields.
-
-This convention matches typical nf-core/sarek outputs, for example:
-
-- `HCC1395T_vs_HCC1395N.mutect2.vcf.gz`
-- `HCC1395T_vs_HCC1395N.strelka.somatic_snvs.vcf.gz`
+The pipeline extracts the variant caller from the VCF header. Make sure to use VCFs that hold this information.
 
 ### Example samplesheet
 

@@ -4,10 +4,10 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { REFORMAT_VCF               } from '../../../modules/local/reformat_vcf'
-include { REFORMAT_CNA               } from '../../../modules/local/reformat_cna'
-include { INTERSECT_SOMATIC_VARIANTS } from '../../../modules/local/isec_vcf'
-include { PCGR_VCF                   } from '../../../modules/local/pcgr_vcf'
+include { REFORMAT_VCF    } from '../../../modules/local/reformat/vcf'
+include { REFORMAT_CNA    } from '../../../modules/local/reformat/cna'
+include { INTERSECT_VCF   } from '../../../modules/local/intersect/vcf'
+include { PCGR_PREPAREVCF } from '../../../modules/local/pcgr/preparevcf'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -21,8 +21,6 @@ workflow FORMAT_FILES {
     cna_files
 
     main:
-    ch_versions = channel.empty()
-
     pcgr_header = channel.fromPath("${projectDir}/bin/pcgr_header.txt", checkIfExists: true)
 
 
@@ -32,10 +30,6 @@ workflow FORMAT_FILES {
 
     vcf_ch = REFORMAT_VCF.out.vcf
     cna_ch = REFORMAT_CNA.out.cna
-
-    // vcf_ch.view()
-    // cna_ch.view()
-
 
     // Intersect somatic variants
     // create master TSV file with variant <-> tool mapping
@@ -48,46 +42,24 @@ workflow FORMAT_FILES {
         var.sample = meta.sample
         return [var, vcf, tbi]
     }
-    per_sample_somatic_vcfs = per_sample_somatic.map { var, vcf, tbi ->
-        return [var, vcf, tbi]
-    }.groupTuple()
 
-    /*per_sample_somatic_vcfs.map{ it ->
-            "My values are:\n$it\n"
+    per_sample_somatic_vcfs = per_sample_somatic
+        .map { var, vcf, tbi ->
+            return [var, vcf, tbi]
         }
-        .collectFile(
-            name: 'INTERSECT_SOMATIC_VARIANTS.txt',
-            storeDir:'.',
-            keepHeader: true,
-            skip: 1
-        )*/
+        .groupTuple()
 
-    INTERSECT_SOMATIC_VARIANTS(per_sample_somatic_vcfs)
+    INTERSECT_VCF(per_sample_somatic_vcfs)
 
     // merge mapping key back with sample VCFs, produce PCGR ready VCFs.
-    sample_vcfs_keys = INTERSECT_SOMATIC_VARIANTS.out.variant_tool_map.join(per_sample_somatic_vcfs)
+    sample_vcfs_keys = INTERSECT_VCF.out.variant_tool_map.join(per_sample_somatic_vcfs)
 
-    /*sample_vcfs_keys.map{ it ->
-            "My values are:\n$it\n"
-        }
-        .collectFile(
-            name: 'PCGR_VCF.txt',
-            storeDir:'.',
-            keepHeader: true,
-            skip: 1
-        )*/
-
-    PCGR_VCF(sample_vcfs_keys, pcgr_header.collect())
-
-
-    ch_versions = ch_versions.mix(REFORMAT_VCF.out.versions)
-    ch_versions = ch_versions.mix(REFORMAT_CNA.out.versions)
-    ch_versions = ch_versions.mix(INTERSECT_SOMATIC_VARIANTS.out.versions)
-    ch_versions = ch_versions.mix(PCGR_VCF.out.versions)
+    PCGR_PREPAREVCF(sample_vcfs_keys, pcgr_header.collect())
 
     emit:
-    pcgr_ready_vcf = params.cna_analysis ? PCGR_VCF.out.vcf.join(cna_ch) : PCGR_VCF.out.vcf.map { meta, vcf, tbi ->
-        return [meta, vcf, tbi, []]
-    }
-    versions       = ch_versions // channel: [ path(versions.yml) ]
+    pcgr_ready_vcf = params.cna_analysis
+        ? PCGR_PREPAREVCF.out.vcf.join(cna_ch)
+        : PCGR_PREPAREVCF.out.vcf.map { meta, vcf, tbi ->
+            return [meta, vcf, tbi, []]
+        }
 }
