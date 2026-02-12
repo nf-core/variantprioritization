@@ -13,6 +13,7 @@ process INTERSECT_VCF {
     output:
     tuple val(meta), path("${prefix}_keys.txt"), emit: variant_tool_map
     tuple val("${task.process}"), val('python'),  eval("python --version | cut -d' ' -f2"), topic: versions, emit: versions_python
+    tuple val("${task.process}"), val('bcftools'), eval("bcftools --version | sed '1!d; s/^.*bcftools //'"), topic: versions, emit: versions_bcftools
 
     when:
     task.ext.when == null || task.ext.when
