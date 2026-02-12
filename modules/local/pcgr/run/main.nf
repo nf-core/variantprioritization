@@ -1,8 +1,8 @@
-process PCGR {
+process PCGR_RUN {
     tag "${meta.patient}:${meta.sample}"
     label 'process_low'
 
-    conda "pcgr::pcgr=2.2.1"
+    conda "${moduleDir}/environment.yml"
     container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
         ? 'docker.io/sigven/pcgr:2.2.1'
         : 'docker.io/sigven/pcgr:2.2.1'}"

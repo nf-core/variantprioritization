@@ -4,10 +4,10 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { REFORMAT_VCF               } from '../../../modules/local/reformat_vcf'
-include { REFORMAT_CNA               } from '../../../modules/local/reformat_cna'
+include { REFORMAT_VCF               } from '../../../modules/local/reformat/vcf'
+include { REFORMAT_CNA               } from '../../../modules/local/reformat/cna'
 include { INTERSECT_SOMATIC_VARIANTS } from '../../../modules/local/isec_vcf'
-include { PCGR_VCF                   } from '../../../modules/local/pcgr_vcf'
+include { PCGR_PREPAREVCF            } from '../../../modules/local/pcgr/preparevcf'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -77,16 +77,16 @@ workflow FORMAT_FILES {
             skip: 1
         )*/
 
-    PCGR_VCF(sample_vcfs_keys, pcgr_header.collect())
+    PCGR_PREPAREVCF(sample_vcfs_keys, pcgr_header.collect())
 
 
     ch_versions = ch_versions.mix(REFORMAT_VCF.out.versions)
     ch_versions = ch_versions.mix(REFORMAT_CNA.out.versions)
     ch_versions = ch_versions.mix(INTERSECT_SOMATIC_VARIANTS.out.versions)
-    ch_versions = ch_versions.mix(PCGR_VCF.out.versions)
+    ch_versions = ch_versions.mix(PCGR_PREPAREVCF.out.versions)
 
     emit:
-    pcgr_ready_vcf = params.cna_analysis ? PCGR_VCF.out.vcf.join(cna_ch) : PCGR_VCF.out.vcf.map { meta, vcf, tbi ->
+    pcgr_ready_vcf = params.cna_analysis ? PCGR_PREPAREVCF.out.vcf.join(cna_ch) : PCGR_PREPAREVCF.out.vcf.map { meta, vcf, tbi ->
         return [meta, vcf, tbi, []]
     }
     versions       = ch_versions // channel: [ path(versions.yml) ]

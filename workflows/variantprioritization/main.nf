@@ -7,7 +7,7 @@ include { REFERENCE_DATA         } from '../../subworkflows/local/reference_data
 
 include { VCF_PREPROCESSING      } from '../../subworkflows/local/vcf_preprocessing'
 include { FORMAT_FILES           } from '../../subworkflows/local/format_files'
-include { PCGR as RUN_PCGR       } from '../../modules/local/pcgr'
+include { PCGR_RUN               } from '../../modules/local/pcgr/run'
 
 include { getGenomeAttribute     } from '../../subworkflows/local/utils_nfcore_variantprioritization_pipeline'
 include { MULTIQC                } from '../../modules/nf-core/multiqc'
@@ -74,13 +74,13 @@ workflow VARIANTPRIORITIZATION {
     //
     // SUBWORKFLOW: pcgr
     //
-    RUN_PCGR(
+    PCGR_RUN(
         FORMAT_FILES.out.pcgr_ready_vcf,
         ch_pcgr_dir.collect(),
         ch_vep_cache.collect(),
     )
 
-    ch_versions = ch_versions.mix(RUN_PCGR.out.versions)
+    ch_versions = ch_versions.mix(PCGR_RUN.out.versions)
 
     //
     // Collate and save software versions
