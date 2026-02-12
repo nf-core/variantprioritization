@@ -8,7 +8,7 @@ process INTERSECT_VCF {
         : 'community.wave.seqera.io/library/bcftools_pysam_pandas_python:6b813c53a7ef4ede'}"
 
     input:
-    tuple val(meta), path(isec_results)
+    tuple val(meta), path(vcf), path(tbi)
 
     output:
     tuple val(meta), path("${prefix}_keys.txt"), emit: variant_tool_map
@@ -21,7 +21,7 @@ process INTERSECT_VCF {
     // meta.sample, toggle using modules.config
     prefix = task.ext.prefix ?: "${meta.id}"
     """
-    isec_vcfs.py \
+    isec_vcfs.py \\
         --sample ${prefix}
     """
 }
