@@ -59,8 +59,6 @@ workflow VARIANTPRIORITIZATION {
     def ch_vcf_files = VCF_PREPROCESSING.out.filtered_ch
     def ch_cna_files = VCF_PREPROCESSING.out.ch_cna_files
 
-    ch_versions = ch_versions.mix(VCF_PREPROCESSING.out.versions)
-
     //
     // SUBWORKFLOW: Format input files
     //

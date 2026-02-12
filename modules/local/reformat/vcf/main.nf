@@ -4,8 +4,8 @@ process REFORMAT_VCF {
 
     conda "${moduleDir}/environment.yml"
     container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
-        ? 'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/78/78186c6fc95e23c235ffba10839ffd751c7fd2a131bbd7d34d4ee4ec80edd784/data'
-        : 'community.wave.seqera.io/library/bcftools_pysam_python:c6d15d978dc52fc5'}"
+        ? 'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/e8/e865b57ba6a9b7164c8018cf631df0ae2746cf5ca3db5666502fc0d61d9bcf91/data'
+        : 'community.wave.seqera.io/library/bcftools_pysam_pandas_python:6b813c53a7ef4ede'}"
 
     input:
     tuple val(meta), path(vcf), path(tbi)

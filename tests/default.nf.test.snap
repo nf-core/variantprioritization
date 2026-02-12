@@ -10,7 +10,7 @@
                     "bcftools": 1.22
                 },
                 "INTERSECT_VCF": {
-                    "bcftools": 1.21,
+                    "bcftools": 1.22,
                     "python": "3.10.19"
                 },
                 "PCGR_PREPAREVCF": {
@@ -23,7 +23,7 @@
                     "python": "3.10.19"
                 },
                 "REFORMAT_VCF": {
-                    "bcftools": 1.21,
+                    "bcftools": 1.22,
                     "python": "3.10.19"
                 },
                 "TABIX_TABIX": {

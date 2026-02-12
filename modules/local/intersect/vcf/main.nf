@@ -4,8 +4,8 @@ process INTERSECT_VCF {
 
     conda "${moduleDir}/environment.yml"
     container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
-        ? 'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/2f/2f7a55b8b6c7e72be975e8dfd6cba9117f9c6ec41e67e5c3a095e6021fad7d71/data'
-        : 'community.wave.seqera.io/library/bcftools_pandas_python:00d964080a86c66f'}"
+        ? 'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/e8/e865b57ba6a9b7164c8018cf631df0ae2746cf5ca3db5666502fc0d61d9bcf91/data'
+        : 'community.wave.seqera.io/library/bcftools_pysam_pandas_python:6b813c53a7ef4ede'}"
 
     input:
     tuple val(meta), path(isec_results)
