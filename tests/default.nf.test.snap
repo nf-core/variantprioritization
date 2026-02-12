@@ -9,8 +9,9 @@
                 "BCFTOOLS_NORM": {
                     "bcftools": 1.22
                 },
-                "INTERSECT_SOMATIC_VARIANTS": {
-                    "python": "3.6.15"
+                "INTERSECT_VCF": {
+                    "bcftools": 1.21,
+                    "python": "3.10.19"
                 },
                 "PCGR_PREPAREVCF": {
                     "python": "3.10.19"

@@ -69,8 +69,6 @@ workflow VARIANTPRIORITIZATION {
         ch_cna_files,
     )
 
-    ch_versions = ch_versions.mix(FORMAT_FILES.out.versions)
-
     //
     // SUBWORKFLOW: pcgr
     //
