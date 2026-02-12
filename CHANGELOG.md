@@ -14,7 +14,8 @@ Team from October 2025 nf-core Hackathon: @georgiakes, @petanska, @maxibor, @eol
 - [#51](https://github.com/nf-core/variantprioritization/pull/51) - Automatic retrieval of VEP Cache and PCGR database + CI testing (@famosab, @georgiakes & @MaKuzman)
 - [#54](https://github.com/nf-core/variantprioritization/pull/54) - Move test data to [nf-core/test-datasets](https://github.com/nf-core/test-datasets/tree/variantprioritization) repo and add full_size test config (@famosab)
 - [#55](https://github.com/nf-core/variantprioritization/pull/55) - Expand and adapt documentation (@famosab)
-- [#58] (https://github.com/nf-core/variantprioritization/pull/58) - defined a function that extract the variantcaller from the vcf (@yussab)
+- [#58](https://github.com/nf-core/variantprioritization/pull/58) - Defined a function that extract the variantcaller from the vcf (@yussab)
+- [#55](https://github.com/nf-core/variantprioritization/pull/55) - Expand and adapt documentation (@famosab)
 
 ### `Fixed`
 
@@ -23,6 +24,7 @@ Team from October 2025 nf-core Hackathon: @georgiakes, @petanska, @maxibor, @eol
 - [#53](https://github.com/nf-core/variantprioritization/pull/53) - Template update to 3.5.1 (@famosab)
 - [#55](https://github.com/nf-core/variantprioritization/pull/55) - More changes to adhere to strict syntax, bump to 25.10.0 and nf-schema 2.6.1 (@famosab)
 - [#56](https://github.com/nf-core/variantprioritization/pull/56) - Recover help message (@famosab)
+
 
 ### `Dependencies`
 

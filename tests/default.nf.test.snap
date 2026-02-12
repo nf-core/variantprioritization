@@ -12,17 +12,18 @@
                 "INTERSECT_SOMATIC_VARIANTS": {
                     "python": "3.6.15"
                 },
-                "PCGR_VCF": {
-                    "python": "3.6.15"
+                "PCGR_PREPAREVCF": {
+                    "python": "3.10.19"
+                },
+                "PCGR_RUN": {
+                    "pcgr": "2.2.1"
                 },
                 "REFORMAT_CNA": {
-                    "python": "3.6.15"
+                    "python": "3.10.19"
                 },
                 "REFORMAT_VCF": {
-                    "python": "3.6.15"
-                },
-                "RUN_PCGR": {
-                    "pcgr": "2.2.1"
+                    "bcftools": 1.21,
+                    "python": "3.10.19"
                 },
                 "TABIX_TABIX": {
                     "tabix": 1.21
@@ -109,9 +110,9 @@
             ]
         ],
         "meta": {
-            "nf-test": "0.9.3",
-            "nextflow": "25.10.3"
+            "nf-test": "0.9.2",
+            "nextflow": "25.10.4"
         },
-        "timestamp": "2026-02-07T11:25:09.34779"
+        "timestamp": "2026-02-12T11:42:18.094032396"
     }
 }

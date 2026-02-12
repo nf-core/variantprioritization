@@ -12,7 +12,7 @@ process REFORMAT_CNA {
 
     output:
     tuple val(meta), path("${prefix}.*.tsv"), emit: cna
-    path "versions.yml", emit: versions
+    tuple val("${task.process}"), val('python'),  eval("python --version | cut -d' ' -f2"), topic: versions, emit: versions_python
 
     when:
     task.ext.when == null || task.ext.when
@@ -23,10 +23,5 @@ process REFORMAT_CNA {
     reformat_cna.py \\
         --input ${cna} \\
         --sample ${prefix}
-
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        python: \$(python --version 2>&1 | cut -d ' ' -f 2)
-    END_VERSIONS
     """
 }

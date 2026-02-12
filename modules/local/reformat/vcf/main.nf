@@ -4,15 +4,16 @@ process REFORMAT_VCF {
 
     conda "${moduleDir}/environment.yml"
     container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
-        ? 'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/93/935400e4df07528697155f191c225dbf18ac4dc5d7779b1b14f5b974e9237227/data'
-        : 'community.wave.seqera.io/library/pysam_vcf2tsvpy_numpy_pandas_python:eb0ee661861e1b56'}"
+        ? 'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/78/78186c6fc95e23c235ffba10839ffd751c7fd2a131bbd7d34d4ee4ec80edd784/data'
+        : 'community.wave.seqera.io/library/bcftools_pysam_python:c6d15d978dc52fc5'}"
 
     input:
     tuple val(meta), path(vcf), path(tbi)
 
     output:
     tuple val(meta), path("${prefix}.vcf.gz"), path("${prefix}.vcf.gz.tbi"), emit: vcf
-    path "versions.yml", emit: versions
+    tuple val("${task.process}"), val('python'),   eval("python --version | cut -d' ' -f2"), topic: versions, emit: versions_python
+    tuple val("${task.process}"), val('bcftools'), eval("bcftools --version | sed '1!d; s/^.*bcftools //'"), topic: versions, emit: versions_bcftools
 
     when:
     task.ext.when == null || task.ext.when
@@ -23,10 +24,5 @@ process REFORMAT_VCF {
     reformat_vcf.py \\
         --input ${vcf} \\
         --output ${prefix}.vcf
-
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        python: \$(python --version 2>&1 | cut -d ' ' -f 2)
-    END_VERSIONS
     """
 }
