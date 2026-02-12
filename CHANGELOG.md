@@ -26,7 +26,6 @@ Team from October 2025 nf-core Hackathon: @georgiakes, @petanska, @maxibor, @eol
 - [#55](https://github.com/nf-core/variantprioritization/pull/55) - More changes to adhere to strict syntax, bump to 25.10.0 and nf-schema 2.6.1 (@famosab)
 - [#56](https://github.com/nf-core/variantprioritization/pull/56) - Recover help message (@famosab)
 
-
 ### `Dependencies`
 
 ### `Deprecated`
