@@ -13,7 +13,7 @@ process PCGR_PREPAREVCF {
 
     output:
     tuple val(meta), path("${prefix}.vcf.gz"), path("${prefix}.vcf.gz.tbi"), emit: vcf
-    path "versions.yml", emit: versions
+    tuple val("${task.process}"), val('python'),  eval("python --version | cut -d' ' -f2"), topic: versions, emit: versions_python
 
     when:
     task.ext.when == null || task.ext.when
@@ -23,10 +23,5 @@ process PCGR_PREPAREVCF {
     """
     pcgr_vcf.py \\
         --sample ${prefix}
-
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        python: \$(echo \$( python --version | cut -d' ' -f2 ))
-    END_VERSIONS
     """
 }

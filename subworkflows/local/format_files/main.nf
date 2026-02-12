@@ -80,7 +80,6 @@ workflow FORMAT_FILES {
     PCGR_PREPAREVCF(sample_vcfs_keys, pcgr_header.collect())
 
     ch_versions = ch_versions.mix(INTERSECT_SOMATIC_VARIANTS.out.versions)
-    ch_versions = ch_versions.mix(PCGR_PREPAREVCF.out.versions)
 
     emit:
     pcgr_ready_vcf = params.cna_analysis ? PCGR_PREPAREVCF.out.vcf.join(cna_ch) : PCGR_PREPAREVCF.out.vcf.map { meta, vcf, tbi ->
