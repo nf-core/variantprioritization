@@ -4,8 +4,8 @@ process PCGR_RUN {
 
     conda "${moduleDir}/environment.yml"
     container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
-        ? 'docker.io/sigven/pcgr:2.2.1'
-        : 'docker.io/sigven/pcgr:2.2.1'}"
+        ? 'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/29/2929458f7ea23b328ec3cd40c8feba83e8e4aecda53d2eaf911640e878bdbc7d/data'
+        : 'community.wave.seqera.io/library/pcgr:2.2.1--cf53926ac45a4bda'}"
 
     input:
     tuple val(meta), path(vcf), path(tbi), path(cna)
@@ -15,7 +15,7 @@ process PCGR_RUN {
 
     output:
     tuple val(meta), path("${prefix}"), emit: pcgr_reports
-    path "versions.yml",                emit: versions
+    tuple val("${task.process}"), val('pcgr'),  eval("pcgr --version | sed 's/pcgr //g'"), topic: versions, emit: versions_pcgr
 
     when:
     task.ext.when == null || task.ext.when
@@ -44,10 +44,11 @@ process PCGR_RUN {
         --call_conf_tag 'TAL' \\
         ${cna_cmd} \\
         ${args}
+    """
 
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        pcgr: \$(echo \$( pcgr --version | sed 's/pcgr //g' ))
-    END_VERSIONS
+    stub:
+    prefix      = task.ext.prefix ?: "${meta.id}"
+    """
+    mkdir -p ${prefix}
     """
 }
