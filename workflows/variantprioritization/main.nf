@@ -8,6 +8,8 @@ include { REFERENCE_DATA         } from '../../subworkflows/local/reference_data
 include { VCF_PREPROCESSING      } from '../../subworkflows/local/vcf_preprocessing'
 include { FORMAT_FILES           } from '../../subworkflows/local/format_files'
 include { PCGR_RUN               } from '../../modules/local/pcgr/run'
+include { CPSR_RUN               } from '../../modules/local/cpgr'
+
 
 include { getGenomeAttribute     } from '../../subworkflows/local/utils_nfcore_variantprioritization_pipeline'
 include { MULTIQC                } from '../../modules/nf-core/multiqc'
@@ -56,14 +58,19 @@ workflow VARIANTPRIORITIZATION {
         fasta,
     )
 
-    def ch_vcf_files = VCF_PREPROCESSING.out.filtered_ch
+    //VCF_PREPROCESSING.out.normalised_germline.view()
+    //VCF_PREPROCESSING.out.normalised_somatic.view()
+
+    def ch_germline_vcf_files = VCF_PREPROCESSING.out.normalised_germline
+    def ch_somatic_vcf_files = VCF_PREPROCESSING.out.normalised_somatic
+
     def ch_cna_files = VCF_PREPROCESSING.out.ch_cna_files
 
     //
     // SUBWORKFLOW: Format input files
     //
     FORMAT_FILES(
-        ch_vcf_files,
+        ch_somatic_vcf_files,
         ch_cna_files,
     )
 
@@ -77,6 +84,18 @@ workflow VARIANTPRIORITIZATION {
     )
 
     ch_versions = ch_versions.mix(PCGR_RUN.out.versions)
+
+
+    //
+    // SUBWORKFLOW: cpsr
+    //
+    CPSR_RUN( VCF_PREPROCESSING.out.normalised_germline,
+              ch_pcgr_dir.collect(),
+              ch_vep_cache.collect()
+            )
+
+    ch_versions = ch_versions.mix(CPSR_RUN.out.versions)
+
 
     //
     // Collate and save software versions
