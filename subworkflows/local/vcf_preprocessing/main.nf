@@ -84,7 +84,13 @@ workflow VCF_PREPROCESSING {
     BCFTOOLS_FILTER(norm_ch)
     filtered_ch = BCFTOOLS_FILTER.out.vcf.join(BCFTOOLS_FILTER.out.tbi)
 
+    normalised_germline = filtered_ch.filter{ it -> meta = it[0]; meta.status == 'germline' }
+    normalised_somatic  = filtered_ch.filter{ it -> meta = it[0]; meta.status == 'somatic' }
+
+
     emit:
-    filtered_ch // channel: [ meta, path(vcf_file), path(tbi_file), path(cna_file) ]
+    //filtered_ch // channel: [ meta, path(vcf_file), path(tbi_file), path(cna_file) ]
+    normalised_germline
+    normalised_somatic
     ch_cna_files
 }
