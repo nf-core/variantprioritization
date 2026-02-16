@@ -4,8 +4,8 @@ process PCGR_RUN {
 
     conda "${moduleDir}/environment.yml"
     container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
-        ? 'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/29/2929458f7ea23b328ec3cd40c8feba83e8e4aecda53d2eaf911640e878bdbc7d/data'
-        : 'community.wave.seqera.io/library/pcgr:2.2.1--cf53926ac45a4bda'}"
+        ? 'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/13/13d45cfcdc2a705e5fc5e8eba1a27c54aecba3f483a085aa13505560a2528932/data'
+        : 'community.wave.seqera.io/library/pcgr:2.2.5.9000--2d18ab4fab1bbfe0'}"
 
     input:
     tuple val(meta), path(vcf), path(tbi), path(cna)

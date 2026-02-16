@@ -1,6 +1,6 @@
 channels:
+  - pcgr
   - conda-forge
   - bioconda
-  - pcgr
 dependencies:
-  - pcgr::pcgr=2.2.1
+  - pcgr::pcgr=2.2.5.9000
