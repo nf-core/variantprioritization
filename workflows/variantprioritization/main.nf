@@ -67,6 +67,8 @@ workflow VARIANTPRIORITIZATION {
         ch_cna_files,
     )
 
+    FORMAT_FILES.out.pcgr_ready_vcf.dump(tag: "pcgr_ready_vcf")
+
     //
     // SUBWORKFLOW: pcgr
     //
