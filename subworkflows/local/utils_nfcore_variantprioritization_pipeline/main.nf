@@ -227,7 +227,7 @@ def processSamplesheet(row) {
                 }
             }
         }
-        meta.tool = isIndel ? 'strelka_indel' : 'strelka_snv'
+        meta.vartype = isIndel ? 'indel' : 'snv'
     }
 
     // If tool still empty, try DeepVariant-specific headers
@@ -254,6 +254,8 @@ def processSamplesheet(row) {
             }
         }
     }
+
+    meta.tool = meta.tool.toLowerCase()
 
     // meta.id for process tags
     meta.id = "${meta.patient}.${meta.sample}.${meta.tool}"
