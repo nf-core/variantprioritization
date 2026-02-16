@@ -227,7 +227,7 @@ def processSamplesheet(row) {
                 }
             }
         }
-        meta.vartype = isIndel ? 'indel' : 'snv'
+        meta.tool = isIndel ? 'strelka_indel' : 'strelka_snv'
     }
 
     // If tool still empty, try DeepVariant-specific headers

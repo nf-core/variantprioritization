@@ -20,8 +20,10 @@ process REFORMAT_VCF {
 
     script:
     prefix = task.ext.prefix ?: "${meta.id}"
+    def tool = meta.tool.startsWith('strelka') ? 'strelka' : meta.tool
     """
     reformat_vcf.py \\
+        --tool ${tool} \\
         --input ${vcf} \\
         --output ${prefix}.vcf
     """

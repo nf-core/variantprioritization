@@ -92,7 +92,7 @@ vcf_formats = {
     "strelka_variants_vaf" : ["AD", "ADF", "ADR", "DP", "DPF", "DPI", "FT", "GQ", "GQX", "GT", "MIN_DP", "PL", "PS", "SB"]
 }
 
-def tumor_normal(out):
+def tumor_normal(out, tool):
     with VariantFile("tmp_.vcf") as fr:
         header = fr.header
         samples = list(header.samples)
@@ -125,8 +125,7 @@ def tumor_normal(out):
         with VariantFile("tmp_1.vcf", "w", header=header) as fw:
             tumor_is_first = 0
             tumor_is_second = 0
-            algorithm = fnc_str.split("_", 1)[0]
-            algorithm_code = 1 if algorithm == "freebayes" else 2 if algorithm == "mutect2" else 3
+            tool_code = 1 if tool == "freebayes" else 2 if tool == "mutect2" else 3
             for record in fr:
                 VAF_sample0 = globals()[fnc_str](record, 0)
                 VAF_sample1 = globals()[fnc_str](record, 1)
@@ -152,9 +151,9 @@ def tumor_normal(out):
                     record.info["ADT"] = tmp.replace("(", "").replace(")", "")
                     tmp = "".join([s.strip() for s in str(record.samples[normal_idx]["AD"])])
                     record.info["ADN"] = tmp.replace("(", "").replace(")", "")
-                record.info["TAL"] = algorithm
-                record.samples[tumor_idx]["AL"] = algorithm_code
-                record.samples[normal_idx]["AL"] = algorithm_code
+                record.info["TAL"] = tool
+                record.samples[tumor_idx]["AL"] = tool_code
+                record.samples[normal_idx]["AL"] = tool_code
                 fw.write(record)
         normal = f"{samples[normal_idx]} NORMAL"
         tumor = f"{samples[tumor_idx]} TUMOR"
@@ -172,7 +171,7 @@ def tumor_normal(out):
     os.system(f"bgzip {out}")
     os.system(f"tabix {out}.gz")
 
-def tumor_only(out):
+def tumor_only(out, tool):
     with VariantFile("tmp_.vcf") as fr:
         header = fr.header
         samples = list(header.samples)
@@ -186,8 +185,7 @@ def tumor_only(out):
         header.formats.add("AL", number=".", type="Integer", description="Codes for algorithms that produced the somatic call (1 = freebayes, 2 = mutect2, 3 = strelka)")
         with VariantFile("tmp_1.vcf", "w", header=header) as fw:
             tumor_idx = 0
-            algorithm = fnc_str.split("_", 1)[0]
-            algorithm_code = 1 if algorithm == "freebayes" else 2 if algorithm == "mutect2" else 3
+            tool_code = 1 if tool == "freebayes" else 2 if tool == "mutect2" else 3
             for record in fr:
                 VAF_tumor = globals()[fnc_str](record, 0)
                 record.info["TDP"] = record.samples[tumor_idx]["DP"]
@@ -195,8 +193,8 @@ def tumor_only(out):
                 record.info["TAF"] = round(AF[tumor_idx], 3)
                 tmp = "".join([s.strip() for s in str(record.samples[tumor_idx]["AD"])])
                 record.info["ADT"] = tmp.replace("(", "").replace(")", "")
-                record.info["TAL"] = algorithm
-                record.samples[tumor_idx]["AL"] = algorithm_code
+                record.info["TAL"] = tool
+                record.samples[tumor_idx]["AL"] = tool_code
                 fw.write(record)
         tumor = f"{samples[tumor_idx]} TUMOR"
         with open("bcftools_reheader.txt", "w") as f:
@@ -209,19 +207,20 @@ def tumor_only(out):
     os.system(f"bgzip {out}")
     os.system(f"tabix {out}.gz")
 
-def reformat_vcf(vcf_file, out):
+def reformat_vcf(vcf_file, out, tool):
     os.system(f"bcftools filter -e'FORMAT/DP=\".\"' {vcf_file} -o tmp_.vcf")
     with VariantFile("tmp_.vcf") as fr:
         header = fr.header
         samples = list(header.samples)
         if len(samples) > 1:
-            tumor_normal(out)
+            tumor_normal(out, tool)
         else:
-            tumor_only(out)
+            tumor_only(out, tool)
 
 
 def main():
     parser = argparse.ArgumentParser(description="Reformat VCF files for tumor-normal or tumor-only VCF processing.")
+    parser.add_argument("-t", "--tool", required=True, choices=["freebayes", "mutect2", "strelka"], help="Variant caller used to generate the VCF file.")
     parser.add_argument("-i", "--input", required=True, help="Input VCF file.")
     parser.add_argument("-o", "--output", required=True, help="Output file name.")
 
@@ -232,7 +231,7 @@ def main():
         print(f"Error: Input file '{args.input}' does not exist.")
         sys.exit(1)
 
-    reformat_vcf(args.input, args.output)
+    reformat_vcf(args.input, args.output, args.tool)
 
 
 if __name__ == "__main__":
