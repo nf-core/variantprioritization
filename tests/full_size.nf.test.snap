@@ -9,25 +9,27 @@
                 "BCFTOOLS_NORM": {
                     "bcftools": 1.22
                 },
-                "INTERSECT_SOMATIC_VARIANTS": {
-                    "python": "3.6.15"
+                "INTERSECT_VCF": {
+                    "bcftools": 1.22,
+                    "python": "3.10.19"
                 },
                 "PCGR_GETREF": {
                     "curl": "8.16.0",
                     "gzip": 1.14,
                     "tar": 1.35
                 },
-                "PCGR_VCF": {
-                    "python": "3.6.15"
+                "PCGR_PREPAREVCF": {
+                    "python": "3.10.19"
+                },
+                "PCGR_RUN": {
+                    "pcgr": "2.2.1"
                 },
                 "REFORMAT_CNA": {
-                    "python": "3.6.15"
+                    "python": "3.10.19"
                 },
                 "REFORMAT_VCF": {
-                    "python": "3.6.15"
-                },
-                "RUN_PCGR": {
-                    "pcgr": "2.2.1"
+                    "bcftools": 1.22,
+                    "python": "3.10.19"
                 },
                 "TABIX_TABIX": {
                     "tabix": 1.21
@@ -38,17 +40,17 @@
                 "bcftools/filter",
                 "bcftools/filter/HCC1395.HCC1395T.mutect2.norm.filtered.vcf.gz",
                 "bcftools/filter/HCC1395.HCC1395T.mutect2.norm.filtered.vcf.gz.tbi",
-                "bcftools/filter/HCC1395.HCC1395T.strelka.somatic_indels.norm.filtered.vcf.gz",
-                "bcftools/filter/HCC1395.HCC1395T.strelka.somatic_indels.norm.filtered.vcf.gz.tbi",
-                "bcftools/filter/HCC1395.HCC1395T.strelka.somatic_snvs.norm.filtered.vcf.gz",
-                "bcftools/filter/HCC1395.HCC1395T.strelka.somatic_snvs.norm.filtered.vcf.gz.tbi",
+                "bcftools/filter/HCC1395.HCC1395T.strelka_indel.norm.filtered.vcf.gz",
+                "bcftools/filter/HCC1395.HCC1395T.strelka_indel.norm.filtered.vcf.gz.tbi",
+                "bcftools/filter/HCC1395.HCC1395T.strelka_snv.norm.filtered.vcf.gz",
+                "bcftools/filter/HCC1395.HCC1395T.strelka_snv.norm.filtered.vcf.gz.tbi",
                 "bcftools/norm",
                 "bcftools/norm/HCC1395.HCC1395T.mutect2.norm.vcf.gz",
                 "bcftools/norm/HCC1395.HCC1395T.mutect2.norm.vcf.gz.tbi",
-                "bcftools/norm/HCC1395.HCC1395T.strelka.somatic_indels.norm.vcf.gz",
-                "bcftools/norm/HCC1395.HCC1395T.strelka.somatic_indels.norm.vcf.gz.tbi",
-                "bcftools/norm/HCC1395.HCC1395T.strelka.somatic_snvs.norm.vcf.gz",
-                "bcftools/norm/HCC1395.HCC1395T.strelka.somatic_snvs.norm.vcf.gz.tbi",
+                "bcftools/norm/HCC1395.HCC1395T.strelka_indel.norm.vcf.gz",
+                "bcftools/norm/HCC1395.HCC1395T.strelka_indel.norm.vcf.gz.tbi",
+                "bcftools/norm/HCC1395.HCC1395T.strelka_snv.norm.vcf.gz",
+                "bcftools/norm/HCC1395.HCC1395T.strelka_snv.norm.vcf.gz.tbi",
                 "custom",
                 "custom/intersect_vcf",
                 "custom/intersect_vcf/HCC1395.HCC1395T_keys.txt",
@@ -58,10 +60,10 @@
                 "custom/reformat",
                 "custom/reformat/HCC1395.HCC1395T.mutect2.reformatted.vcf.gz",
                 "custom/reformat/HCC1395.HCC1395T.mutect2.reformatted.vcf.gz.tbi",
-                "custom/reformat/HCC1395.HCC1395T.strelka.somatic_indels.reformatted.vcf.gz",
-                "custom/reformat/HCC1395.HCC1395T.strelka.somatic_indels.reformatted.vcf.gz.tbi",
-                "custom/reformat/HCC1395.HCC1395T.strelka.somatic_snvs.reformatted.vcf.gz",
-                "custom/reformat/HCC1395.HCC1395T.strelka.somatic_snvs.reformatted.vcf.gz.tbi",
+                "custom/reformat/HCC1395.HCC1395T.strelka_indel.reformatted.vcf.gz",
+                "custom/reformat/HCC1395.HCC1395T.strelka_indel.reformatted.vcf.gz.tbi",
+                "custom/reformat/HCC1395.HCC1395T.strelka_snv.reformatted.vcf.gz",
+                "custom/reformat/HCC1395.HCC1395T.strelka_snv.reformatted.vcf.gz.tbi",
                 "custom/reformat/HCC1395T.reformatted.allelic_cna.tsv",
                 "multiqc",
                 "multiqc/multiqc_data",
@@ -99,34 +101,34 @@
                 "tabix/HCC1395T_vs_HCC1395N.strelka.somatic_snvs.vcf.gz.tbi"
             ],
             [
-                "HCC1395.HCC1395T_keys.txt:md5,a896cdc8f9f54d8d59dd1ee91193499a",
+                "HCC1395.HCC1395T_keys.txt:md5,e19e65f037b6f055584c89d89b63147e",
                 "HCC1395T.reformatted.allelic_cna.tsv:md5,f8e64f39bfc6cf7e7b6b9727c25be962",
                 "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f",
                 "HCC1395.HCC1395T.pcgr.grch38.cna_gene.tsv.gz:md5,d753bdf67c498b8cc5e2d013ede2cefa",
                 "HCC1395.HCC1395T.pcgr.grch38.cna_gene_ann.tsv.gz:md5,dff3da2a532ce4981c3a23dded66f15e",
                 "HCC1395.HCC1395T.pcgr.grch38.cna_segment.tsv.gz:md5,8c9625abab7494b988a81bfb6c9c7e19",
-                "HCC1395.HCC1395T.pcgr.grch38.conf.yaml:md5,c2f0d13617820cfa62dccbfafb01747a",
-                "HCC1395.HCC1395T.pcgr.grch38.html:md5,75990a9f15e0f87a352f48eeb9c636f8",
+                "HCC1395.HCC1395T.pcgr.grch38.conf.yaml:md5,0610adfb5e7178342acc766781507690",
+                "HCC1395.HCC1395T.pcgr.grch38.html:md5,4833b374ef5ffb858b87ce36eecad837",
                 "HCC1395.HCC1395T.pcgr.grch38.maf:md5,c8b7f72570a11aeb3148f38cf82909c7",
-                "HCC1395.HCC1395T.pcgr.grch38.msigs.tsv.gz:md5,318ebc5a94f39c635302f9f615364e7b",
-                "HCC1395.HCC1395T.pcgr.grch38.pass.tsv.gz:md5,59480d72d0864c9f98fcbb7380b268e6",
+                "HCC1395.HCC1395T.pcgr.grch38.msigs.tsv.gz:md5,f487f01c9be96098d27fb4507d0d19f1",
+                "HCC1395.HCC1395T.pcgr.grch38.pass.tsv.gz:md5,d7c0fd6a44cd5ef277980025f1dce103",
                 "HCC1395.HCC1395T.pcgr.grch38.snv_indel_ann.tsv.gz:md5,73b9720069f731f007f231836d2e5d74",
                 "HCC1395.HCC1395T.pcgr.grch38.tmb.tsv:md5,b8b74e5d24ebe9e590c3432fec658866",
-                "HCC1395.HCC1395T.pcgr.grch38.xlsx:md5,b66865a8316313bec1d45b977e829eea"
+                "HCC1395.HCC1395T.pcgr.grch38.xlsx:md5,b6abfa43023ce34103b463a3d7d9590e"
             ],
             [
                 "HCC1395.HCC1395T.mutect2.norm.filtered.vcf.gz:md5,13acf3dbb23e3c5a60feb22c4b288ca6",
-                "HCC1395.HCC1395T.strelka.somatic_indels.norm.filtered.vcf.gz:md5,2957c37487f260c8b1f5a1ed565838df",
-                "HCC1395.HCC1395T.strelka.somatic_snvs.norm.filtered.vcf.gz:md5,b57c725eca7ce0d1e574c96554eeee45",
+                "HCC1395.HCC1395T.strelka_indel.norm.filtered.vcf.gz:md5,39a54e4af8ded3554ba192405f2ea8d0",
+                "HCC1395.HCC1395T.strelka_snv.norm.filtered.vcf.gz:md5,c85741d1606f6a9daa73088c363fcd52",
                 "HCC1395.HCC1395T.mutect2.norm.vcf.gz:md5,3081f09370a836a7002f9244a00f37c2",
-                "HCC1395.HCC1395T.strelka.somatic_indels.norm.vcf.gz:md5,39a54e4af8ded3554ba192405f2ea8d0",
-                "HCC1395.HCC1395T.strelka.somatic_snvs.norm.vcf.gz:md5,c85741d1606f6a9daa73088c363fcd52",
-                "HCC1395.HCC1395T.vcf.gz:md5,cee9d5ad9db593055b5906a634584cd",
+                "HCC1395.HCC1395T.strelka_indel.norm.vcf.gz:md5,39a54e4af8ded3554ba192405f2ea8d0",
+                "HCC1395.HCC1395T.strelka_snv.norm.vcf.gz:md5,c85741d1606f6a9daa73088c363fcd52",
+                "HCC1395.HCC1395T.vcf.gz:md5,5af9518c7220b0899a4acc818ca615d2",
                 "HCC1395.HCC1395T.mutect2.reformatted.vcf.gz:md5,70b83cdbbee606d64ca20bf8a5303006",
-                "HCC1395.HCC1395T.strelka.somatic_indels.reformatted.vcf.gz:md5,20223e1f68321cbb9cc0f1ac51f245e1",
-                "HCC1395.HCC1395T.strelka.somatic_snvs.reformatted.vcf.gz:md5,9050efd7c75a3d6ae5defc9a55a77e2f",
-                "HCC1395.HCC1395T.pcgr.grch38.pass.vcf.gz:md5,e760e155a812ef194ab5e7704543510e",
-                "HCC1395.HCC1395T.pcgr.grch38.vcf.gz:md5,f1feba76295a9d434102667c6af4237c",
+                "HCC1395.HCC1395T.strelka_indel.reformatted.vcf.gz:md5,ede4300e06320779411e85f71f46f239",
+                "HCC1395.HCC1395T.strelka_snv.reformatted.vcf.gz:md5,b2937f603e05a2d74ca79c4a7b48f312",
+                "HCC1395.HCC1395T.pcgr.grch38.pass.vcf.gz:md5,7bdcfb99fb32e1439c83a9154b153d3a",
+                "HCC1395.HCC1395T.pcgr.grch38.vcf.gz:md5,8d80bd5dbc15cb1ef394b13f917fc791",
                 "clinvar.vcf.gz:md5,b2f53483413d640271a2eeae6d107eac",
                 "dbmts.vcf.gz:md5,514b4494562f8ad9b843bbb890b767da",
                 "dbnsfp.vcf.gz:md5,eb8e8ed6b6344b73af21c4af7feaa89",
@@ -137,8 +139,8 @@
         ],
         "meta": {
             "nf-test": "0.9.2",
-            "nextflow": "25.04.6"
+            "nextflow": "25.10.4"
         },
-        "timestamp": "2025-12-10T16:38:00.231081627"
+        "timestamp": "2026-02-16T15:11:13.157759923"
     }
 }

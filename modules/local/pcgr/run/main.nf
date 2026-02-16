@@ -4,13 +4,12 @@ process PCGR_RUN {
 
     conda "${moduleDir}/environment.yml"
     container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
-        ? 'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/13/13d45cfcdc2a705e5fc5e8eba1a27c54aecba3f483a085aa13505560a2528932/data'
-        : 'community.wave.seqera.io/library/pcgr:2.2.5.9000--2d18ab4fab1bbfe0'}"
+        ? 'docker.io/sigven/pcgr:2.2.1'
+        : 'docker.io/sigven/pcgr:2.2.1'}"
 
     input:
     tuple val(meta), path(vcf), path(tbi), path(cna)
     path pcgr_dir
-    //path pon
     path vep_cache
 
     output:
