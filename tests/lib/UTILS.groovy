@@ -17,7 +17,7 @@ class UTILS {
         // stable_content: All files in ${outdir}/ with stable content
         def stable_content = getAllFilesFromDir(outdir, ignoreFile: 'tests/.nftignore')
         // vcf_files: All vcf files
-        def vcf_files = getAllFilesFromDir(outdir, include: ['**/*.vcf{,.gz}'], ignore: ['pcgr/**'])
+        def vcf_files = getAllFilesFromDir(outdir, include: ['**/*.vcf{,.gz}'])
 
         def assertion = []
 
