@@ -106,12 +106,10 @@
                 "HCC1395.HCC1395T.pcgr.grch38.cna_gene.tsv.gz:md5,b301bf849179a442259ca92cc7f792c9",
                 "HCC1395.HCC1395T.pcgr.grch38.cna_gene_ann.tsv.gz:md5,8aa9781fe452ecff89aa006325c0f5fe",
                 "HCC1395.HCC1395T.pcgr.grch38.cna_segment.tsv.gz:md5,c8731c3be866b116af786cb76ea758cc",
-                "HCC1395.HCC1395T.pcgr.grch38.conf.yaml:md5,232945c210d069b1f3065ad4b33f73df",
                 "HCC1395.HCC1395T.pcgr.grch38.maf:md5,3a81207502720524e817b5d76f5a181c",
                 "HCC1395.HCC1395T.pcgr.grch38.pass.tsv.gz:md5,34221af12208b5f1f5ed21dde57d8760",
                 "HCC1395.HCC1395T.pcgr.grch38.snv_indel_ann.tsv.gz:md5,661dea535583a017309ee29248041251",
-                "HCC1395.HCC1395T.pcgr.grch38.tmb.tsv:md5,bbfda5ec66f1f6cfff65ed79bc250c58",
-                "HCC1395.HCC1395T.pcgr.grch38.xlsx:md5,520a8dbdc49d89b232eb209b8a634cdd"
+                "HCC1395.HCC1395T.pcgr.grch38.tmb.tsv:md5,bbfda5ec66f1f6cfff65ed79bc250c58"
             ],
             [
                 "HCC1395.HCC1395T.mutect2.norm.filtered.vcf.gz:md5,a2d2dd898784b1342f821f9f3254d3e1",
@@ -138,6 +136,6 @@
             "nf-test": "0.9.3",
             "nextflow": "25.10.4"
         },
-        "timestamp": "2026-02-18T14:22:34.866968172"
+        "timestamp": "2026-02-18T15:29:06.728522437"
     }
 }

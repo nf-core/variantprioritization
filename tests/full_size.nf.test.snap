@@ -107,14 +107,12 @@
                 "HCC1395.HCC1395T.pcgr.grch38.cna_gene.tsv.gz:md5,d753bdf67c498b8cc5e2d013ede2cefa",
                 "HCC1395.HCC1395T.pcgr.grch38.cna_gene_ann.tsv.gz:md5,dff3da2a532ce4981c3a23dded66f15e",
                 "HCC1395.HCC1395T.pcgr.grch38.cna_segment.tsv.gz:md5,8c9625abab7494b988a81bfb6c9c7e19",
-                "HCC1395.HCC1395T.pcgr.grch38.conf.yaml:md5,12bedbe7f6ea3daf0a7b8d378aab87ce",
-                "HCC1395.HCC1395T.pcgr.grch38.html:md5,8a73e3091bd75fb3fed92c3e72793571",
+                "HCC1395.HCC1395T.pcgr.grch38.html:md5,e5a83c626bab8760c60e1e1d5c6e45fc",
                 "HCC1395.HCC1395T.pcgr.grch38.maf:md5,c8b7f72570a11aeb3148f38cf82909c7",
-                "HCC1395.HCC1395T.pcgr.grch38.msigs.tsv.gz:md5,fe75b6ee80634669047f3f3234330014",
+                "HCC1395.HCC1395T.pcgr.grch38.msigs.tsv.gz:md5,54eca8df2ee30961013fc30cd29047ce",
                 "HCC1395.HCC1395T.pcgr.grch38.pass.tsv.gz:md5,d7c0fd6a44cd5ef277980025f1dce103",
                 "HCC1395.HCC1395T.pcgr.grch38.snv_indel_ann.tsv.gz:md5,73b9720069f731f007f231836d2e5d74",
-                "HCC1395.HCC1395T.pcgr.grch38.tmb.tsv:md5,b8b74e5d24ebe9e590c3432fec658866",
-                "HCC1395.HCC1395T.pcgr.grch38.xlsx:md5,7b4e87cb1cd3d2a23b9d194ca30d479b"
+                "HCC1395.HCC1395T.pcgr.grch38.tmb.tsv:md5,b8b74e5d24ebe9e590c3432fec658866"
             ],
             [
                 "HCC1395.HCC1395T.mutect2.norm.filtered.vcf.gz:md5,13acf3dbb23e3c5a60feb22c4b288ca6",
@@ -141,6 +139,6 @@
             "nf-test": "0.9.3",
             "nextflow": "25.10.4"
         },
-        "timestamp": "2026-02-18T14:35:51.045106284"
+        "timestamp": "2026-02-18T15:43:07.685457892"
     }
 }
