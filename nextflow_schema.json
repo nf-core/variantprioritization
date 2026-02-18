@@ -492,6 +492,10 @@
         },
         "vep_no_intergenic": {
             "type": "boolean"
+        },
+        "no_html": {
+            "type": "boolean",
+            "description": "Set to true if pcgr should not create the html report."
         }
     }
 }
