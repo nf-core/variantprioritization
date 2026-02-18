@@ -8,8 +8,7 @@ nextflow_pipeline {
     def test_scenario = [
         [
             name: "-profile test",
-            params: [],
-            show_yaml: true,
+            params: []
         ]
     ]
 
