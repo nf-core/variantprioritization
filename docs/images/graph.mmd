@@ -1,0 +1,16 @@
+%%metro title: variantprioritization
+%%metro style: dark
+%%metro line: main | Main | #4CAF50
+%%metro line: reference | Reference | #2196F3
+
+graph LR
+    input[Input]
+    reference[Reference]
+    reformat[Reformat]
+    prepare[Prepare]
+    pcgr[PCGR]
+
+    input -->|main| reformat
+    reformat -->|main| prepare
+    prepare -->|main| pcgr
+    reference -->|reference| pcgr
