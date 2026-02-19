@@ -29,6 +29,9 @@
                     "description": "The output directory where the results will be saved. You have to use absolute paths to storage on Cloud infrastructure.",
                     "fa_icon": "fas fa-folder-open"
                 },
+                "save_intermediates": {
+                    "type": "boolean"
+                },
                 "email": {
                     "type": "string",
                     "description": "Email address for completion summary.",
@@ -43,8 +46,8 @@
                 }
             }
         },
-        "reference_genome_options": {
-            "title": "Reference genome options",
+        "reference_options": {
+            "title": "Reference options",
             "type": "object",
             "fa_icon": "fas fa-dna",
             "description": "Reference genome related files and options required for the workflow.",
@@ -69,17 +72,23 @@
                     "fa_icon": "fas fa-ban",
                     "hidden": true,
                     "default": "s3://ngi-igenomes/igenomes/"
-                }
-            }
-        },
-        "reference_database_options": {
-            "title": "Reference database options",
-            "type": "object",
-            "description": "",
-            "default": "",
-            "properties": {
+                },
+                "pcgr_bundleversion": {
+                    "type": "integer",
+                    "default": 20250314
+                },
+                "pcgr_database_dir": {
+                    "type": "string",
+                    "description": "Path to PCGR database. Set pcgr_download to false when using this."
+                },
+                "pcgr_download": {
+                    "type": "boolean",
+                    "description": "Download PCGR reference database from the PCGR site. Set to false if you want to use a local path.",
+                    "default": true
+                },
                 "vep_cache": {
                     "type": "string",
+                    "description": "Path to VEP cache directory. Can be either a local path or the url of the annotation-cache website.",
                     "default": "s3://annotation-cache/vep_cache/"
                 },
                 "vep_cache_version": {
@@ -90,20 +99,257 @@
                     "type": "string",
                     "default": "homo_sapiens",
                     "hidden": true
+                }
+            }
+        },
+        "cpsr_options": {
+            "title": "CPSR options",
+            "type": "object",
+            "description": "",
+            "default": "",
+            "properties": {
+                "panel_id": {
+                    "type": "integer",
+                    "default": 0
                 },
-                "pcgr_download": {
+                "diagnostic_grade_only": {
+                    "type": "boolean"
+                },
+                "ignore_noncoding": {
+                    "type": "boolean"
+                },
+                "pop_gnomad": {
+                    "type": "string",
+                    "default": "nfe"
+                },
+                "maf_upper_threshold": {
+                    "type": "number",
+                    "default": 0.9
+                },
+                "classify_all": {
+                    "type": "boolean"
+                },
+                "clinvar_ignore_noncancer": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "pcgr_options": {
+            "title": "PCGR options",
+            "type": "object",
+            "description": "",
+            "default": "",
+            "properties": {
+                "vcf2maf": {
+                    "type": "boolean"
+                },
+                "assay": {
+                    "type": "string"
+                },
+                "tumor_site": {
+                    "type": "integer",
+                    "default": 0
+                },
+                "tumor_ploidy": {
+                    "type": "string"
+                },
+                "cna_analysis": {
+                    "type": "boolean"
+                },
+                "cna_overlap_pct": {
+                    "type": "integer",
+                    "default": 50
+                },
+                "tumor_purity": {
+                    "type": "string"
+                },
+                "effective_target_size_mb": {
+                    "type": "integer",
+                    "default": 34
+                },
+                "cpsr_report": {
+                    "type": "string"
+                },
+                "estimate_tmb": {
+                    "type": "boolean"
+                },
+                "estimate_msi": {
+                    "type": "boolean"
+                },
+                "estimate_signatures": {
+                    "type": "boolean"
+                },
+                "tmb_display": {
+                    "type": "string",
+                    "default": "coding_and_silent"
+                },
+                "min_mutations_signatures": {
+                    "type": "integer",
+                    "default": 200
+                },
+                "all_reference_signatures": {
+                    "type": "boolean"
+                },
+                "include_artefact_signatures": {
+                    "type": "boolean"
+                },
+                "prevalence_reference_signatures": {
+                    "type": "integer",
+                    "default": 5
+                },
+                "include_trials": {
                     "type": "boolean",
                     "default": true
                 },
-                "pcgr_bundleversion": {
+                "tumor_dp_min": {
                     "type": "integer",
-                    "default": 20250314
+                    "default": 0
                 },
-                "pcgr_database_dir": {
-                    "type": "string"
+                "tumor_af_min": {
+                    "type": "integer",
+                    "default": 0
+                },
+                "control_dp_min": {
+                    "type": "integer",
+                    "default": 0
+                },
+                "control_af_max": {
+                    "type": "integer",
+                    "default": 1
                 }
-            },
-            "fa_icon": "fas fa-database"
+            }
+        },
+        "pcgrtumoronly_options": {
+            "title": "PCGR tumor-only options",
+            "type": "object",
+            "description": "",
+            "default": "",
+            "properties": {
+                "tumor_only": {
+                    "type": "boolean"
+                },
+                "pon_vcf": {
+                    "type": "string"
+                },
+                "exclude_pon": {
+                    "type": "boolean"
+                },
+                "exclude_likely_hom_germline": {
+                    "type": "boolean"
+                },
+                "exclude_likely_het_germline": {
+                    "type": "boolean"
+                },
+                "exclude_dbsnp_nonsomatic": {
+                    "type": "boolean"
+                },
+                "exclude_nonexonic": {
+                    "type": "boolean"
+                },
+                "maf_gnomad_nfe": {
+                    "type": "number",
+                    "default": 0.002
+                },
+                "maf_gnomad_fin": {
+                    "type": "number",
+                    "default": 0.002
+                },
+                "maf_gnomad_asj": {
+                    "type": "number",
+                    "default": 0.002
+                },
+                "maf_gnomad_oth": {
+                    "type": "number",
+                    "default": 0.002
+                },
+                "maf_gnomad_amr": {
+                    "type": "number",
+                    "default": 0.002
+                },
+                "maf_gnomad_afr": {
+                    "type": "number",
+                    "default": 0.002
+                },
+                "maf_gnomad_eas": {
+                    "type": "number",
+                    "default": 0.002
+                },
+                "maf_gnomad_sas": {
+                    "type": "number",
+                    "default": 0.002
+                },
+                "maf_gnomad_global": {
+                    "type": "number",
+                    "default": 0.002
+                }
+            }
+        },
+        "variantfiltering_options": {
+            "title": "Variant filtering options",
+            "type": "object",
+            "description": "",
+            "default": "",
+            "properties": {
+                "filter_haplotypecaller": {
+                    "type": "string",
+                    "default": "-i\\'FORMAT/DP>10\\"
+                },
+                "filter_deepvariant": {
+                    "type": "string",
+                    "default": "-i\\'FORMAT/DP>10\\"
+                },
+                "filter_strelka_variants": {
+                    "type": "string",
+                    "default": "-i\\'FORMAT/DP>10\\"
+                },
+                "filter_freebayes_germline": {
+                    "type": "string",
+                    "default": "-i\\'FORMAT/DP>10\\"
+                },
+                "filter_mutect2": {
+                    "type": "string",
+                    "default": "-i\\'FORMAT/DP>10\\"
+                },
+                "filter_freebayes_somatic": {
+                    "type": "string",
+                    "default": "-i\\'FORMAT/DP>10\\"
+                },
+                "filter_strelka_indels": {
+                    "type": "string",
+                    "default": "-i\\'FORMAT/DP>10\\"
+                },
+                "filter_strelka_snvs": {
+                    "type": "string",
+                    "default": "-i\\'FORMAT/DP>10\\"
+                }
+            }
+        },
+        "vepparams_options": {
+            "title": "VEP options",
+            "type": "object",
+            "description": "",
+            "default": "",
+            "properties": {
+                "vep_n_forks": {
+                    "type": "integer",
+                    "default": 4
+                },
+                "vep_buffer_size": {
+                    "type": "integer",
+                    "default": 500
+                },
+                "vep_gencode_all": {
+                    "type": "boolean",
+                    "default": true
+                },
+                "vep_pick_order": {
+                    "type": "string",
+                    "default": "mane_select,mane_plus_clinical,canonical,biotype,ccds,rank,tsl,appris,length"
+                },
+                "vep_no_intergenic": {
+                    "type": "boolean"
+                }
+            }
         },
         "institutional_config_options": {
             "title": "Institutional config options",
@@ -259,258 +505,6 @@
                 "show_hidden": {
                     "type": "boolean",
                     "description": "Display hidden parameters in the help message (only works when --help or --help_full are provided)."
-                },
-                "save_intermediates": {
-                    "type": "boolean"
-                }
-            }
-        },
-        "pcgr_options": {
-            "title": "PCGR options",
-            "type": "object",
-            "description": "",
-            "default": "",
-            "properties": {
-                "vcf2maf": {
-                    "type": "boolean"
-                },
-                "assay": {
-                    "type": "string"
-                },
-                "tumor_site": {
-                    "type": "integer",
-                    "default": 0
-                },
-                "tumor_ploidy": {
-                    "type": "string"
-                },
-                "cna_analysis": {
-                    "type": "boolean"
-                },
-                "cna_overlap_pct": {
-                    "type": "integer",
-                    "default": 50
-                },
-                "tumor_purity": {
-                    "type": "string"
-                },
-                "effective_target_size_mb": {
-                    "type": "integer",
-                    "default": 34
-                },
-                "cpsr_report": {
-                    "type": "string"
-                },
-                "estimate_tmb": {
-                    "type": "boolean"
-                },
-                "estimate_msi": {
-                    "type": "boolean"
-                },
-                "estimate_signatures": {
-                    "type": "boolean"
-                },
-                "tmb_display": {
-                    "type": "string",
-                    "default": "coding_and_silent"
-                },
-                "min_mutations_signatures": {
-                    "type": "integer",
-                    "default": 200
-                },
-                "all_reference_signatures": {
-                    "type": "boolean"
-                },
-                "include_artefact_signatures": {
-                    "type": "boolean"
-                },
-                "prevalence_reference_signatures": {
-                    "type": "integer",
-                    "default": 5
-                },
-                "include_trials": {
-                    "type": "boolean",
-                    "default": true
-                },
-                "tumor_dp_min": {
-                    "type": "integer",
-                    "default": 0
-                },
-                "tumor_af_min": {
-                    "type": "integer",
-                    "default": 0
-                },
-                "control_dp_min": {
-                    "type": "integer",
-                    "default": 0
-                },
-                "control_af_max": {
-                    "type": "integer",
-                    "default": 1
-                }
-            }
-        },
-        "pcgrtumoronly_options": {
-            "title": "PCGR tumor-only options",
-            "type": "object",
-            "description": "",
-            "default": "",
-            "properties": {
-                "tumor_only": {
-                    "type": "boolean"
-                },
-                "pon_vcf": {
-                    "type": "string"
-                },
-                "exclude_pon": {
-                    "type": "boolean"
-                },
-                "exclude_likely_hom_germline": {
-                    "type": "boolean"
-                },
-                "exclude_likely_het_germline": {
-                    "type": "boolean"
-                },
-                "exclude_dbsnp_nonsomatic": {
-                    "type": "boolean"
-                },
-                "exclude_nonexonic": {
-                    "type": "boolean"
-                },
-                "maf_gnomad_nfe": {
-                    "type": "number",
-                    "default": 0.002
-                },
-                "maf_gnomad_fin": {
-                    "type": "number",
-                    "default": 0.002
-                },
-                "maf_gnomad_asj": {
-                    "type": "number",
-                    "default": 0.002
-                },
-                "maf_gnomad_oth": {
-                    "type": "number",
-                    "default": 0.002
-                },
-                "maf_gnomad_amr": {
-                    "type": "number",
-                    "default": 0.002
-                },
-                "maf_gnomad_afr": {
-                    "type": "number",
-                    "default": 0.002
-                },
-                "maf_gnomad_eas": {
-                    "type": "number",
-                    "default": 0.002
-                },
-                "maf_gnomad_sas": {
-                    "type": "number",
-                    "default": 0.002
-                },
-                "maf_gnomad_global": {
-                    "type": "number",
-                    "default": 0.002
-                }
-            }
-        },
-        "vepparams_options": {
-            "title": "VEP options",
-            "type": "object",
-            "description": "",
-            "default": "",
-            "properties": {
-                "vep_n_forks": {
-                    "type": "integer",
-                    "default": 4
-                },
-                "vep_buffer_size": {
-                    "type": "integer",
-                    "default": 500
-                },
-                "vep_gencode_all": {
-                    "type": "boolean",
-                    "default": true
-                },
-                "vep_pick_order": {
-                    "type": "string",
-                    "default": "mane_select,mane_plus_clinical,canonical,biotype,ccds,rank,tsl,appris,length"
-                },
-                "vep_no_intergenic": {
-                    "type": "boolean"
-                }
-            }
-        },
-        "variantfiltering_options": {
-            "title": "Variant filtering options",
-            "type": "object",
-            "description": "",
-            "default": "",
-            "properties": {
-                "filter_haplotypecaller": {
-                    "type": "string",
-                    "default": "-i\\'FORMAT/DP>10\\"
-                },
-                "filter_deepvariant": {
-                    "type": "string",
-                    "default": "-i\\'FORMAT/DP>10\\"
-                },
-                "filter_strelka_variants": {
-                    "type": "string",
-                    "default": "-i\\'FORMAT/DP>10\\"
-                },
-                "filter_freebayes_germline": {
-                    "type": "string",
-                    "default": "-i\\'FORMAT/DP>10\\"
-                },
-                "filter_mutect2": {
-                    "type": "string",
-                    "default": "-i\\'FORMAT/DP>10\\"
-                },
-                "filter_freebayes_somatic": {
-                    "type": "string",
-                    "default": "-i\\'FORMAT/DP>10\\"
-                },
-                "filter_strelka_indels": {
-                    "type": "string",
-                    "default": "-i\\'FORMAT/DP>10\\"
-                },
-                "filter_strelka_snvs": {
-                    "type": "string",
-                    "default": "-i\\'FORMAT/DP>10\\"
-                }
-            }
-        },
-        "cpsr_options": {
-            "title": "CPSR options",
-            "type": "object",
-            "description": "",
-            "default": "",
-            "properties": {
-                "panel_id": {
-                    "type": "integer",
-                    "default": 0
-                },
-                "diagnostic_grade_only": {
-                    "type": "boolean"
-                },
-                "ignore_noncoding": {
-                    "type": "boolean"
-                },
-                "pop_gnomad": {
-                    "type": "string",
-                    "default": "nfe"
-                },
-                "maf_upper_threshold": {
-                    "type": "number",
-                    "default": 0.9
-                },
-                "classify_all": {
-                    "type": "boolean"
-                },
-                "clinvar_ignore_noncancer": {
-                    "type": "boolean"
                 }
             }
         }
