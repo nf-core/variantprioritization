@@ -75,7 +75,9 @@
                 },
                 "pcgr_bundleversion": {
                     "type": "integer",
-                    "default": 20250314
+                    "default": 20250314,
+                    "description": "PCGR/CPSR reference data bundle version.",
+                    "help_text": "Version tag for the downloadable PCGR reference bundle. Keep this aligned with the PCGR container/software version for compatibility."
                 },
                 "pcgr_database_dir": {
                     "type": "string",
@@ -113,249 +115,317 @@
         "cpsr_options": {
             "title": "CPSR options",
             "type": "object",
-            "description": "",
+            "description": "Configuration options for germline cancer predisposition reporting (CPSR).",
             "default": "",
             "properties": {
                 "panel_id": {
                     "type": "integer",
-                    "default": 0
+                    "default": 0,
+                    "description": "CPSR virtual gene panel identifier.",
+                    "help_text": "Use 0 for the full panel (default), or a specific panel ID to restrict analysis to selected predisposition genes."
                 },
                 "diagnostic_grade_only": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "Report only variants with diagnostic-grade evidence.",
+                    "help_text": "When enabled, CPSR output is restricted to high-confidence clinically relevant findings."
                 },
                 "ignore_noncoding": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "Exclude non-coding variants from CPSR interpretation."
                 },
                 "pop_gnomad": {
                     "type": "string",
-                    "default": "nfe"
+                    "default": "nfe",
+                    "description": "gnomAD population code used for population-frequency assessment.",
+                    "help_text": "Examples include nfe, fin, asj, amr, afr, eas, sas, oth. Used when applying frequency-aware interpretation rules."
                 },
                 "maf_upper_threshold": {
                     "type": "number",
-                    "default": 0.9
+                    "default": 0.9,
+                    "description": "Upper minor allele frequency threshold used in CPSR filtering/classification."
                 },
                 "classify_all": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "Classify all eligible variants, not only a restricted clinical subset."
                 },
                 "clinvar_ignore_noncancer": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "Ignore ClinVar records without cancer-related phenotype context."
                 }
             }
         },
         "pcgr_options": {
             "title": "PCGR options",
             "type": "object",
-            "description": "",
+            "description": "Configuration options for somatic interpretation and reporting with PCGR.",
             "default": "",
             "properties": {
                 "vcf2maf": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "Generate a Mutation Annotation Format (MAF) file from input VCF."
                 },
                 "assay": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Sequencing assay type.",
+                    "help_text": "Set assay context for reporting/metrics (for example WGS, WES, or targeted panel)."
                 },
                 "tumor_site": {
                     "type": "integer",
-                    "default": 0
+                    "default": 0,
+                    "description": "Tumor site code used for site-specific interpretation.",
+                    "help_text": "Use the numeric code expected by PCGR; 0 keeps a generic/non-specific setting."
                 },
                 "tumor_ploidy": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Estimated tumor ploidy value.",
+                    "help_text": "Optional ploidy estimate used by downstream interpretation modules."
                 },
                 "cna_analysis": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "Enable copy-number alteration (CNA) analysis and reporting."
                 },
                 "cna_overlap_pct": {
                     "type": "integer",
-                    "default": 50
+                    "default": 50,
+                    "description": "Minimum overlap percentage between CNA segment and gene region to call gene-level CNA."
                 },
                 "tumor_purity": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Estimated tumor purity value.",
+                    "help_text": "Optional purity estimate used in interpretation and QC context."
                 },
                 "effective_target_size_mb": {
                     "type": "integer",
-                    "default": 34
+                    "default": 34,
+                    "description": "Effective target territory in megabases for TMB estimation.",
+                    "help_text": "Set to covered coding territory for panel/WES assays; used as denominator for mutations-per-Mb."
                 },
                 "cpsr_report": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Path to a CPSR report/input to incorporate germline findings into PCGR output."
                 },
                 "estimate_tmb": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "Estimate tumor mutational burden (TMB)."
                 },
                 "estimate_msi": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "Estimate microsatellite instability (MSI) status."
                 },
                 "estimate_signatures": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "Estimate mutational signatures from somatic SNV profile."
                 },
                 "tmb_display": {
                     "type": "string",
-                    "default": "coding_and_silent"
+                    "default": "coding_and_silent",
+                    "description": "Rule for which variant classes are included in displayed TMB.",
+                    "help_text": "Typical choices distinguish coding-only vs coding+silent counting strategies."
                 },
                 "min_mutations_signatures": {
                     "type": "integer",
-                    "default": 200
+                    "default": 200,
+                    "description": "Minimum number of mutations required for mutational signature estimation."
                 },
                 "all_reference_signatures": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "Use the full reference signature set during fitting."
                 },
                 "include_artefact_signatures": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "Allow inclusion of known artefactual signatures in signature fitting."
                 },
                 "prevalence_reference_signatures": {
                     "type": "integer",
-                    "default": 5
+                    "default": 5,
+                    "description": "Minimum prevalence threshold (percent) for including reference signatures."
                 },
                 "include_trials": {
                     "type": "boolean",
-                    "default": true
+                    "default": true,
+                    "description": "Include variant-matched clinical trial information in report output."
                 },
                 "tumor_dp_min": {
                     "type": "integer",
-                    "default": 0
+                    "default": 0,
+                    "description": "Minimum tumor read depth required for somatic variant retention."
                 },
                 "tumor_af_min": {
                     "type": "integer",
-                    "default": 0
+                    "default": 0,
+                    "description": "Minimum tumor allele fraction required for somatic variant retention."
                 },
                 "control_dp_min": {
                     "type": "integer",
-                    "default": 0
+                    "default": 0,
+                    "description": "Minimum control/normal read depth required for filtering logic."
                 },
                 "control_af_max": {
                     "type": "integer",
-                    "default": 1
+                    "default": 1,
+                    "description": "Maximum control/normal allele fraction allowed for somatic variant retention."
                 }
             }
         },
         "pcgrtumoronly_options": {
             "title": "PCGR tumor-only options",
             "type": "object",
-            "description": "",
+            "description": "Additional filtering options for tumor-only somatic interpretation.",
             "default": "",
             "properties": {
                 "tumor_only": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "Run in tumor-only mode (no matched normal sample)."
                 },
                 "pon_vcf": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Path to panel-of-normals (PoN) VCF used to suppress recurrent artefacts."
                 },
                 "exclude_pon": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "Exclude variants overlapping panel-of-normals calls."
                 },
                 "exclude_likely_hom_germline": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "Exclude variants likely to represent homozygous germline events."
                 },
                 "exclude_likely_het_germline": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "Exclude variants likely to represent heterozygous germline events."
                 },
                 "exclude_dbsnp_nonsomatic": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "Exclude variants with dbSNP support for non-somatic origin."
                 },
                 "exclude_nonexonic": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "Exclude non-exonic variants in tumor-only filtering."
                 },
                 "maf_gnomad_nfe": {
                     "type": "number",
-                    "default": 0.002
+                    "default": 0.002,
+                    "description": "Maximum gnomAD NFE population AF tolerated in tumor-only filtering."
                 },
                 "maf_gnomad_fin": {
                     "type": "number",
-                    "default": 0.002
+                    "default": 0.002,
+                    "description": "Maximum gnomAD FIN population AF tolerated in tumor-only filtering."
                 },
                 "maf_gnomad_asj": {
                     "type": "number",
-                    "default": 0.002
+                    "default": 0.002,
+                    "description": "Maximum gnomAD ASJ population AF tolerated in tumor-only filtering."
                 },
                 "maf_gnomad_oth": {
                     "type": "number",
-                    "default": 0.002
+                    "default": 0.002,
+                    "description": "Maximum gnomAD OTH population AF tolerated in tumor-only filtering."
                 },
                 "maf_gnomad_amr": {
                     "type": "number",
-                    "default": 0.002
+                    "default": 0.002,
+                    "description": "Maximum gnomAD AMR population AF tolerated in tumor-only filtering."
                 },
                 "maf_gnomad_afr": {
                     "type": "number",
-                    "default": 0.002
+                    "default": 0.002,
+                    "description": "Maximum gnomAD AFR population AF tolerated in tumor-only filtering."
                 },
                 "maf_gnomad_eas": {
                     "type": "number",
-                    "default": 0.002
+                    "default": 0.002,
+                    "description": "Maximum gnomAD EAS population AF tolerated in tumor-only filtering."
                 },
                 "maf_gnomad_sas": {
                     "type": "number",
-                    "default": 0.002
+                    "default": 0.002,
+                    "description": "Maximum gnomAD SAS population AF tolerated in tumor-only filtering."
                 },
                 "maf_gnomad_global": {
                     "type": "number",
-                    "default": 0.002
+                    "default": 0.002,
+                    "description": "Maximum global gnomAD AF tolerated in tumor-only filtering."
                 }
             }
         },
         "variantfiltering_options": {
             "title": "Variant filtering options",
             "type": "object",
-            "description": "",
+            "description": "Custom expressions for caller-specific hard filtering.",
             "default": "",
             "properties": {
                 "filter_haplotypecaller": {
                     "type": "string",
-                    "default": "-i\\'FORMAT/DP>10\\"
+                    "default": "-i\\'FORMAT/DP>10\\",
+                    "description": "Filtering expression for HaplotypeCaller VCF records."
                 },
                 "filter_deepvariant": {
                     "type": "string",
-                    "default": "-i\\'FORMAT/DP>10\\"
+                    "default": "-i\\'FORMAT/DP>10\\",
+                    "description": "Filtering expression for DeepVariant VCF records."
                 },
                 "filter_strelka_variants": {
                     "type": "string",
-                    "default": "-i\\'FORMAT/DP>10\\"
+                    "default": "-i\\'FORMAT/DP>10\\",
+                    "description": "Filtering expression for combined Strelka variant records."
                 },
                 "filter_freebayes_germline": {
                     "type": "string",
-                    "default": "-i\\'FORMAT/DP>10\\"
+                    "default": "-i\\'FORMAT/DP>10\\",
+                    "description": "Filtering expression for FreeBayes germline VCF records."
                 },
                 "filter_mutect2": {
                     "type": "string",
-                    "default": "-i\\'FORMAT/DP>10\\"
+                    "default": "-i\\'FORMAT/DP>10\\",
+                    "description": "Filtering expression for Mutect2 VCF records."
                 },
                 "filter_freebayes_somatic": {
                     "type": "string",
-                    "default": "-i\\'FORMAT/DP>10\\"
+                    "default": "-i\\'FORMAT/DP>10\\",
+                    "description": "Filtering expression for FreeBayes somatic VCF records."
                 },
                 "filter_strelka_indels": {
                     "type": "string",
-                    "default": "-i\\'FORMAT/DP>10\\"
+                    "default": "-i\\'FORMAT/DP>10\\",
+                    "description": "Filtering expression for Strelka INDEL records."
                 },
                 "filter_strelka_snvs": {
                     "type": "string",
-                    "default": "-i\\'FORMAT/DP>10\\"
+                    "default": "-i\\'FORMAT/DP>10\\",
+                    "description": "Filtering expression for Strelka SNV records."
                 }
             }
         },
         "vepparams_options": {
             "title": "VEP options",
             "type": "object",
-            "description": "",
+            "description": "Runtime and annotation behavior options for Ensembl VEP.",
             "default": "",
             "properties": {
                 "vep_n_forks": {
                     "type": "integer",
-                    "default": 4
+                    "default": 4,
+                    "description": "Number of parallel VEP forks.",
+                    "help_text": "Higher values can improve throughput but increase CPU and memory usage."
                 },
                 "vep_buffer_size": {
                     "type": "integer",
-                    "default": 500
+                    "default": 500,
+                    "description": "Number of variants buffered per VEP processing block."
                 },
                 "vep_gencode_all": {
                     "type": "boolean",
-                    "default": true
+                    "default": true,
+                    "description": "Use full GENCODE transcript set during annotation."
                 },
                 "vep_pick_order": {
                     "type": "string",
-                    "default": "mane_select,mane_plus_clinical,canonical,biotype,ccds,rank,tsl,appris,length"
+                    "default": "mane_select,mane_plus_clinical,canonical,biotype,ccds,rank,tsl,appris,length",
+                    "description": "Priority order used by VEP when selecting a single representative consequence."
                 },
                 "vep_no_intergenic": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "Skip annotation of intergenic variants."
                 }
             }
         },
