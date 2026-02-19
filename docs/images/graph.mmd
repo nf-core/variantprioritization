@@ -1,16 +1,50 @@
-%%metro title: variantprioritization
-%%metro style: dark
+%%metro title: nf-core/variantprioritization
+%%metro logo: nf-core-variantprioritization_logo_dark.png
+%%metro file: vcf_in | VCF
+%%metro file: report_pcgr | HTML
 %%metro line: main | Main | #4CAF50
 %%metro line: reference | Reference | #2196F3
 
 graph LR
-    input[Input]
-    reference[Reference]
-    reformat[Reformat]
-    prepare[Prepare]
-    pcgr[PCGR]
 
-    input -->|main| reformat
-    reformat -->|main| prepare
-    prepare -->|main| pcgr
-    reference -->|reference| pcgr
+    subgraph preprocessing [Pre-processing]
+        vcf_in[VCF]
+        tabix[Tabix]
+        bcftools_norm[BCFtools norm]
+        bcftools_filter[BCFTools filter]
+
+        vcf_in -->|main| tabix
+        tabix -->|main| bcftools_norm
+        bcftools_norm -->|main| bcftools_filter
+    end
+
+
+    subgraph format_files [Format-Files]
+        reformat_cna[CNA]
+        reformat_vcf[VCF]
+        intersect[Intersect]
+        prepare_pcgr[Prepare PCGR]
+
+        reformat_vcf -->|main| intersect
+        reformat_vcf -->|main| prepare_pcgr
+        intersect -->|main| prepare_pcgr
+    end
+
+    subgraph reference [Get reference]
+        get_pcgr[PCGR DB]
+        get_vep[VEP Cache]
+    end
+
+    subgraph run_pcgr [PCGR]
+        pcgr[PCGR]
+        report_pcgr[Report]
+
+        pcgr -->|main| report_pcgr
+    end
+
+    %% Inter-section edges
+    bcftools_filter -->|main| reformat_vcf
+    reformat_cna -->|main| pcgr
+    prepare_pcgr -->|main| pcgr
+    get_pcgr -->|reference| pcgr
+    get_vep -->|reference| pcgr
