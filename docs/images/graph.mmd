@@ -28,10 +28,10 @@ graph LR
         intersect[Intersect VCF]
         prepare_pcgr[Prepare VCF]
 
-        cna_in -->|cna| reformat_cna
         reformat_vcf -->|main| intersect
         reformat_vcf -->|main| prepare_pcgr
         intersect -->|main| prepare_pcgr
+        cna_in -->|cna| reformat_cna
     end
 
     subgraph run_pcgr [PCGR]
