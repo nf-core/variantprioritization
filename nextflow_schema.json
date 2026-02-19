@@ -90,14 +90,13 @@
                 },
                 "vep_cache": {
                     "type": "string",
-                    "format": "directory-path",
                     "fa_icon": "fas fa-cloud-download-alt",
                     "default": "s3://annotation-cache/vep_cache/",
                     "description": "Path to VEP cache.",
                     "help_text": "Path to VEP cache which should contain the relevant species, genome and build directories at the path ${vep_species}/${vep_genome}_${vep_cache_version}."
                 },
                 "vep_cache_version": {
-                    "type": "string",
+                    "type": "integer",
                     "fa_icon": "fas fa-tag",
                     "default": 113,
                     "description": "VEP cache version.",
