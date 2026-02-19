@@ -88,15 +88,23 @@
                 },
                 "vep_cache": {
                     "type": "string",
-                    "description": "Path to VEP cache directory. Can be either a local path or the url of the annotation-cache website.",
-                    "default": "s3://annotation-cache/vep_cache/"
+                    "format": "directory-path",
+                    "fa_icon": "fas fa-cloud-download-alt",
+                    "default": "s3://annotation-cache/vep_cache/",
+                    "description": "Path to VEP cache.",
+                    "help_text": "Path to VEP cache which should contain the relevant species, genome and build directories at the path ${vep_species}/${vep_genome}_${vep_cache_version}."
                 },
                 "vep_cache_version": {
-                    "type": "integer",
-                    "default": 113
+                    "type": "string",
+                    "fa_icon": "fas fa-tag",
+                    "default": 113,
+                    "description": "VEP cache version.",
+                    "help_text": "Alternative cache version can be used to specify the correct Ensembl Genomes version number as these differ from the concurrent Ensembl/VEP version numbers."
                 },
                 "vep_species": {
                     "type": "string",
+                    "fa_icon": "fas fa-microscope",
+                    "description": "VEP species. Defaults to homo_sapiens.",
                     "default": "homo_sapiens",
                     "hidden": true
                 }
