@@ -255,6 +255,8 @@ def processSamplesheet(row) {
         }
     }
 
+    meta.tool = meta.tool.toLowerCase()
+
     // meta.id for process tags
     meta.id = "${meta.patient}.${meta.sample}.${meta.tool}"
 

@@ -10,12 +10,11 @@ process PCGR_RUN {
     input:
     tuple val(meta), path(vcf), path(tbi), path(cna)
     path pcgr_dir
-    //path pon
     path vep_cache
 
     output:
     tuple val(meta), path("${prefix}"), emit: pcgr_reports
-    path "versions.yml",                emit: versions
+    tuple val("${task.process}"), val('pcgr'),  eval("pcgr --version | sed 's/pcgr //g'"), topic: versions, emit: versions_pcgr
 
     when:
     task.ext.when == null || task.ext.when
@@ -44,10 +43,11 @@ process PCGR_RUN {
         --call_conf_tag 'TAL' \\
         ${cna_cmd} \\
         ${args}
+    """
 
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        pcgr: \$(echo \$( pcgr --version | sed 's/pcgr //g' ))
-    END_VERSIONS
+    stub:
+    prefix      = task.ext.prefix ?: "${meta.id}"
+    """
+    mkdir -p ${prefix}
     """
 }
