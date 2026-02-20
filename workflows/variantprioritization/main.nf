@@ -83,9 +83,6 @@ workflow VARIANTPRIORITIZATION {
         ch_vep_cache.collect(),
     )
 
-    ch_versions = ch_versions.mix(PCGR_RUN.out.versions)
-
-
     //
     // SUBWORKFLOW: cpsr
     //
