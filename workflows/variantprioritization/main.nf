@@ -83,7 +83,7 @@ workflow VARIANTPRIORITIZATION {
     //
     // SUBWORKFLOW: cpsr
     //
-    CPSR_RUN( 
+    CPSR_RUN(
         ch_germline_vcf_files,
         ch_pcgr_dir.collect(),
         ch_vep_cache.collect()

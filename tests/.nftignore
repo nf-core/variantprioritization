@@ -13,3 +13,4 @@ pipeline_info/*.{html,json,txt,yml}
 reference/**
 **/*.{vcf,vcf.gz,vcf.gz.tbi}
 pcgr/**/*.{conf.yaml,xlsx}
+cpsr/**/*.{conf.yaml,xlsx}
