@@ -1,7 +1,7 @@
 {
     "-profile test | CPSR": {
         "content": [
-            7,
+            15,
             {
                 "BCFTOOLS_FILTER": {
                     "bcftools": 1.22
@@ -25,9 +25,17 @@
             [
                 "bcftools",
                 "bcftools/filter",
+                "bcftools/filter/NA12878.NA12878N.deepvariant.norm.filtered.vcf.gz",
+                "bcftools/filter/NA12878.NA12878N.deepvariant.norm.filtered.vcf.gz.tbi",
+                "bcftools/filter/NA12878.NA12878N.haplotypecaller.norm.filtered.vcf.gz",
+                "bcftools/filter/NA12878.NA12878N.haplotypecaller.norm.filtered.vcf.gz.tbi",
                 "bcftools/filter/NA12878.NA12878N.strelka_snv.norm.filtered.vcf.gz",
                 "bcftools/filter/NA12878.NA12878N.strelka_snv.norm.filtered.vcf.gz.tbi",
                 "bcftools/norm",
+                "bcftools/norm/NA12878.NA12878N.deepvariant.norm.vcf.gz",
+                "bcftools/norm/NA12878.NA12878N.deepvariant.norm.vcf.gz.tbi",
+                "bcftools/norm/NA12878.NA12878N.haplotypecaller.norm.vcf.gz",
+                "bcftools/norm/NA12878.NA12878N.haplotypecaller.norm.vcf.gz.tbi",
                 "bcftools/norm/NA12878.NA12878N.strelka_snv.norm.vcf.gz",
                 "bcftools/norm/NA12878.NA12878N.strelka_snv.norm.vcf.gz.tbi",
                 "cpsr",
@@ -55,19 +63,25 @@
                 "pipeline_info/nf_core_variantprioritization_software_mqc_versions.yml",
                 "reference",
                 "tabix",
+                "tabix/NA12878.deepvariant.chr22.vcf.gz.tbi",
+                "tabix/NA12878.haplotypecaller.chr22.vcf.gz.tbi",
                 "tabix/NA12878.strelka.variants.chr22.vcf.gz.tbi"
             ],
             [
-                "NA12878.NA12878N.cpsr.grch38.classification.tsv.gz:md5,6eddf0d151758d134e02dbc89e1b39fc",
-                "NA12878.NA12878N.cpsr.grch38.html:md5,b8239980882b256581e5c5dd0e0469cd",
-                "NA12878.NA12878N.cpsr.grch38.pass.tsv.gz:md5,19020ed760bb26c88f50713374e12069",
+                "NA12878.NA12878N.cpsr.grch38.classification.tsv.gz:md5,568d7953780a84c50d2d410828fbc655",
+                "NA12878.NA12878N.cpsr.grch38.html:md5,a4c605c72d8ad94bed29c3e51c2d561d",
+                "NA12878.NA12878N.cpsr.grch38.pass.tsv.gz:md5,20569704e03cb6d461148bdbd3d5f33f",
                 "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f"
             ],
             [
+                "NA12878.NA12878N.deepvariant.norm.filtered.vcf.gz:md5,838148d91b559d39859ccc7b6140f293",
+                "NA12878.NA12878N.haplotypecaller.norm.filtered.vcf.gz:md5,1d51f07c55b96bb3ec253bc978774ca",
                 "NA12878.NA12878N.strelka_snv.norm.filtered.vcf.gz:md5,4d08ebc56b1d528d87e76e8011a43faa",
+                "NA12878.NA12878N.deepvariant.norm.vcf.gz:md5,272363f93f21b7a9adc6dcad78647116",
+                "NA12878.NA12878N.haplotypecaller.norm.vcf.gz:md5,4f2f21777d10571f444f0f3a9c80aadc",
                 "NA12878.NA12878N.strelka_snv.norm.vcf.gz:md5,4d08ebc56b1d528d87e76e8011a43faa",
-                "NA12878.NA12878N.cpsr.grch38.pass.vcf.gz:md5,f46ba57143f5bd5d52278179af762695",
-                "NA12878.NA12878N.cpsr.grch38.vcf.gz:md5,306c9be722a61529c436206740fe9506",
+                "NA12878.NA12878N.cpsr.grch38.pass.vcf.gz:md5,6aae7623eaa21b914d76aad8ce5e94f2",
+                "NA12878.NA12878N.cpsr.grch38.vcf.gz:md5,6aae7623eaa21b914d76aad8ce5e94f2",
                 "clinvar.vcf.gz:md5,8d3b4f3fa176287738ae82e72e26eac9",
                 "dbmts.vcf.gz:md5,fe9d26d3f24a49fde2d98a62ec329de5",
                 "dbnsfp.vcf.gz:md5,9fe7521182b9bd0c07f233f168504e8f",
@@ -80,6 +94,6 @@
             "nf-test": "0.9.2",
             "nextflow": "25.10.4"
         },
-        "timestamp": "2026-02-23T14:24:23.111827442"
+        "timestamp": "2026-02-23T14:38:18.372726536"
     }
 }

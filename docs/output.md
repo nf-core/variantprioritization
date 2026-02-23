@@ -13,7 +13,8 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 - [Reference data](#reference-data) – PCGR and VEP resources when downloaded or provided as archives
 - [VCF preprocessing](#vcf-preprocessing) – optional bgzip/tabix, left-normalisation and filtering
 - [Variant formatting and intersection](#variant-formatting-and-intersection) – reheader VCFs, merge caller support, and reformat CNAs
-- [PCGR](#pcgr) – combined variant annotation and reporting
+- [PCGR](#pcgr) – combined somatic variant annotation and reporting
+- [CPSR](#cpsr) – combined germline variant annotation and reporting
 - [MultiQC](#multiqc) – aggregate QC and provenance reporting
 - [Pipeline information](#pipeline-information) – run metadata and software versions
 
@@ -79,6 +80,21 @@ Variants are first intersected across somatic callers to capture support per too
 </details>
 
 PCGR ingests the unified somatic VCF (and optional allele-specific CNA table) together with the provided reference bundle and VEP cache to produce interactive and machine-readable reports per sample.
+
+### CPSR
+
+<details markdown="1">
+<summary>Output files</summary>
+
+- `cpsr/{sample}/`
+  - `{sample}.cpsr.{assembly}.html`: interactive CPSR report.
+  - `{sample}.cpsr.{assembly}.xlsx`: Excel summary of annotated variants.
+  - `{sample}.cpsr.{assembly}.pass.*`: PASS-filtered TSV/VCF summaries (e.g. `.pass.tsv.gz`, `.pass.vcf.gz` + `.tbi`).
+  - `{sample}.cpsr.{assembly}.conf.yaml`: configuration used by CPSR.
+
+</details>
+
+CPSR ingests the unified germline VCF together with the provided reference bundle and VEP cache to produce interactive and machine-readable reports per sample.
 
 ### MultiQC
 
