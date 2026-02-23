@@ -8,7 +8,7 @@ include { REFERENCE_DATA         } from '../../subworkflows/local/reference_data
 include { VCF_PREPROCESSING      } from '../../subworkflows/local/vcf_preprocessing'
 include { FORMAT_FILES           } from '../../subworkflows/local/format_files'
 include { PCGR_RUN               } from '../../modules/local/pcgr/run'
-include { CPSR_RUN               } from '../../modules/local/cpgr'
+include { CPSR_RUN               } from '../../modules/local/cpsr/run'
 
 
 include { getGenomeAttribute     } from '../../subworkflows/local/utils_nfcore_variantprioritization_pipeline'
@@ -58,9 +58,6 @@ workflow VARIANTPRIORITIZATION {
         fasta,
     )
 
-    //VCF_PREPROCESSING.out.normalised_germline.view()
-    //VCF_PREPROCESSING.out.normalised_somatic.view()
-
     def ch_germline_vcf_files = VCF_PREPROCESSING.out.normalised_germline
     def ch_somatic_vcf_files = VCF_PREPROCESSING.out.normalised_somatic
 
@@ -77,21 +74,24 @@ workflow VARIANTPRIORITIZATION {
     //
     // SUBWORKFLOW: pcgr
     //
-    PCGR_RUN(
-        FORMAT_FILES.out.pcgr_ready_vcf,
-        ch_pcgr_dir.collect(),
-        ch_vep_cache.collect(),
-    )
+    if (params.analysis.split(',').contains('somatic')) {
+        PCGR_RUN(
+            FORMAT_FILES.out.pcgr_ready_vcf,
+            ch_pcgr_dir.collect(),
+            ch_vep_cache.collect(),
+        )
+    }
 
     //
     // SUBWORKFLOW: cpsr
     //
-    CPSR_RUN( VCF_PREPROCESSING.out.normalised_germline,
-              ch_pcgr_dir.collect(),
-              ch_vep_cache.collect()
+    if (params.analysis.split(',').contains('germline')) {
+        CPSR_RUN( 
+                ch_germline_vcf_files,
+                ch_pcgr_dir.collect(),
+                ch_vep_cache.collect()
             )
-
-    ch_versions = ch_versions.mix(CPSR_RUN.out.versions)
+    }
 
 
     //

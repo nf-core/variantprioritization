@@ -9,7 +9,8 @@ nextflow_pipeline {
         [
             name: "-profile test",
             params: [
-                analysis: 'somatic',
+                input: "tests/cpsr-sheet.csv",
+                analysis: 'germline',
             ]
         ]
     ]

@@ -14,7 +14,7 @@ process CPSR_RUN {
 
     output:
     tuple val(meta), path("${prefix}"), emit: cpgr_reports
-    path "versions.yml"           , emit: versions
+    tuple val("${task.process}"), val('cpsr'),  eval("cpsr --version | sed 's/cpsr //g'"), topic: versions, emit: versions_cpsr
 
     when:
     task.ext.when == null || task.ext.when
@@ -38,10 +38,11 @@ process CPSR_RUN {
         --genome_assembly ${genome} \\
         --sample_id ${prefix} \\
          ${args}
+    """
 
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        pcgr: \$(echo \$( cpsr --version | sed 's/cpsr //g' ))
-    END_VERSIONS
+    stub:
+    prefix = task.ext.prefix ?: "${meta.id}"
+    """
+    mkdir -p ${prefix}
     """
 }

@@ -1,0 +1,2 @@
+patient,status,sample,vcf,cna
+NA12878,0,NA12878N,https://github.com/nf-core/test-datasets/raw/refs/heads/modules/data/genomics/homo_sapiens/illumina/vcf/NA12878_GIAB.chr22.vcf.gz,
