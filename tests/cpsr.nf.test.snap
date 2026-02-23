@@ -73,16 +73,6 @@
                 "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f"
             ],
             [
-                [
-                    "NA12878.NA12878N.cpsr.grch38.pass.vcf.gz",
-                    "VcfFile [chromosomes=[22], sampleCount=1, variantCount=88, phased=false, phasedAutodetect=false]"
-                ],
-                [
-                    "NA12878.NA12878N.cpsr.grch38.vcf.gz",
-                    "VcfFile [chromosomes=[22], sampleCount=1, variantCount=88, phased=false, phasedAutodetect=false]"
-                ]
-            ],
-            [
                 "NA12878.NA12878N.deepvariant.norm.filtered.vcf.gz:md5,838148d91b559d39859ccc7b6140f293",
                 "NA12878.NA12878N.haplotypecaller.norm.filtered.vcf.gz:md5,1d51f07c55b96bb3ec253bc978774ca",
                 "NA12878.NA12878N.strelka_snv.norm.filtered.vcf.gz:md5,4d08ebc56b1d528d87e76e8011a43faa",
