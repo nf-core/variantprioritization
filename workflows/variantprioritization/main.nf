@@ -74,24 +74,20 @@ workflow VARIANTPRIORITIZATION {
     //
     // SUBWORKFLOW: pcgr
     //
-    if (params.analysis.split(',').contains('somatic')) {
-        PCGR_RUN(
-            FORMAT_FILES.out.pcgr_ready_vcf,
-            ch_pcgr_dir.collect(),
-            ch_vep_cache.collect(),
-        )
-    }
+    PCGR_RUN(
+        FORMAT_FILES.out.pcgr_ready_vcf,
+        ch_pcgr_dir.collect(),
+        ch_vep_cache.collect(),
+    )
 
     //
     // SUBWORKFLOW: cpsr
     //
-    if (params.analysis.split(',').contains('germline')) {
-        CPSR_RUN( 
-                ch_germline_vcf_files,
-                ch_pcgr_dir.collect(),
-                ch_vep_cache.collect()
-            )
-    }
+    CPSR_RUN( 
+        ch_germline_vcf_files,
+        ch_pcgr_dir.collect(),
+        ch_vep_cache.collect()
+    )
 
 
     //

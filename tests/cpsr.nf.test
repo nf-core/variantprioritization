@@ -1,4 +1,3 @@
-def projectDir = new File('.').absolutePath
 nextflow_pipeline {
 
     name "Test pipeline"
@@ -10,8 +9,8 @@ nextflow_pipeline {
         [
             name: "-profile test",
             params: [
-                input: "${projectDir}/tests/cpsr-sheet.csv",
-                analysis: 'germline',
+                input: "https://github.com/nf-core/test-datasets/raw/refs/heads/variantprioritization/samplesheets/cpsr.csv",
+                panel_id: 21,
             ]
         ]
     ]
