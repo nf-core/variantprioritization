@@ -69,9 +69,18 @@
             ],
             [
                 "NA12878.NA12878N.cpsr.grch38.classification.tsv.gz:md5,568d7953780a84c50d2d410828fbc655",
-                "NA12878.NA12878N.cpsr.grch38.html:md5,a4c605c72d8ad94bed29c3e51c2d561d",
                 "NA12878.NA12878N.cpsr.grch38.pass.tsv.gz:md5,20569704e03cb6d461148bdbd3d5f33f",
                 "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f"
+            ],
+            [
+                [
+                    "NA12878.NA12878N.cpsr.grch38.pass.vcf.gz",
+                    "VcfFile [chromosomes=[22], sampleCount=1, variantCount=88, phased=false, phasedAutodetect=false]"
+                ],
+                [
+                    "NA12878.NA12878N.cpsr.grch38.vcf.gz",
+                    "VcfFile [chromosomes=[22], sampleCount=1, variantCount=88, phased=false, phasedAutodetect=false]"
+                ]
             ],
             [
                 "NA12878.NA12878N.deepvariant.norm.filtered.vcf.gz:md5,838148d91b559d39859ccc7b6140f293",
@@ -94,6 +103,6 @@
             "nf-test": "0.9.2",
             "nextflow": "25.10.4"
         },
-        "timestamp": "2026-02-23T14:38:18.372726536"
+        "timestamp": "2026-02-23T15:03:38.198236"
     }
 }

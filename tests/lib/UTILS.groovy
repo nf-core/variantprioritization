@@ -18,6 +18,8 @@ class UTILS {
         def stable_content = getAllFilesFromDir(outdir, ignoreFile: 'tests/.nftignore')
         // vcf_files: All vcf files
         def vcf_files = getAllFilesFromDir(outdir, include: ['**/*.vcf{,.gz}'])
+        // vcf_content
+        def vcf_content = getAllFilesFromDir(outdir, include: ['**/*.cpsr.*.vcf{,.gz}'])
 
         def assertion = []
 
@@ -26,6 +28,7 @@ class UTILS {
 
         if (!stub) {
             assertion.add(stable_content.isEmpty() ? 'No stable content' : stable_content)
+            assertion.add(vcf_content.isEmpty() ? 'No VCF content files' : vcf_content.collect { file -> [ file.getName(), path(file.toString()).vcf.summary ] })
             if (no_vcf_md5sum) {
                 assertion.add(vcf_files.isEmpty() ? 'No VCF files' : vcf_files.collect { file -> [ file.getName(), path(file.toString()).vcf.summary ] })
             } else {
