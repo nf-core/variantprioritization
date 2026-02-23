@@ -1,3 +1,4 @@
+def projectDir = new File('.').absolutePath
 nextflow_pipeline {
 
     name "Test pipeline"
@@ -9,7 +10,7 @@ nextflow_pipeline {
         [
             name: "-profile test",
             params: [
-                input: "tests/cpsr-sheet.csv",
+                input: "${projectDir}/tests/cpsr-sheet.csv",
                 analysis: 'germline',
             ]
         ]

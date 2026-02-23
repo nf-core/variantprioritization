@@ -1,2 +1,2 @@
 patient,status,sample,vcf,cna
-NA12878,0,NA12878N,https://github.com/nf-core/test-datasets/raw/refs/heads/modules/data/genomics/homo_sapiens/illumina/vcf/NA12878_GIAB.chr22.vcf.gz,
+NA12878,0,NA12878N,https://nf-core-awsmegatests.s3-eu-west-1.amazonaws.com/sarek/results-e9f175045340f34be9f273ca5a543d08ab90c661/test_full_germline_aws/variant_calling/strelka/NA12878/NA12878.strelka.variants.vcf.gz,
