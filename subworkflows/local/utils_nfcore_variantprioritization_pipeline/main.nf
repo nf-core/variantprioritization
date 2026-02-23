@@ -1,8 +1,6 @@
 //
 // Subworkflow with functionality specific to the nf-core/variantprioritization pipeline
 //
-import java.util.zip.GZIPInputStream
-import groovy.transform.Field
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -190,7 +188,7 @@ def processSamplesheet(row) {
     meta.tool = ''
     if (vcf.toString().endsWith('.gz')) {
         vcf.withInputStream { fis ->
-            def gzis = new GZIPInputStream(fis)
+            def gzis = new java.util.zip.GZIPInputStream(fis)
             gzis.withReader { reader ->
                 reader.eachLine { line ->
                     if (line.startsWith('##source=')) {
@@ -214,13 +212,16 @@ def processSamplesheet(row) {
     if (meta.tool.startsWith('strelka')) {
         def isIndel = false
         // Read the first variant line after headers
-        (vcf.toString().endsWith('.gz') ? new GZIPInputStream(vcf.newInputStream()) : vcf.newInputStream()).withReader { reader ->
+        (vcf.toString().endsWith('.gz') ? new java.util.zip.GZIPInputStream(vcf.newInputStream()) : vcf.newInputStream()).withReader { reader ->
             reader.eachLine { line ->
                 if (!line.startsWith('#')) {
                     def fields = line.tokenize('\t')
                     def formatCol = fields[8]  // FORMAT is the 9th column
                     // Strelka indels often have TIR/TAR fields
-                    if (formatCol.contains('TIR') || formatCol.contains('TAR')) {
+                    if (formatCol == null) {
+                         log.info("WARNING: FORMAT column is null for line: ${line}")
+                    }
+                    else if (formatCol.contains('TIR') || formatCol.contains('TAR')) {
                         isIndel = true
                     }
                     return
@@ -234,7 +235,7 @@ def processSamplesheet(row) {
     if (!meta.tool) {
         if (vcf.toString().endsWith('.gz')) {
             vcf.withInputStream { fis ->
-                new GZIPInputStream(fis).withReader { reader ->
+                new java.util.zip.GZIPInputStream(fis).withReader { reader ->
                     reader.eachLine { line ->
                         if (line.startsWith('##DeepVariant')) {
                             meta.tool = 'deepvariant'
