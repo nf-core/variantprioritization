@@ -1,5 +1,5 @@
 {
-    "-profile test": {
+    "-profile test | CPSR": {
         "content": [
             7,
             {
@@ -59,10 +59,10 @@
             ],
             [
                 "NA12878.NA12878N.cpsr.grch38.classification.tsv.gz:md5,6eddf0d151758d134e02dbc89e1b39fc",
-                "NA12878.NA12878N.cpsr.grch38.conf.yaml:md5,5ed53c7ab2b2d9f2e0613bec973bba83",
-                "NA12878.NA12878N.cpsr.grch38.html:md5,30eb0415622403031bdc2e7711158a96",
+                "NA12878.NA12878N.cpsr.grch38.conf.yaml:md5,06f43c613f56c15a94d2fc47995b7eac",
+                "NA12878.NA12878N.cpsr.grch38.html:md5,fb043bf0c4258fdb0a9853336cbcf359",
                 "NA12878.NA12878N.cpsr.grch38.pass.tsv.gz:md5,19020ed760bb26c88f50713374e12069",
-                "NA12878.NA12878N.cpsr.grch38.xlsx:md5,a2d34e1e800ae7717ac36e1f296fb90b",
+                "NA12878.NA12878N.cpsr.grch38.xlsx:md5,e5b01077248098f4b69f0f6642a6b258",
                 "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f"
             ],
             [
@@ -82,6 +82,6 @@
             "nf-test": "0.9.2",
             "nextflow": "25.10.4"
         },
-        "timestamp": "2026-02-23T13:57:35.132816423"
+        "timestamp": "2026-02-23T14:09:23.938457081"
     }
 }
