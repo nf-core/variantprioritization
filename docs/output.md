@@ -12,6 +12,7 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 
 - [Reference data](#reference-data) – PCGR and VEP resources when downloaded or provided as archives
 - [VCF preprocessing](#vcf-preprocessing) – optional bgzip/tabix, left-normalisation and filtering
+- [Germline merge preparation](#germline-merge-preparation) – sample name files, VCF reheadering, and per-sample germline concatenation
 - [Variant formatting and intersection](#variant-formatting-and-intersection) – reheader VCFs, merge caller support, and reformat CNAs
 - [PCGR](#pcgr) – combined somatic variant annotation and reporting
 - [CPSR](#cpsr) – combined germline variant annotation and reporting
@@ -46,6 +47,22 @@ Reference resources are only written to the results directory when you request d
 </details>
 
 Input VCFs are optionally bgzipped and indexed, then normalized and filtered per caller (e.g. Mutect2, Strelka). Output paths retain caller-specific prefixes to make downstream merging transparent.
+
+### Germline merge preparation
+
+<details markdown="1">
+<summary>Output files</summary>
+
+- `createsamplefile/` (or module-specific publish directory)
+  - `{meta.id}.txt`: one-line sample file created by `CREATESAMPLEFILE`, containing the sample identifier used for reheadering.
+- `bcftools/reheader/`
+  - `*.vcf.gz` and index (`*.tbi`/`*.csi`): per-caller germline VCFs with harmonized sample header names.
+- `bcftools/concat/`
+  - `*.vcf.gz` and index (`*.tbi`/`*.csi`): per-sample germline VCFs after concatenating reheadered caller VCFs.
+
+</details>
+
+For germline inputs, the pipeline first generates a sample-name text file, then reheaders each caller-specific VCF, and finally concatenates reheadered VCFs into one germline VCF per sample for downstream CPSR analysis.
 
 ### Variant formatting and intersection
 
