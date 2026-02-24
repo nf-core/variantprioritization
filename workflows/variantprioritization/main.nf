@@ -5,8 +5,9 @@
 */
 include { REFERENCE_DATA         } from '../../subworkflows/local/reference_data'
 
-include { VCF_PREPROCESSING      } from '../../subworkflows/local/vcf_preprocessing'
-include { FORMAT_FILES           } from '../../subworkflows/local/format_files'
+include { FILE_PREPROCESSING      } from '../../subworkflows/local/file_preprocessing'
+include { PREPARE_GERMLINE       } from '../../subworkflows/local/prepare_germline'
+include { PREPARE_SOMATIC        } from '../../subworkflows/local/prepare_somatic'
 include { PCGR_RUN               } from '../../modules/local/pcgr/run'
 include { CPSR_RUN               } from '../../modules/local/cpsr/run'
 
@@ -53,38 +54,58 @@ workflow VARIANTPRIORITIZATION {
     //
     // SUBWORKFLOW: Preprocess VCF files
     //
-    VCF_PREPROCESSING(
+    FILE_PREPROCESSING(
         ch_samplesheet,
         fasta,
     )
 
-    def ch_germline_vcf_files = VCF_PREPROCESSING.out.combined_germline
-    def ch_somatic_vcf_files = VCF_PREPROCESSING.out.normalised_somatic
-
-    def ch_cna_files = VCF_PREPROCESSING.out.ch_cna_files
-
     //
-    // SUBWORKFLOW: Format input files
+    // SUBWORKFLOW: Format input files for somatic analyses
     //
-    FORMAT_FILES(
-        ch_somatic_vcf_files,
-        ch_cna_files,
+    PREPARE_SOMATIC(
+        FILE_PREPROCESSING.out.normalised_somatic,
+        FILE_PREPROCESSING.out.ch_cna_files,
     )
 
     //
-    // SUBWORKFLOW: pcgr
+    // SUBWORKFLOW: pcgr (somatic)
     //
     PCGR_RUN(
-        FORMAT_FILES.out.pcgr_ready_vcf,
+        PREPARE_SOMATIC.out.pcgr_ready_vcf,
         ch_pcgr_dir.collect(),
         ch_vep_cache.collect(),
     )
 
     //
+    // SUBWORKFLOW: prepare germline VCFs for cpsr input
+    //
+    def ch_germline_per_sample = FILE_PREPROCESSING.out.normalised_germline
+        .map { meta, vcf, tbi -> tuple(meta.sample, tuple(meta, vcf, tbi)) }
+        .groupTuple()
+
+    def ch_germline_split = ch_germline_per_sample
+        .branch { _sample, records ->
+            single: records.size() == 1
+            multi : records.size() > 1
+        }
+
+    def ch_single_germline = ch_germline_split.single
+        .map { _sample, records -> records[0] }
+
+    def ch_multi_germline = ch_germline_split.multi
+        .flatMap { _sample, records -> records }
+
+    PREPARE_GERMLINE(
+        ch_multi_germline,
+    )
+
+    def cpsr_ready_vcf = ch_single_germline.mix(PREPARE_GERMLINE.out.combined_germline)
+
+    //
     // SUBWORKFLOW: cpsr
     //
     CPSR_RUN(
-        ch_germline_vcf_files,
+        cpsr_ready_vcf,
         ch_pcgr_dir.collect(),
         ch_vep_cache.collect()
     )
