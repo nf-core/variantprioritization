@@ -3,24 +3,20 @@ process CREATESAMPLEFILE {
     label 'process_single'
 
     input:
-    val(meta)
+    val meta
 
     output:
-    tuple val(meta), path("${filename}"), emit: samplefile
-    tuple val("${task.process}"), val('createsamplefile'),  eval("echo $VERSION"), topic: versions, emit: versions_createsamplefile
+    tuple val(meta), path("${meta.id}.txt"), emit: samplefile
+    tuple val("${task.process}"), val('createsamplefile'), eval("echo ${VERSION}"), topic: versions, emit: versions_createsamplefile
 
     script:
-    def prefix = task.ext.prefix   ?: "${meta.id}"
-    filename = task.ext.prefix ? "${prefix}.txt" : "${meta.id}.${meta.tool}.txt"
     VERSION = '1.0.0'
     """
-    echo "${meta.id}" > ${filename}
+    echo "${meta.sample}" > ${meta.id}.txt
     """
 
     stub:
-    def prefix = task.ext.prefix ?: "${meta.id}"
-    filename = task.ext.prefix ? "${prefix}.txt" : "${meta.id}.${meta.tool}.txt"
     """
-    touch ${filename}
+    touch ${meta.id}.txt
     """
 }

@@ -58,7 +58,7 @@ workflow VARIANTPRIORITIZATION {
         fasta,
     )
 
-    def ch_germline_vcf_files = VCF_PREPROCESSING.out.normalised_germline
+    def ch_germline_vcf_files = VCF_PREPROCESSING.out.combined_germline
     def ch_somatic_vcf_files = VCF_PREPROCESSING.out.normalised_somatic
 
     def ch_cna_files = VCF_PREPROCESSING.out.ch_cna_files
