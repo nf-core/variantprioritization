@@ -4,10 +4,13 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { TABIX_BGZIPTABIX } from '../../../modules/nf-core/tabix/bgziptabix'
-include { TABIX_TABIX      } from '../../../modules/nf-core/tabix/tabix'
-include { BCFTOOLS_NORM    } from '../../../modules/nf-core/bcftools/norm'
-include { BCFTOOLS_FILTER  } from '../../../modules/nf-core/bcftools/filter'
+include { BCFTOOLS_CONCAT    } from '../../../modules/nf-core/bcftools/concat'
+include { BCFTOOLS_FILTER    } from '../../../modules/nf-core/bcftools/filter'
+include { BCFTOOLS_NORM      } from '../../../modules/nf-core/bcftools/norm'
+include { BCFTOOLS_REHEADER  } from '../../../modules/nf-core/bcftools/reheader'
+include { CREATESAMPLEFILE } from '../../../modules/local/createsamplefile'
+include { TABIX_BGZIPTABIX   } from '../../../modules/nf-core/tabix/bgziptabix'
+include { TABIX_TABIX        } from '../../../modules/nf-core/tabix/tabix'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -87,10 +90,35 @@ workflow VCF_PREPROCESSING {
     normalised_germline = filtered_ch.filter{ meta, _vcf, _tbi -> meta.status == 'germline' }
     normalised_somatic  = filtered_ch.filter{ meta, _vcf, _tbi -> meta.status == 'somatic' }
 
+    // Reheader and combine germline VCFs
+    CREATESAMPLEFILE(normalised_germline.map{ meta, _vcf, _tbi -> [meta] })
+    ch_vcf_sample = normalised_germline
+        .join(CREATESAMPLEFILE.out.samplefile)
+        .map { meta, vcf, _tbi, samplefile -> [ meta, vcf, [], samplefile ] }
+
+    BCFTOOLS_REHEADER(
+        ch_vcf_sample,
+        [[],[]]
+    )
+
+    ch_vcf_index_rh = BCFTOOLS_REHEADER.out.vcf
+            .join(BCFTOOLS_REHEADER.out.index)
+
+    ch_concat_in = ch_vcf_index_rh
+        .map { meta, vcf, tbi -> tuple(meta.id, meta, vcf, tbi) }
+        .groupTuple(by: 0)
+        .map { _id, metas, vcfs, tbis ->
+            tuple(metas[0], vcfs, tbis)
+        }
+
+    BCFTOOLS_CONCAT(ch_concat_in)
+
+    combined_germline = BCFTOOLS_CONCAT.out.vcf.join(BCFTOOLS_CONCAT.out.tbi)
+
+    combined_germline.dump(tag: 'combined_germline')
 
     emit:
-    //filtered_ch // channel: [ meta, path(vcf_file), path(tbi_file), path(cna_file) ]
-    normalised_germline
+    combined_germline
     normalised_somatic
     ch_cna_files
 }
