@@ -21,6 +21,8 @@ def intersect_variants(sample):
     tool_names = {}
     for idx, file in enumerate(sample_files):
         tool = file.split(".")[2]  # change this if you change prefix
+        if tool.split("_")[0] == "strelka":
+            tool = "strelka"
         tool_names[idx] = tool
 
     if len(sample_files) > 1:
