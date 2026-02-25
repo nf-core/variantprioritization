@@ -5,7 +5,7 @@ process PCGR_RUN {
     conda "${moduleDir}/environment.yml"
     container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
         ? 'docker.io/sigven/pcgr:2.2.1'
-        : 'docker.io/sigven/pcgr:2.2.1'}"
+        : 'community.wave.seqera.io/library/pcgr_r-pcgrr:2.2.1--c5452922997ea11d'}"
 
     input:
     tuple val(meta), path(vcf), path(tbi), path(cna)

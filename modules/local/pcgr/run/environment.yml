@@ -4,3 +4,4 @@ channels:
   - bioconda
 dependencies:
   - pcgr::pcgr=2.2.1
+  - pcgr::r-pcgrr=2.2.1
