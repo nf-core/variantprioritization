@@ -36,6 +36,9 @@ Optionally (somatic analysis only), you can provide:
 
 If you have multiple VCFs for the same sample (e.g. one per caller), provide one row per VCF. The pipeline will keep caller-specific files separate during preprocessing and then consolidate/intersect somatic calls per sample for PCGR reporting.
 
+> [!NOTE]
+> Intersection of calls is only implemented for the somatic reporting. For germline calls please provide unique sample ids, otherwise the files will be overwritten.
+
 ### CNA files
 
 If you run with `--cna_analysis`, CNA segments are required for somatic (`status=1`) rows.
