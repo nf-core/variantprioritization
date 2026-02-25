@@ -17,6 +17,7 @@ Team from October 2025 nf-core Hackathon: @georgiakes, @petanska, @maxibor, @eol
 - [#58](https://github.com/nf-core/variantprioritization/pull/58) - Defined a function that extract the variantcaller from the vcf (@yussab)
 - [#59](https://github.com/nf-core/variantprioritization/pull/59) - Enable conda usage for the entire pipeline (@yussab)
 - [#63](https://github.com/nf-core/variantprioritization/pull/63) - Restructure local modules (@famosab)
+- [#68](https://github.com/nf-core/variantprioritization/pull/68) - Cancer Predisposition Reporter (@yussab, @famosab)
 
 ### `Fixed`
 

@@ -129,7 +129,7 @@
                 "HCC1395.HCC1395T.pcgr.grch38.cna_gene_ann.tsv.gz:md5,dff3da2a532ce4981c3a23dded66f15e",
                 "HCC1395.HCC1395T.pcgr.grch38.cna_segment.tsv.gz:md5,8c9625abab7494b988a81bfb6c9c7e19",
                 "HCC1395.HCC1395T.pcgr.grch38.maf:md5,c8b7f72570a11aeb3148f38cf82909c7",
-                "HCC1395.HCC1395T.pcgr.grch38.msigs.tsv.gz:md5,288561e647a2e794c09b6b080e4abb09",
+                "HCC1395.HCC1395T.pcgr.grch38.msigs.tsv.gz:md5,263acfb096c2bed5eb7d97c33c688dbb",
                 "HCC1395.HCC1395T.pcgr.grch38.pass.tsv.gz:md5,d7c0fd6a44cd5ef277980025f1dce103",
                 "HCC1395.HCC1395T.pcgr.grch38.snv_indel_ann.tsv.gz:md5,73b9720069f731f007f231836d2e5d74",
                 "HCC1395.HCC1395T.pcgr.grch38.tmb.tsv:md5,b8b74e5d24ebe9e590c3432fec658866"
@@ -163,6 +163,6 @@
             "nf-test": "0.9.2",
             "nextflow": "25.10.4"
         },
-        "timestamp": "2026-02-23T15:11:50.271406062"
+        "timestamp": "2026-02-25T13:48:52.398601269"
     }
 }
