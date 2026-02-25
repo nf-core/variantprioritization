@@ -1,25 +1,16 @@
 {
     "-profile test | CPSR": {
         "content": [
-            20,
+            11,
             {
-                "BCFTOOLS_CONCAT": {
-                    "bcftools": 1.22
-                },
                 "BCFTOOLS_FILTER": {
                     "bcftools": 1.22
                 },
                 "BCFTOOLS_NORM": {
                     "bcftools": 1.22
                 },
-                "BCFTOOLS_REHEADER": {
-                    "bcftools": 1.22
-                },
                 "CPSR_RUN": {
                     "cpsr": "2.2.1"
-                },
-                "CREATESAMPLEFILE": {
-                    "createsamplefile": "1.0.0"
                 },
                 "TABIX_TABIX": {
                     "tabix": 1.21
@@ -33,48 +24,37 @@
             },
             [
                 "bcftools",
-                "bcftools/concat",
-                "bcftools/concat/NA12878N",
-                "bcftools/concat/NA12878N/NA12878N.vcf.gz",
-                "bcftools/concat/NA12878N/NA12878N.vcf.gz.tbi",
                 "bcftools/filter",
-                "bcftools/filter/NA12878.NA12878N.deepvariant.norm.filtered.vcf.gz",
-                "bcftools/filter/NA12878.NA12878N.deepvariant.norm.filtered.vcf.gz.tbi",
-                "bcftools/filter/NA12878.NA12878N.haplotypecaller.norm.filtered.vcf.gz",
-                "bcftools/filter/NA12878.NA12878N.haplotypecaller.norm.filtered.vcf.gz.tbi",
-                "bcftools/filter/NA12878.NA12878N.strelka_snv.norm.filtered.vcf.gz",
-                "bcftools/filter/NA12878.NA12878N.strelka_snv.norm.filtered.vcf.gz.tbi",
+                "bcftools/filter/NA12878.deepvariant_calls.deepvariant.norm.filtered.vcf.gz",
+                "bcftools/filter/NA12878.deepvariant_calls.deepvariant.norm.filtered.vcf.gz.tbi",
+                "bcftools/filter/NA12878.haplotypecaller_calls.haplotypecaller.norm.filtered.vcf.gz",
+                "bcftools/filter/NA12878.haplotypecaller_calls.haplotypecaller.norm.filtered.vcf.gz.tbi",
                 "bcftools/norm",
-                "bcftools/norm/NA12878.NA12878N.deepvariant.norm.vcf.gz",
-                "bcftools/norm/NA12878.NA12878N.deepvariant.norm.vcf.gz.tbi",
-                "bcftools/norm/NA12878.NA12878N.haplotypecaller.norm.vcf.gz",
-                "bcftools/norm/NA12878.NA12878N.haplotypecaller.norm.vcf.gz.tbi",
-                "bcftools/norm/NA12878.NA12878N.strelka_snv.norm.vcf.gz",
-                "bcftools/norm/NA12878.NA12878N.strelka_snv.norm.vcf.gz.tbi",
-                "bcftools/reheader",
-                "bcftools/reheader/NA12878N",
-                "bcftools/reheader/NA12878N/NA12878.NA12878N.deepvariant.vcf.gz",
-                "bcftools/reheader/NA12878N/NA12878.NA12878N.deepvariant.vcf.gz.tbi",
-                "bcftools/reheader/NA12878N/NA12878.NA12878N.haplotypecaller.vcf.gz",
-                "bcftools/reheader/NA12878N/NA12878.NA12878N.haplotypecaller.vcf.gz.tbi",
-                "bcftools/reheader/NA12878N/NA12878.NA12878N.strelka_snv.vcf.gz",
-                "bcftools/reheader/NA12878N/NA12878.NA12878N.strelka_snv.vcf.gz.tbi",
+                "bcftools/norm/NA12878.deepvariant_calls.deepvariant.norm.vcf.gz",
+                "bcftools/norm/NA12878.deepvariant_calls.deepvariant.norm.vcf.gz.tbi",
+                "bcftools/norm/NA12878.haplotypecaller_calls.haplotypecaller.norm.vcf.gz",
+                "bcftools/norm/NA12878.haplotypecaller_calls.haplotypecaller.norm.vcf.gz.tbi",
                 "cpsr",
-                "cpsr/NA12878N",
-                "cpsr/NA12878N/NA12878N.cpsr.grch38.classification.tsv.gz",
-                "cpsr/NA12878N/NA12878N.cpsr.grch38.conf.yaml",
-                "cpsr/NA12878N/NA12878N.cpsr.grch38.html",
-                "cpsr/NA12878N/NA12878N.cpsr.grch38.pass.tsv.gz",
-                "cpsr/NA12878N/NA12878N.cpsr.grch38.pass.vcf.gz",
-                "cpsr/NA12878N/NA12878N.cpsr.grch38.pass.vcf.gz.tbi",
-                "cpsr/NA12878N/NA12878N.cpsr.grch38.vcf.gz",
-                "cpsr/NA12878N/NA12878N.cpsr.grch38.vcf.gz.tbi",
-                "cpsr/NA12878N/NA12878N.cpsr.grch38.xlsx",
-                "custom",
-                "custom/createsamplefile",
-                "custom/createsamplefile/NA12878.NA12878N.deepvariant.txt",
-                "custom/createsamplefile/NA12878.NA12878N.haplotypecaller.txt",
-                "custom/createsamplefile/NA12878.NA12878N.strelka_snv.txt",
+                "cpsr/NA12878.deepvariant_calls",
+                "cpsr/NA12878.deepvariant_calls/NA12878.deepvariant_calls.cpsr.grch38.classification.tsv.gz",
+                "cpsr/NA12878.deepvariant_calls/NA12878.deepvariant_calls.cpsr.grch38.conf.yaml",
+                "cpsr/NA12878.deepvariant_calls/NA12878.deepvariant_calls.cpsr.grch38.html",
+                "cpsr/NA12878.deepvariant_calls/NA12878.deepvariant_calls.cpsr.grch38.pass.tsv.gz",
+                "cpsr/NA12878.deepvariant_calls/NA12878.deepvariant_calls.cpsr.grch38.pass.vcf.gz",
+                "cpsr/NA12878.deepvariant_calls/NA12878.deepvariant_calls.cpsr.grch38.pass.vcf.gz.tbi",
+                "cpsr/NA12878.deepvariant_calls/NA12878.deepvariant_calls.cpsr.grch38.vcf.gz",
+                "cpsr/NA12878.deepvariant_calls/NA12878.deepvariant_calls.cpsr.grch38.vcf.gz.tbi",
+                "cpsr/NA12878.deepvariant_calls/NA12878.deepvariant_calls.cpsr.grch38.xlsx",
+                "cpsr/NA12878.haplotypecaller_calls",
+                "cpsr/NA12878.haplotypecaller_calls/NA12878.haplotypecaller_calls.cpsr.grch38.classification.tsv.gz",
+                "cpsr/NA12878.haplotypecaller_calls/NA12878.haplotypecaller_calls.cpsr.grch38.conf.yaml",
+                "cpsr/NA12878.haplotypecaller_calls/NA12878.haplotypecaller_calls.cpsr.grch38.html",
+                "cpsr/NA12878.haplotypecaller_calls/NA12878.haplotypecaller_calls.cpsr.grch38.pass.tsv.gz",
+                "cpsr/NA12878.haplotypecaller_calls/NA12878.haplotypecaller_calls.cpsr.grch38.pass.vcf.gz",
+                "cpsr/NA12878.haplotypecaller_calls/NA12878.haplotypecaller_calls.cpsr.grch38.pass.vcf.gz.tbi",
+                "cpsr/NA12878.haplotypecaller_calls/NA12878.haplotypecaller_calls.cpsr.grch38.vcf.gz",
+                "cpsr/NA12878.haplotypecaller_calls/NA12878.haplotypecaller_calls.cpsr.grch38.vcf.gz.tbi",
+                "cpsr/NA12878.haplotypecaller_calls/NA12878.haplotypecaller_calls.cpsr.grch38.xlsx",
                 "multiqc",
                 "multiqc/multiqc_data",
                 "multiqc/multiqc_data/llms-full.txt",
@@ -90,30 +70,24 @@
                 "reference",
                 "tabix",
                 "tabix/NA12878.deepvariant.chr22.vcf.gz.tbi",
-                "tabix/NA12878.haplotypecaller.chr22.vcf.gz.tbi",
-                "tabix/NA12878.strelka.variants.chr22.vcf.gz.tbi"
+                "tabix/NA12878.haplotypecaller.chr22.vcf.gz.tbi"
             ],
             [
-                "NA12878N.cpsr.grch38.classification.tsv.gz:md5,4330640c38136de8014508db8dbaa451",
-                "NA12878N.cpsr.grch38.pass.tsv.gz:md5,11b65b225e1a2483d73c4d8a6b9b46de",
-                "NA12878.NA12878N.deepvariant.txt:md5,9d84357a2971817db0c903523beb8ad9",
-                "NA12878.NA12878N.haplotypecaller.txt:md5,9d84357a2971817db0c903523beb8ad9",
-                "NA12878.NA12878N.strelka_snv.txt:md5,9d84357a2971817db0c903523beb8ad9",
+                "NA12878.deepvariant_calls.cpsr.grch38.classification.tsv.gz:md5,ab3e6e311fb3bc80e1aa52faa5f79ff9",
+                "NA12878.deepvariant_calls.cpsr.grch38.pass.tsv.gz:md5,a652358df156caa6c4134857359b3b50",
+                "NA12878.haplotypecaller_calls.cpsr.grch38.classification.tsv.gz:md5,cda5108e2b4a9a927ec786b78279d55d",
+                "NA12878.haplotypecaller_calls.cpsr.grch38.pass.tsv.gz:md5,e973a07efb1bb3cb3c69f16a6e099522",
                 "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f"
             ],
             [
-                "NA12878N.vcf.gz:md5,2c92905889ca7d7f272a60f4dc9ed337",
-                "NA12878.NA12878N.deepvariant.norm.filtered.vcf.gz:md5,838148d91b559d39859ccc7b6140f293",
-                "NA12878.NA12878N.haplotypecaller.norm.filtered.vcf.gz:md5,1d51f07c55b96bb3ec253bc978774ca",
-                "NA12878.NA12878N.strelka_snv.norm.filtered.vcf.gz:md5,4d08ebc56b1d528d87e76e8011a43faa",
-                "NA12878.NA12878N.deepvariant.norm.vcf.gz:md5,272363f93f21b7a9adc6dcad78647116",
-                "NA12878.NA12878N.haplotypecaller.norm.vcf.gz:md5,4f2f21777d10571f444f0f3a9c80aadc",
-                "NA12878.NA12878N.strelka_snv.norm.vcf.gz:md5,4d08ebc56b1d528d87e76e8011a43faa",
-                "NA12878.NA12878N.deepvariant.vcf.gz:md5,838148d91b559d39859ccc7b6140f293",
-                "NA12878.NA12878N.haplotypecaller.vcf.gz:md5,1d51f07c55b96bb3ec253bc978774ca",
-                "NA12878.NA12878N.strelka_snv.vcf.gz:md5,4d08ebc56b1d528d87e76e8011a43faa",
-                "NA12878N.cpsr.grch38.pass.vcf.gz:md5,3544f7f56fb978cd4a44bfd7e0900002",
-                "NA12878N.cpsr.grch38.vcf.gz:md5,beaebfe05018cda5e9cb149d62f0afd0",
+                "NA12878.deepvariant_calls.deepvariant.norm.filtered.vcf.gz:md5,838148d91b559d39859ccc7b6140f293",
+                "NA12878.haplotypecaller_calls.haplotypecaller.norm.filtered.vcf.gz:md5,1d51f07c55b96bb3ec253bc978774ca",
+                "NA12878.deepvariant_calls.deepvariant.norm.vcf.gz:md5,272363f93f21b7a9adc6dcad78647116",
+                "NA12878.haplotypecaller_calls.haplotypecaller.norm.vcf.gz:md5,4f2f21777d10571f444f0f3a9c80aadc",
+                "NA12878.deepvariant_calls.cpsr.grch38.pass.vcf.gz:md5,155fc60e0747d66881f5d1088a00b0c7",
+                "NA12878.deepvariant_calls.cpsr.grch38.vcf.gz:md5,52278657a383f166e21f17d9bda16742",
+                "NA12878.haplotypecaller_calls.cpsr.grch38.pass.vcf.gz:md5,6aae7623eaa21b914d76aad8ce5e94f2",
+                "NA12878.haplotypecaller_calls.cpsr.grch38.vcf.gz:md5,6aae7623eaa21b914d76aad8ce5e94f2",
                 "clinvar.vcf.gz:md5,8d3b4f3fa176287738ae82e72e26eac9",
                 "dbmts.vcf.gz:md5,fe9d26d3f24a49fde2d98a62ec329de5",
                 "dbnsfp.vcf.gz:md5,9fe7521182b9bd0c07f233f168504e8f",
@@ -126,6 +100,6 @@
             "nf-test": "0.9.2",
             "nextflow": "25.10.4"
         },
-        "timestamp": "2026-02-24T16:31:57.218402077"
+        "timestamp": "2026-02-25T13:14:37.584040195"
     }
 }
