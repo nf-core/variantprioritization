@@ -115,38 +115,60 @@
             "default": "",
             "properties": {
                 "panel_id": {
-                    "type": "integer",
-                    "default": 0,
-                    "description": "CPSR virtual gene panel identifier.",
-                    "help_text": "Use `0` for the full panel (default), or a specific panel ID to restrict analysis to selected predisposition genes."
+                    "type": "string",
+                    "default": "0",
+                    "description": "Comma-separated CPSR virtual panel identifier(s).",
+                    "help_text": "Maps to CPSR `--panel_id`. Use `0` for the exploratory panel, or a comma-separated list (e.g. `1,10,44`).",
+                    "pattern": "^\\d+(,\\d+)*$"
+                },
+                "custom_list": {
+                    "type": "string",
+                    "description": "Path to custom gene list file (single-column Ensembl gene identifiers).",
+                    "help_text": "Alternative to predefined panels (`--custom_list`)"
+                },
+                "custom_list_name": {
+                    "type": "string",
+                    "description": "Display name for custom panel/list.",
+                    "help_text": "Maps to CPSR `--custom_list_name`."
                 },
                 "diagnostic_grade_only": {
                     "type": "boolean",
-                    "description": "Report only variants with diagnostic-grade evidence.",
-                    "help_text": "When enabled, CPSR output is restricted to high-confidence clinically relevant findings."
+                    "description": "For PanelApp panels (1-44), include GREEN-status genes only."
                 },
-                "ignore_noncoding": {
+                "secondary_findings": {
                     "type": "boolean",
-                    "description": "Exclude non-coding variants from CPSR interpretation."
+                    "description": "Include variants in ACMG secondary findings gene list (v3.2)."
+                },
+                "pgx_findings": {
+                    "type": "boolean",
+                    "description": "Report overlap with pharmacogenomic toxicity variants (CPIC/PgX)."
+                },
+                "gwas_findings": {
+                    "type": "boolean",
+                    "description": "Report overlap with low/moderate-risk GWAS cancer variants."
                 },
                 "pop_gnomad": {
                     "type": "string",
                     "default": "nfe",
-                    "description": "gnomAD population code used for population-frequency assessment.",
-                    "help_text": "Examples include nfe, fin, asj, amr, afr, eas, sas, oth. Used when applying frequency-aware interpretation rules."
+                    "enum": ["afr", "amr", "eas", "sas", "asj", "nfe", "fin", "global"],
+                    "description": "gnomAD population source used for ACMG frequency assessment."
                 },
                 "maf_upper_threshold": {
                     "type": "number",
                     "default": 0.9,
-                    "description": "Upper minor allele frequency threshold used in CPSR filtering/classification."
+                    "description": "Upper gnomAD global MAF threshold for variants included in report."
                 },
                 "classify_all": {
                     "type": "boolean",
-                    "description": "Classify all eligible variants, not only a restricted clinical subset."
+                    "description": "Also provide CPSR TIER classifications for variants with existing ClinVar classifications."
                 },
-                "clinvar_ignore_noncancer": {
+                "clinvar_report_noncancer": {
                     "type": "boolean",
-                    "description": "Ignore ClinVar records without cancer-related phenotype context."
+                    "description": "Include ClinVar variants linked to non-cancer phenotypes/conditions."
+                },
+                "ignore_noncoding": {
+                    "type": "boolean",
+                    "description": "Ignore non-coding (non protein-altering) variants in CPSR report."
                 }
             }
         },
@@ -158,23 +180,23 @@
             "properties": {
                 "vcf2maf": {
                     "type": "boolean",
-                    "description": "Generate a Mutation Annotation Format (MAF) file from input VCF."
+                    "description": "Generate a MAF file for the input VCF using vcf2maf."
                 },
                 "assay": {
                     "type": "string",
-                    "description": "Sequencing assay type.",
-                    "help_text": "Set assay context for reporting/metrics (for example WGS, WES, or targeted panel)."
+                    "enum": ["WGS", "WES", "TARGETED"],
+                    "description": "Type of DNA sequencing assay performed for input data.",
+                    "help_text": "PCGR option `--assay` (default in PCGR: WES)."
                 },
                 "tumor_site": {
                     "type": "integer",
                     "default": 0,
-                    "description": "Tumor site code used for site-specific interpretation.",
-                    "help_text": "Use the numeric code expected by PCGR; 0 keeps a generic/non-specific setting."
+                    "description": "Primary tumor type/site code used for site-specific interpretation.",
+                    "help_text": "PCGR `--tumor_site` supports codes 0-30, where 0 means any tumor type."
                 },
                 "tumor_ploidy": {
                     "type": "string",
-                    "description": "Estimated tumor ploidy value.",
-                    "help_text": "Optional ploidy estimate used by downstream interpretation modules."
+                    "description": "Estimated tumor ploidy."
                 },
                 "cna_analysis": {
                     "type": "boolean",
@@ -183,32 +205,51 @@
                 "cna_overlap_pct": {
                     "type": "integer",
                     "default": 50,
-                    "description": "Minimum overlap percentage between CNA segment and gene region to call gene-level CNA."
+                    "description": "Mean percent overlap between CNA segment and gene transcripts for reporting gains/losses."
+                },
+                "tumor_dp_tag": {
+                    "type": "string",
+                    "description": "VCF INFO tag for tumor sequencing depth (Type=Integer).",
+                    "help_text": "Maps to PCGR `--tumor_dp_tag`."
+                },
+                "tumor_af_tag": {
+                    "type": "string",
+                    "description": "VCF INFO tag for tumor variant allelic fraction (Type=Float).",
+                    "help_text": "Maps to PCGR `--tumor_af_tag`."
                 },
                 "control_dp_tag": {
                     "type": "string",
-                    "description": "FORMAT tag in input VCF that contains read depth for the control/normal sample.",
-                    "help_text": "Set this to the control sample depth tag present in your VCF (for example `NDP`). Used with `control_dp_min` for somatic filtering logic."
+                    "description": "VCF INFO tag for control/normal sequencing depth (Type=Integer).",
+                    "help_text": "Maps to PCGR `--control_dp_tag`."
                 },
                 "control_af_tag": {
                     "type": "string",
-                    "description": "FORMAT tag in input VCF that contains allele fraction for the control/normal sample.",
-                    "help_text": "Set this to the control sample allele-fraction tag present in your VCF (for example `NAF`). Used with `control_af_max` for somatic filtering logic."
+                    "description": "VCF INFO tag for control/normal variant allelic fraction (Type=Float).",
+                    "help_text": "Maps to PCGR `--control_af_tag`."
+                },
+                "call_conf_tag": {
+                    "type": "string",
+                    "description": "VCF INFO tag for somatic call confidence (categorical).",
+                    "help_text": "Maps to PCGR `--call_conf_tag`."
                 },
                 "tumor_purity": {
                     "type": "string",
-                    "description": "Estimated tumor purity value.",
-                    "help_text": "Optional purity estimate used in interpretation and QC context."
+                    "description": "Estimated tumor purity (between 0 and 1)."
                 },
                 "effective_target_size_mb": {
                     "type": "integer",
                     "default": 34,
-                    "description": "Effective target territory in megabases for TMB estimation.",
-                    "help_text": "Set to covered coding territory for panel/WES assays; used as denominator for mutations-per-Mb."
+                    "description": "Effective target size in Mb for TMB calculation."
                 },
-                "cpsr_report": {
+                "input_cpsr": {
                     "type": "string",
-                    "description": "Path to a CPSR report/input to incorporate germline findings into PCGR output."
+                    "description": "Path to CPSR-classified germline calls file.",
+                    "help_text": "Maps to PCGR `--input_cpsr`."
+                },
+                "input_cpsr_yaml": {
+                    "type": "string",
+                    "description": "Path to CPSR YAML configuration file.",
+                    "help_text": "Maps to PCGR `--input_cpsr_yaml`."
                 },
                 "estimate_tmb": {
                     "type": "boolean",
@@ -216,64 +257,79 @@
                 },
                 "estimate_msi": {
                     "type": "boolean",
-                    "description": "Estimate microsatellite instability (MSI) status."
+                    "description": "Predict microsatellite instability (MSI) status."
                 },
                 "estimate_signatures": {
                     "type": "boolean",
-                    "description": "Estimate mutational signatures from somatic SNV profile."
+                    "description": "Estimate mutational signature contributions by re-fitting."
                 },
                 "tmb_display": {
                     "type": "string",
                     "default": "coding_and_silent",
-                    "description": "Rule for which variant classes are included in displayed TMB.",
-                    "help_text": "Typical choices distinguish coding-only vs coding+silent counting strategies."
+                    "description": "TMB measure to show in report.",
+                    "help_text": "Allowed PCGR values: coding_and_silent, coding_non_silent, missense_only."
+                },
+                "tmb_dp_min": {
+                    "type": "integer",
+                    "description": "Minimum tumor depth required for inclusion in TMB calculation when depth tag is available."
+                },
+                "tmb_af_min": {
+                    "type": "number",
+                    "description": "Minimum tumor allelic fraction required for inclusion in TMB calculation when AF tag is available."
+                },
+                "tmb_ad_min": {
+                    "type": "integer",
+                    "description": "Minimum tumor allelic depth (ALT-supporting reads) required for TMB calculation when depth+AF tags are available."
                 },
                 "min_mutations_signatures": {
                     "type": "integer",
                     "default": 200,
-                    "description": "Minimum number of mutations required for mutational signature estimation."
+                    "description": "Minimum number of SNVs required for mutational signature re-fitting."
                 },
                 "all_reference_signatures": {
                     "type": "boolean",
-                    "description": "Use the full reference signature set during fitting."
+                    "description": "Use all reference SBS signatures during signature re-fitting."
                 },
                 "include_artefact_signatures": {
                     "type": "boolean",
-                    "description": "Allow inclusion of known artefactual signatures in signature fitting."
+                    "description": "Include sequencing artefact signatures during fitting."
                 },
                 "prevalence_reference_signatures": {
-                    "type": "integer",
-                    "default": 5,
-                    "description": "Minimum prevalence threshold (percent) for including reference signatures."
-                },
-                "include_trials": {
-                    "type": "boolean",
-                    "default": true,
-                    "description": "Include variant-matched clinical trial information in report output."
+                    "type": "number",
+                    "default": 0.1,
+                    "description": "Minimum tumor-type prevalence (%) of reference signatures to include in re-fitting."
                 },
                 "tumor_dp_min": {
                     "type": "integer",
                     "default": 0,
-                    "description": "Minimum tumor read depth required for somatic variant retention."
+                    "description": "Minimum tumor depth for variant inclusion when tumor depth tag is provided."
+                },
+                "tumor_ad_min": {
+                    "type": "integer",
+                    "description": "Minimum tumor allelic depth (ALT-supporting reads) for variant inclusion when tumor depth+AF tags are provided."
                 },
                 "tumor_af_min": {
                     "type": "integer",
                     "default": 0,
-                    "description": "Minimum tumor allele fraction required for somatic variant retention."
+                    "description": "Minimum tumor allelic fraction for variant inclusion when tumor AF tag is provided."
                 },
                 "control_dp_min": {
                     "type": "integer",
                     "default": 0,
-                    "description": "Minimum control/normal read depth required for filtering logic."
+                    "description": "Minimum control/normal depth for variant inclusion when control depth tag is provided."
+                },
+                "control_ad_max": {
+                    "type": "integer",
+                    "description": "Maximum control/normal allelic depth (ALT-supporting reads) allowed when control depth+AF tags are provided."
                 },
                 "control_af_max": {
                     "type": "integer",
                     "default": 1,
-                    "description": "Maximum control/normal allele fraction allowed for somatic variant retention."
+                    "description": "Maximum control/normal allelic fraction allowed when control AF tag is provided."
                 },
                 "no_html": {
                     "type": "boolean",
-                    "description": "Set to true if pcgr should not create the html report."
+                    "description": "Do not generate PCGR HTML report."
                 }
             }
         },
@@ -598,35 +654,14 @@
         }
     },
     "allOf": [
-        {
-            "$ref": "#/$defs/input_output_options"
-        },
-        {
-            "$ref": "#/$defs/reference_options"
-        },
-        {
-            "$ref": "#/$defs/cpsr_options"
-        },
-        {
-            "$ref": "#/$defs/pcgr_options"
-        },
-        {
-            "$ref": "#/$defs/pcgrtumoronly_options"
-        },
-        {
-            "$ref": "#/$defs/variantfiltering_options"
-        },
-        {
-            "$ref": "#/$defs/vepparams_options"
-        },
-        {
-            "$ref": "#/$defs/institutional_config_options"
-        },
-        {
-            "$ref": "#/$defs/generic_options"
-        },
-        {
-            "$ref": "#/$defs/pcgr_options"
-        }
+        { "$ref": "#/$defs/input_output_options" },
+        { "$ref": "#/$defs/reference_options" },
+        { "$ref": "#/$defs/cpsr_options" },
+        { "$ref": "#/$defs/pcgr_options" },
+        { "$ref": "#/$defs/pcgrtumoronly_options" },
+        { "$ref": "#/$defs/variantfiltering_options" },
+        { "$ref": "#/$defs/vepparams_options" },
+        { "$ref": "#/$defs/institutional_config_options" },
+        { "$ref": "#/$defs/generic_options" }
     ]
 }
