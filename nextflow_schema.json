@@ -81,11 +81,11 @@
                 },
                 "pcgr_database_dir": {
                     "type": "string",
-                    "description": "Path to PCGR database. Set pcgr_download to false when using this."
+                    "description": "Path to PCGR database. Set `pcgr_download` to `false` when using this."
                 },
                 "pcgr_download": {
                     "type": "boolean",
-                    "description": "Download PCGR reference database from the PCGR site. Set to false if you want to use a local path.",
+                    "description": "Download PCGR reference database from the PCGR site. Set to `false` if you want to use a local path.",
                     "default": true
                 },
                 "vep_cache": {
@@ -93,7 +93,7 @@
                     "fa_icon": "fas fa-cloud-download-alt",
                     "default": "s3://annotation-cache/vep_cache/",
                     "description": "Path to VEP cache.",
-                    "help_text": "Path to VEP cache which should contain the relevant species, genome and build directories at the path ${vep_species}/${vep_genome}_${vep_cache_version}."
+                    "help_text": "Path to VEP cache which should contain the relevant species, genome and build directories at the path `${vep_species}/${vep_genome}_${vep_cache_version}`."
                 },
                 "vep_cache_version": {
                     "type": "integer",
@@ -121,7 +121,7 @@
                     "type": "integer",
                     "default": 0,
                     "description": "CPSR virtual gene panel identifier.",
-                    "help_text": "Use 0 for the full panel (default), or a specific panel ID to restrict analysis to selected predisposition genes."
+                    "help_text": "Use `0` for the full panel (default), or a specific panel ID to restrict analysis to selected predisposition genes."
                 },
                 "diagnostic_grade_only": {
                     "type": "boolean",
