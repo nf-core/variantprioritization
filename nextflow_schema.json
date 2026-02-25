@@ -185,6 +185,16 @@
                     "default": 50,
                     "description": "Minimum overlap percentage between CNA segment and gene region to call gene-level CNA."
                 },
+                "control_dp_tag": {
+                    "type": "string",
+                    "description": "FORMAT tag in input VCF that contains read depth for the control/normal sample.",
+                    "help_text": "Set this to the control sample depth tag present in your VCF (for example `NDP`). Used with `control_dp_min` for somatic filtering logic."
+                },
+                "control_af_tag": {
+                    "type": "string",
+                    "description": "FORMAT tag in input VCF that contains allele fraction for the control/normal sample.",
+                    "help_text": "Set this to the control sample allele-fraction tag present in your VCF (for example `NAF`). Used with `control_af_max` for somatic filtering logic."
+                },
                 "tumor_purity": {
                     "type": "string",
                     "description": "Estimated tumor purity value.",
