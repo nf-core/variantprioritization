@@ -13,7 +13,7 @@ process CPSR_RUN {
     path vep_cache
 
     output:
-    tuple val(meta), path("${prefix}"), emit: cpgr_reports
+    tuple val(meta), path("${prefix}"), emit: cpsr_reports
     tuple val("${task.process}"), val('cpsr'),  eval("cpsr --version | sed 's/cpsr //g'"), topic: versions, emit: versions_cpsr
 
     when:
