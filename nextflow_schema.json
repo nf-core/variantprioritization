@@ -233,12 +233,10 @@
                     "help_text": "Maps to PCGR `--call_conf_tag`."
                 },
                 "tumor_purity": {
-                    "type": "string",
-                    "description": "Estimated tumor purity (between 0 and 1)."
-                    "type": "number",
-                    "description": "Estimated tumor purity."
-                    "minimum":0,
-                    "maximum":1,
+                    "description": "Estimated tumor purity.",
+                    "minimum": 0,
+                    "maximum": 1
+                },
                 "effective_target_size_mb": {
                     "type": "integer",
                     "default": 34,
@@ -270,7 +268,7 @@
                     "type": "string",
                     "default": "coding_and_silent",
                     "description": "TMB measure to show in report.",
-                    "help_text": "Allowed PCGR values: coding_and_silent, coding_non_silent, missense_only."
+                    "help_text": "Allowed PCGR values: coding_and_silent, coding_non_silent, missense_only.",
                     "enum": ["coding_and_silent", "coding_non_silent", "missense_only"]
                 },
                 "tmb_dp_min": {
