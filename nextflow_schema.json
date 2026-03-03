@@ -102,7 +102,7 @@
                 "vep_species": {
                     "type": "string",
                     "fa_icon": "fas fa-microscope",
-                    "description": "VEP species. Defaults to homo_sapiens.",
+                    "description": "VEP species. Defaults to `homo_sapiens`.",
                     "default": "homo_sapiens",
                     "hidden": true
                 }
@@ -209,33 +209,36 @@
                 },
                 "tumor_dp_tag": {
                     "type": "string",
-                    "description": "VCF INFO tag for tumor sequencing depth (Type=Integer).",
+                    "description": "VCF INFO tag for tumor sequencing depth.",
                     "help_text": "Maps to PCGR `--tumor_dp_tag`."
                 },
                 "tumor_af_tag": {
                     "type": "string",
-                    "description": "VCF INFO tag for tumor variant allelic fraction (Type=Float).",
+                    "description": "VCF INFO tag for tumor variant allelic fraction.",
                     "help_text": "Maps to PCGR `--tumor_af_tag`."
                 },
                 "control_dp_tag": {
                     "type": "string",
-                    "description": "VCF INFO tag for control/normal sequencing depth (Type=Integer).",
+                    "description": "VCF INFO tag for control/normal sequencing depth.",
                     "help_text": "Maps to PCGR `--control_dp_tag`."
                 },
                 "control_af_tag": {
                     "type": "string",
-                    "description": "VCF INFO tag for control/normal variant allelic fraction (Type=Float).",
+                    "description": "VCF INFO tag for control/normal variant allelic fraction.",
                     "help_text": "Maps to PCGR `--control_af_tag`."
                 },
                 "call_conf_tag": {
                     "type": "string",
-                    "description": "VCF INFO tag for somatic call confidence (categorical).",
+                    "description": "VCF INFO tag for somatic call confidence.",
                     "help_text": "Maps to PCGR `--call_conf_tag`."
                 },
                 "tumor_purity": {
                     "type": "string",
                     "description": "Estimated tumor purity (between 0 and 1)."
-                },
+                    "type": "number",
+                    "description": "Estimated tumor purity."
+                    "minimum":0,
+                    "maximum":1,
                 "effective_target_size_mb": {
                     "type": "integer",
                     "default": 34,
@@ -268,6 +271,7 @@
                     "default": "coding_and_silent",
                     "description": "TMB measure to show in report.",
                     "help_text": "Allowed PCGR values: coding_and_silent, coding_non_silent, missense_only."
+                    "enum": ["coding_and_silent", "coding_non_silent", "missense_only"]
                 },
                 "tmb_dp_min": {
                     "type": "integer",
