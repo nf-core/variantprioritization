@@ -470,7 +470,6 @@
             "title": "VEP options",
             "type": "object",
             "description": "Runtime and annotation behavior options for Ensembl VEP.",
-            "default": "",
             "properties": {
                 "vep_n_forks": {
                     "type": "integer",
