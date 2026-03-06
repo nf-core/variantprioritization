@@ -98,7 +98,10 @@ workflow PIPELINE_INITIALISATION {
     //
     // Create channel from input file provided through params.input
     //
-    channel.fromList(samplesheetToList(input, "${projectDir}/assets/schema_input.json"))
+    def samplesheetData = samplesheetToList(input, "${projectDir}/assets/schema_input.json")
+    validateGermlineSampleIds(samplesheetData)
+
+    channel.fromList(samplesheetData)
         .map { samplesheet ->
             processSamplesheet(samplesheet)
         }
@@ -169,6 +172,24 @@ workflow PIPELINE_COMPLETION {
 //
 def validateInputParameters() {
     genomeExistsError()
+}
+
+//
+// Validate that germline samples have unique patient-sample combinations.
+// Intersection of calls is only implemented for somatic reporting.
+// For germline calls, duplicate sample IDs would cause output files to be overwritten.
+//
+def validateGermlineSampleIds(rows) {
+    def germlineIds = rows
+        .findAll { row -> toScalar(row[0].status) == 0 }
+        .collect { row -> "${toScalar(row[0].patient)}.${toScalar(row[0].sample)}" }
+
+    def duplicates = germlineIds.countBy { it }.findAll { _k, v -> v > 1 }.keySet()
+    if (duplicates) {
+        error(
+            "Duplicate germline sample IDs found: ${duplicates.join(', ')}. " + "Intersection of calls is only implemented for somatic reporting. " + "For germline calls, please provide unique sample IDs."
+        )
+    }
 }
 
 //

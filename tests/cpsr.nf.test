@@ -10,7 +10,7 @@ nextflow_pipeline {
             name: "-profile test | CPSR",
             params: [
                 input: "https://github.com/nf-core/test-datasets/raw/refs/heads/variantprioritization/samplesheets/cpsr.csv",
-                panel_id: 21,
+                panel_id: "21",
             ]
         ]
     ]
