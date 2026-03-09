@@ -15,7 +15,7 @@ include { PCGR_PREPAREVCF } from '../../../modules/local/pcgr/preparevcf'
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-workflow FORMAT_FILES {
+workflow PREPARE_SOMATIC {
     take:
     vcf_files
     cna_files

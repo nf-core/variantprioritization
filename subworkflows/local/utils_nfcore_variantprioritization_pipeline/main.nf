@@ -1,8 +1,6 @@
 //
 // Subworkflow with functionality specific to the nf-core/variantprioritization pipeline
 //
-import java.util.zip.GZIPInputStream
-import groovy.transform.Field
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -10,15 +8,15 @@ import groovy.transform.Field
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { UTILS_NFSCHEMA_PLUGIN     } from '../../nf-core/utils_nfschema_plugin'
-include { paramsSummaryMap          } from 'plugin/nf-schema'
-include { samplesheetToList         } from 'plugin/nf-schema'
-include { paramsHelp                } from 'plugin/nf-schema'
-include { completionEmail           } from '../../nf-core/utils_nfcore_pipeline'
-include { completionSummary         } from '../../nf-core/utils_nfcore_pipeline'
-include { imNotification            } from '../../nf-core/utils_nfcore_pipeline'
-include { UTILS_NFCORE_PIPELINE     } from '../../nf-core/utils_nfcore_pipeline'
-include { UTILS_NEXTFLOW_PIPELINE   } from '../../nf-core/utils_nextflow_pipeline'
+include { UTILS_NFSCHEMA_PLUGIN   } from '../../nf-core/utils_nfschema_plugin'
+include { paramsSummaryMap        } from 'plugin/nf-schema'
+include { samplesheetToList       } from 'plugin/nf-schema'
+include { paramsHelp              } from 'plugin/nf-schema'
+include { completionEmail         } from '../../nf-core/utils_nfcore_pipeline'
+include { completionSummary       } from '../../nf-core/utils_nfcore_pipeline'
+include { imNotification          } from '../../nf-core/utils_nfcore_pipeline'
+include { UTILS_NFCORE_PIPELINE   } from '../../nf-core/utils_nfcore_pipeline'
+include { UTILS_NEXTFLOW_PIPELINE } from '../../nf-core/utils_nextflow_pipeline'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -31,11 +29,11 @@ workflow PIPELINE_INITIALISATION {
     version // boolean: Display version and exit
     validate_params // boolean: Boolean whether to validate parameters against the schema at runtime
     nextflow_cli_args //   array: List of positional nextflow CLI args
-    outdir            //  string: The output directory where the results will be saved
-    input             //  string: Path to input samplesheet
-    help              // boolean: Display help message and exit
-    help_full         // boolean: Show the full help message
-    show_hidden       // boolean: Show hidden parameters in the help message
+    outdir //  string: The output directory where the results will be saved
+    input //  string: Path to input samplesheet
+    help // boolean: Display help message and exit
+    help_full // boolean: Show the full help message
+    show_hidden // boolean: Show hidden parameters in the help message
 
     main:
 
@@ -64,7 +62,7 @@ workflow PIPELINE_INITIALISATION {
 \033[0;35m  nf-core/variantprioritization ${workflow.manifest.version}\033[0m
 -\033[2m----------------------------------------------------\033[0m-
 """
-    after_text = """${workflow.manifest.doi ? "\n* The pipeline\n" : ""}${workflow.manifest.doi.tokenize(",").collect { doi -> "    https://doi.org/${doi.trim().replace('https://doi.org/','')}"}.join("\n")}${workflow.manifest.doi ? "\n" : ""}
+    after_text = """${workflow.manifest.doi ? "\n* The pipeline\n" : ""}${workflow.manifest.doi.tokenize(",").collect { doi -> "    https://doi.org/${doi.trim().replace('https://doi.org/', '')}" }.join("\n")}${workflow.manifest.doi ? "\n" : ""}
 * The nf-core framework
     https://doi.org/10.1038/s41587-020-0439-x
 
@@ -73,7 +71,7 @@ workflow PIPELINE_INITIALISATION {
 """
     command = "nextflow run ${workflow.manifest.name} -profile <docker/singularity/.../institute> --input samplesheet.csv --outdir <OUTDIR>"
 
-    UTILS_NFSCHEMA_PLUGIN (
+    UTILS_NFSCHEMA_PLUGIN(
         workflow,
         validate_params,
         null,
@@ -82,7 +80,7 @@ workflow PIPELINE_INITIALISATION {
         show_hidden,
         before_text,
         after_text,
-        command
+        command,
     )
 
     //
@@ -100,8 +98,10 @@ workflow PIPELINE_INITIALISATION {
     //
     // Create channel from input file provided through params.input
     //
-    channel
-        .fromList(samplesheetToList(input, "${projectDir}/assets/schema_input.json"))
+    def samplesheetData = samplesheetToList(input, "${projectDir}/assets/schema_input.json")
+    validateGermlineSampleIds(samplesheetData)
+
+    channel.fromList(samplesheetData)
         .map { samplesheet ->
             processSamplesheet(samplesheet)
         }
@@ -175,12 +175,35 @@ def validateInputParameters() {
 }
 
 //
+// Validate that germline samples have unique patient-sample combinations.
+// Intersection of calls is only implemented for somatic reporting.
+// For germline calls, duplicate sample IDs would cause output files to be overwritten.
+//
+def validateGermlineSampleIds(rows) {
+    def germlineIds = rows
+        .findAll { row -> toScalar(row[0].status) == 0 }
+        .collect { row -> "${toScalar(row[0].patient)}.${toScalar(row[0].sample)}" }
+
+    def duplicates = germlineIds.countBy { it }.findAll { _k, v -> v > 1 }.keySet()
+    if (duplicates) {
+        error(
+            "Duplicate germline sample IDs found: ${duplicates.join(', ')}. " + "Intersection of calls is only implemented for somatic reporting. " + "For germline calls, please provide unique sample IDs."
+        )
+    }
+}
+
+//
 // Process the input samplesheet to define additional metadata
 //
 def processSamplesheet(row) {
 
     // Unpack input row
     def (meta, vcf, cna) = row[0..2]
+
+    // Normalize potentially list-valued fields from parsed input
+    meta.patient = toScalar(meta.patient)
+    meta.sample = toScalar(meta.sample)
+    meta.status = toScalar(meta.status)
 
     // Re-encode status as a string variable
     meta.status = meta.status == 1 ? 'somatic' : 'germline'
@@ -190,22 +213,23 @@ def processSamplesheet(row) {
     meta.tool = ''
     if (vcf.toString().endsWith('.gz')) {
         vcf.withInputStream { fis ->
-            def gzis = new GZIPInputStream(fis)
+            def gzis = new java.util.zip.GZIPInputStream(fis)
             gzis.withReader { reader ->
                 reader.eachLine { line ->
                     if (line.startsWith('##source=')) {
                         meta.tool = line.tokenize('=')[1]
-                        return
+                        return null
                     }
                 }
             }
         }
-    } else {
+    }
+    else {
         vcf.withReader { reader ->
             reader.eachLine { line ->
                 if (line.startsWith('##source=')) {
                     meta.tool = line.tokenize('=')[1]
-                    return
+                    return null
                 }
             }
         }
@@ -214,16 +238,20 @@ def processSamplesheet(row) {
     if (meta.tool.startsWith('strelka')) {
         def isIndel = false
         // Read the first variant line after headers
-        (vcf.toString().endsWith('.gz') ? new GZIPInputStream(vcf.newInputStream()) : vcf.newInputStream()).withReader { reader ->
+        (vcf.toString().endsWith('.gz') ? new java.util.zip.GZIPInputStream(vcf.newInputStream()) : vcf.newInputStream()).withReader { reader ->
             reader.eachLine { line ->
                 if (!line.startsWith('#')) {
                     def fields = line.tokenize('\t')
-                    def formatCol = fields[8]  // FORMAT is the 9th column
+                    def formatCol = fields[8]
+                    // FORMAT is the 9th column
                     // Strelka indels often have TIR/TAR fields
-                    if (formatCol.contains('TIR') || formatCol.contains('TAR')) {
+                    if (formatCol == null) {
+                        log.info("WARNING: FORMAT column is null for line: ${line}")
+                    }
+                    else if (formatCol.contains('TIR') || formatCol.contains('TAR')) {
                         isIndel = true
                     }
-                    return
+                    return null
                 }
             }
         }
@@ -234,21 +262,22 @@ def processSamplesheet(row) {
     if (!meta.tool) {
         if (vcf.toString().endsWith('.gz')) {
             vcf.withInputStream { fis ->
-                new GZIPInputStream(fis).withReader { reader ->
+                new java.util.zip.GZIPInputStream(fis).withReader { reader ->
                     reader.eachLine { line ->
                         if (line.startsWith('##DeepVariant')) {
                             meta.tool = 'deepvariant'
-                            return
+                            return null
                         }
                     }
                 }
             }
-        } else {
+        }
+        else {
             vcf.withReader { reader ->
                 reader.eachLine { line ->
                     if (line.startsWith('##DeepVariant')) {
                         meta.tool = 'deepvariant'
-                        return
+                        return null
                     }
                 }
             }
@@ -257,8 +286,8 @@ def processSamplesheet(row) {
 
     meta.tool = meta.tool.toLowerCase()
 
-    // meta.id for process tags
-    meta.id = "${meta.patient}.${meta.sample}.${meta.tool}"
+    // meta.id for process tags (always scalar string)
+    meta.id = "${meta.patient}.${meta.sample}.${meta.tool}".toString()
 
     // Check if the VCF file is bgzipped
     if (vcf.toString().endsWith('.gz')) {
@@ -292,7 +321,7 @@ def validateInputSamplesheet(row) {
     // If user selects params.cna_analysis but the cna entries are empty, throw an error
     if (meta.status == 'somatic' && params.cna_analysis) {
         if (!cna) {
-            error("Please check input samplesheet -> CNA analysis selected but no copy number alteration files provided with somatic VCF files: ${meta[0].id}")
+            error("Please check input samplesheet -> CNA analysis selected but no copy number alteration files provided with somatic VCF files: ${meta.id}")
         }
     }
 
@@ -328,10 +357,10 @@ def toolCitationText() {
     // Can use ternary operators to dynamically construct based conditions, e.g. params["run_xyz"] ? "Tool (Foo et al. 2023)" : "",
     // Uncomment function in methodsDescriptionText to render in MultiQC report
     def citation_text = [
-            "Tools used in the workflow included:",
-            "MultiQC (Ewels et al. 2016)",
-            "."
-        ].join(' ').trim()
+        "Tools used in the workflow included:",
+        "MultiQC (Ewels et al. 2016)",
+        ".",
+    ].join(' ').trim()
 
     return citation_text
 }
@@ -341,8 +370,8 @@ def toolBibliographyText() {
     // Can use ternary operators to dynamically construct based conditions, e.g. params["run_xyz"] ? "<li>Author (2023) Pub name, Journal, DOI</li>" : "",
     // Uncomment function in methodsDescriptionText to render in MultiQC report
     def reference_text = [
-            "<li>Ewels, P., Magnusson, M., Lundin, S., & Käller, M. (2016). MultiQC: summarize analysis results for multiple tools and samples in a single report. Bioinformatics , 32(19), 3047–3048. doi: /10.1093/bioinformatics/btw354</li>"
-        ].join(' ').trim()
+        "<li>Ewels, P., Magnusson, M., Lundin, S., & Käller, M. (2016). MultiQC: summarize analysis results for multiple tools and samples in a single report. Bioinformatics , 32(19), 3047–3048. doi: /10.1093/bioinformatics/btw354</li>"
+    ].join(' ').trim()
 
     return reference_text
 }
@@ -385,4 +414,11 @@ def methodsDescriptionText(mqc_methods_yaml) {
     def description_html = engine.createTemplate(methods_text).make(meta)
 
     return description_html.toString()
+}
+
+def toScalar(value) {
+    if (value instanceof Collection) {
+        return value ? value[0] : null
+    }
+    return value
 }

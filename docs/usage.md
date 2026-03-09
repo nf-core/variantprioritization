@@ -6,7 +6,7 @@
 
 ## Introduction
 
-nf-core/variantprioritization consumes small variant calls (SNVs/InDels) in VCF format and optionally copy number alteration (CNA) segments, and produces annotated reports using PCGR.
+nf-core/variantprioritization consumes small variant calls (SNVs/InDels) in VCF format and optionally copy number alteration (CNA) segments, and produces annotated reports for the somatic case using PCGR / for the germline case using CPSR.
 
 The pipeline is designed to work well with outputs from nf-core/sarek (e.g. Mutect2, Strelka), but any compatible VCFs can be used.
 
@@ -22,7 +22,9 @@ It must be a comma-separated file with a header row and the following required c
 - `sample`: Sample identifier (no spaces)
 - `vcf`: Path to a VCF / VCF.GZ file
 
-Optionally, you can provide:
+The PCGR / CPSR implementation runs based on the input: If the samplesheet contains both status `0` and `1`, both reporting tools will be used.
+
+Optionally (somatic analysis only), you can provide:
 
 - `cna`: Path to a CNA segments file (required for somatic rows when `--cna_analysis` is enabled)
 
@@ -33,6 +35,9 @@ Optionally, you can provide:
 ### Multiple VCFs per sample
 
 If you have multiple VCFs for the same sample (e.g. one per caller), provide one row per VCF. The pipeline will keep caller-specific files separate during preprocessing and then consolidate/intersect somatic calls per sample for PCGR reporting.
+
+> [!NOTE]
+> Intersection of calls is only implemented for the somatic reporting. For germline calls please provide unique sample ids.
 
 ### CNA files
 

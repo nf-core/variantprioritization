@@ -1,5 +1,5 @@
 {
-    "-profile test": {
+    "-profile test | PCGR": {
         "content": [
             19,
             {
@@ -106,10 +106,10 @@
                 "HCC1395.HCC1395T.pcgr.grch38.cna_gene.tsv.gz:md5,b301bf849179a442259ca92cc7f792c9",
                 "HCC1395.HCC1395T.pcgr.grch38.cna_gene_ann.tsv.gz:md5,8aa9781fe452ecff89aa006325c0f5fe",
                 "HCC1395.HCC1395T.pcgr.grch38.cna_segment.tsv.gz:md5,c8731c3be866b116af786cb76ea758cc",
-                "HCC1395.HCC1395T.pcgr.grch38.maf:md5,3a81207502720524e817b5d76f5a181c",
-                "HCC1395.HCC1395T.pcgr.grch38.pass.tsv.gz:md5,34221af12208b5f1f5ed21dde57d8760",
-                "HCC1395.HCC1395T.pcgr.grch38.snv_indel_ann.tsv.gz:md5,661dea535583a017309ee29248041251",
-                "HCC1395.HCC1395T.pcgr.grch38.tmb.tsv:md5,bbfda5ec66f1f6cfff65ed79bc250c58"
+                "HCC1395.HCC1395T.pcgr.grch38.maf:md5,b4f314b07f7d45aea3412a9fdfaf47d9",
+                "HCC1395.HCC1395T.pcgr.grch38.pass.tsv.gz:md5,bda9e00e4e949737e878d771dd64f8a7",
+                "HCC1395.HCC1395T.pcgr.grch38.snv_indel_ann.tsv.gz:md5,3ee47b60dc77c475224912632cd2cfe6",
+                "HCC1395.HCC1395T.pcgr.grch38.tmb.tsv:md5,7ac9b4854cb503f5a613871ce80ab430"
             ],
             [
                 "HCC1395.HCC1395T.mutect2.norm.filtered.vcf.gz:md5,a2d2dd898784b1342f821f9f3254d3e1",
@@ -122,8 +122,8 @@
                 "HCC1395.HCC1395T.mutect2.reformatted.vcf.gz:md5,4edb5a875785d5749b59875e9f3bbab4",
                 "HCC1395.HCC1395T.strelka_indel.reformatted.vcf.gz:md5,293b005d551e950b6d35d71dfbe1518a",
                 "HCC1395.HCC1395T.strelka_snv.reformatted.vcf.gz:md5,966b32e08e0b9536ab811fff987a30d6",
-                "HCC1395.HCC1395T.pcgr.grch38.pass.vcf.gz:md5,20478d09906638fe45796dc24735f714",
-                "HCC1395.HCC1395T.pcgr.grch38.vcf.gz:md5,20478d09906638fe45796dc24735f714",
+                "HCC1395.HCC1395T.pcgr.grch38.pass.vcf.gz:md5,9e4b7252841edbf1aa2d15ad239fb678",
+                "HCC1395.HCC1395T.pcgr.grch38.vcf.gz:md5,9e4b7252841edbf1aa2d15ad239fb678",
                 "clinvar.vcf.gz:md5,8d3b4f3fa176287738ae82e72e26eac9",
                 "dbmts.vcf.gz:md5,fe9d26d3f24a49fde2d98a62ec329de5",
                 "dbnsfp.vcf.gz:md5,9fe7521182b9bd0c07f233f168504e8f",
@@ -133,9 +133,9 @@
             ]
         ],
         "meta": {
-            "nf-test": "0.9.3",
+            "nf-test": "0.9.2",
             "nextflow": "25.10.4"
         },
-        "timestamp": "2026-02-19T10:16:47.934292387"
+        "timestamp": "2026-02-23T14:09:46.781315789"
     }
 }

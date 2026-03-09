@@ -5,9 +5,11 @@
 */
 include { REFERENCE_DATA         } from '../../subworkflows/local/reference_data'
 
-include { VCF_PREPROCESSING      } from '../../subworkflows/local/vcf_preprocessing'
-include { FORMAT_FILES           } from '../../subworkflows/local/format_files'
+include { FILE_PREPROCESSING      } from '../../subworkflows/local/file_preprocessing'
+include { PREPARE_SOMATIC        } from '../../subworkflows/local/prepare_somatic'
 include { PCGR_RUN               } from '../../modules/local/pcgr/run'
+include { CPSR_RUN               } from '../../modules/local/cpsr/run'
+
 
 include { getGenomeAttribute     } from '../../subworkflows/local/utils_nfcore_variantprioritization_pipeline'
 include { MULTIQC                } from '../../modules/nf-core/multiqc'
@@ -51,30 +53,37 @@ workflow VARIANTPRIORITIZATION {
     //
     // SUBWORKFLOW: Preprocess VCF files
     //
-    VCF_PREPROCESSING(
+    FILE_PREPROCESSING(
         ch_samplesheet,
         fasta,
     )
 
-    def ch_vcf_files = VCF_PREPROCESSING.out.filtered_ch
-    def ch_cna_files = VCF_PREPROCESSING.out.ch_cna_files
-
     //
-    // SUBWORKFLOW: Format input files
+    // SUBWORKFLOW: Format input files for somatic analyses
     //
-    FORMAT_FILES(
-        ch_vcf_files,
-        ch_cna_files,
+    PREPARE_SOMATIC(
+        FILE_PREPROCESSING.out.normalised_somatic,
+        FILE_PREPROCESSING.out.ch_cna_files,
     )
 
     //
-    // SUBWORKFLOW: pcgr
+    // SUBWORKFLOW: pcgr (somatic)
     //
     PCGR_RUN(
-        FORMAT_FILES.out.pcgr_ready_vcf,
+        PREPARE_SOMATIC.out.pcgr_ready_vcf,
         ch_pcgr_dir.collect(),
         ch_vep_cache.collect(),
     )
+
+    //
+    // SUBWORKFLOW: cpsr
+    //
+    CPSR_RUN(
+        FILE_PREPROCESSING.out.normalised_germline,
+        ch_pcgr_dir.collect(),
+        ch_vep_cache.collect()
+    )
+
 
     //
     // Collate and save software versions

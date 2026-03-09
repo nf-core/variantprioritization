@@ -12,4 +12,5 @@ multiqc/multiqc_report.html
 pipeline_info/*.{html,json,txt,yml}
 reference/**
 **/*.{vcf,vcf.gz,vcf.gz.tbi}
-pcgr/**/*.{conf.yaml,xlsx}
+pcgr/**/*.{conf,html,yaml,xlsx}
+cpsr/**/*.{conf,html,yaml,xlsx}

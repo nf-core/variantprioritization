@@ -4,10 +4,10 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { TABIX_BGZIPTABIX } from '../../../modules/nf-core/tabix/bgziptabix'
-include { TABIX_TABIX      } from '../../../modules/nf-core/tabix/tabix'
-include { BCFTOOLS_NORM    } from '../../../modules/nf-core/bcftools/norm'
-include { BCFTOOLS_FILTER  } from '../../../modules/nf-core/bcftools/filter'
+include { BCFTOOLS_FILTER   } from '../../../modules/nf-core/bcftools/filter'
+include { BCFTOOLS_NORM     } from '../../../modules/nf-core/bcftools/norm'
+include { TABIX_BGZIPTABIX  } from '../../../modules/nf-core/tabix/bgziptabix'
+include { TABIX_TABIX       } from '../../../modules/nf-core/tabix/tabix'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -15,7 +15,7 @@ include { BCFTOOLS_FILTER  } from '../../../modules/nf-core/bcftools/filter'
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-workflow VCF_PREPROCESSING {
+workflow FILE_PREPROCESSING {
     take:
     ch_samplesheet // channel: samplesheet read in from --input and processed by PIPELINE_INITIALISATION
     fasta
@@ -60,15 +60,21 @@ workflow VCF_PREPROCESSING {
 
     // Create index for files that need tabix
     ch_vcf.to_tabix
-        .map { meta, vcf, _tbi ->
-            vcf: [meta, vcf]
-        }
+        .map { meta, vcf, _tbi -> tuple(meta.id, meta, vcf) }
+        .set { ch_vcf_to_tabix_keyed }
+
+    ch_vcf_to_tabix_keyed
+        .map { _id, meta, vcf -> [meta, vcf] }
         .set { ch_vcf_to_tabix }
 
     TABIX_TABIX(ch_vcf_to_tabix)
 
-    ch_vcf_to_tabix
-        .join(TABIX_TABIX.out.index)
+    ch_vcf_to_tabix_keyed
+        .join(
+            TABIX_TABIX.out.index.map { meta, tbi -> tuple(meta.id, meta, tbi) },
+            by: 0
+        )
+        .map { _id, meta, vcf, _meta2, tbi -> [meta, vcf, tbi] }
         .set { ch_vcf_with_tabix }
 
     // Combine all processed files into a final channel
@@ -84,7 +90,11 @@ workflow VCF_PREPROCESSING {
     BCFTOOLS_FILTER(norm_ch)
     filtered_ch = BCFTOOLS_FILTER.out.vcf.join(BCFTOOLS_FILTER.out.tbi)
 
+    normalised_germline = filtered_ch.filter { meta, _vcf, _tbi -> meta.status == 'germline' }
+    normalised_somatic = filtered_ch.filter { meta, _vcf, _tbi -> meta.status == 'somatic' }
+
     emit:
-    filtered_ch // channel: [ meta, path(vcf_file), path(tbi_file), path(cna_file) ]
+    normalised_germline
+    normalised_somatic
     ch_cna_files
 }

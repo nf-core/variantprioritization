@@ -7,8 +7,11 @@ nextflow_pipeline {
 
     def test_scenario = [
         [
-            name: "-profile test | PCGR",
-            params: []
+            name: "-profile test | CPSR",
+            params: [
+                input: "https://github.com/nf-core/test-datasets/raw/refs/heads/variantprioritization/samplesheets/cpsr.csv",
+                panel_id: "21",
+            ]
         ]
     ]
 
