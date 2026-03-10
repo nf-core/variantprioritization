@@ -1,6 +1,7 @@
 {
     "-profile test | CPSR": {
         "content": [
+            11,
             {
                 "BCFTOOLS_FILTER": {
                     "bcftools": 1.22

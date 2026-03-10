@@ -1,6 +1,7 @@
 {
     "-profile test --input tests/csv/duplicated_germline.csv": {
         "content": [
+            0,
             {
                 
             },

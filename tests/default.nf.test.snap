@@ -1,6 +1,7 @@
 {
     "-profile test | PCGR": {
         "content": [
+            19,
             {
                 "BCFTOOLS_FILTER": {
                     "bcftools": 1.22
