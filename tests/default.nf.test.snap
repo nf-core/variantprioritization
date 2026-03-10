@@ -17,7 +17,7 @@
                     "python": "3.10.19"
                 },
                 "PCGR_RUN": {
-                    "pcgr": "2.2.1"
+                    "pcgr": "2.2.5"
                 },
                 "REFORMAT_CNA": {
                     "python": "3.10.19"
@@ -103,12 +103,12 @@
                 "HCC1395.HCC1395T_keys.txt:md5,6c4b64e70a705e3c90517189a7cd3963",
                 "HCC1395T.reformatted.allelic_cna.tsv:md5,17d7fc79d8e60ac5f9b3dc007c33b97d",
                 "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f",
-                "HCC1395.HCC1395T.pcgr.grch38.cna_gene.tsv.gz:md5,b301bf849179a442259ca92cc7f792c9",
-                "HCC1395.HCC1395T.pcgr.grch38.cna_gene_ann.tsv.gz:md5,8aa9781fe452ecff89aa006325c0f5fe",
+                "HCC1395.HCC1395T.pcgr.grch38.cna_gene.tsv.gz:md5,677104ede29a45fdc3697b2ddbb9512e",
+                "HCC1395.HCC1395T.pcgr.grch38.cna_gene_ann.tsv.gz:md5,4a307334c9e56d4204b8fa12b2ebb04e",
                 "HCC1395.HCC1395T.pcgr.grch38.cna_segment.tsv.gz:md5,c8731c3be866b116af786cb76ea758cc",
                 "HCC1395.HCC1395T.pcgr.grch38.maf:md5,b4f314b07f7d45aea3412a9fdfaf47d9",
-                "HCC1395.HCC1395T.pcgr.grch38.pass.tsv.gz:md5,bda9e00e4e949737e878d771dd64f8a7",
-                "HCC1395.HCC1395T.pcgr.grch38.snv_indel_ann.tsv.gz:md5,3ee47b60dc77c475224912632cd2cfe6",
+                "HCC1395.HCC1395T.pcgr.grch38.pass.tsv.gz:md5,f89a19739b36e110064c2299b14afa72",
+                "HCC1395.HCC1395T.pcgr.grch38.snv_indel_ann.tsv.gz:md5,6278d7870aeacc54b37258367f7a012d",
                 "HCC1395.HCC1395T.pcgr.grch38.tmb.tsv:md5,7ac9b4854cb503f5a613871ce80ab430"
             ],
             [
@@ -122,8 +122,8 @@
                 "HCC1395.HCC1395T.mutect2.reformatted.vcf.gz:md5,4edb5a875785d5749b59875e9f3bbab4",
                 "HCC1395.HCC1395T.strelka_indel.reformatted.vcf.gz:md5,293b005d551e950b6d35d71dfbe1518a",
                 "HCC1395.HCC1395T.strelka_snv.reformatted.vcf.gz:md5,966b32e08e0b9536ab811fff987a30d6",
-                "HCC1395.HCC1395T.pcgr.grch38.pass.vcf.gz:md5,9e4b7252841edbf1aa2d15ad239fb678",
-                "HCC1395.HCC1395T.pcgr.grch38.vcf.gz:md5,9e4b7252841edbf1aa2d15ad239fb678",
+                "HCC1395.HCC1395T.pcgr.grch38.pass.vcf.gz:md5,db5fe3423d94d8107e1ea2ab57bce027",
+                "HCC1395.HCC1395T.pcgr.grch38.vcf.gz:md5,db5fe3423d94d8107e1ea2ab57bce027",
                 "clinvar.vcf.gz:md5,8d3b4f3fa176287738ae82e72e26eac9",
                 "dbmts.vcf.gz:md5,fe9d26d3f24a49fde2d98a62ec329de5",
                 "dbnsfp.vcf.gz:md5,9fe7521182b9bd0c07f233f168504e8f",
@@ -133,9 +133,9 @@
             ]
         ],
         "meta": {
-            "nf-test": "0.9.2",
+            "nf-test": "0.9.3",
             "nextflow": "25.10.4"
         },
-        "timestamp": "2026-02-23T14:09:46.781315789"
+        "timestamp": "2026-03-10T14:26:12.577328549"
     }
 }
