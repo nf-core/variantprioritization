@@ -11,8 +11,7 @@ nf_core_version: 3.5.2
 repository_type: pipeline
 template:
   author: "@yussab"
-  description: pipeline for the functional annotation and translation of somatic SNVs/InDels
-    and copy number abberations for precision cancer medicine
+  description: pipeline for the functional annotation and translation of somatic SNVs/InDels and copy number abberations for precision cancer medicine
   force: false
   is_nfcore: true
   name: variantprioritization
@@ -20,4 +19,4 @@ template:
   outdir: .
   skip_features:
     - fastqc
-  version: 1.0.0dev
+  version: '1.0'
