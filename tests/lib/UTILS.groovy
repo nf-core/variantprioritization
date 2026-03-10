@@ -5,6 +5,12 @@ class UTILS {
         // Mandatory, as we always need an outdir
         def outdir = args.outdir
 
+        // Get scenario and extract all properties dynamically
+        def scenario = args.scenario ?: [:]
+
+        // Pass down workflow for std capture
+        def workflow = args.workflow
+
         // Use this args to run the test with stub
         // It will disable all assertions but versions and stable_name
         def stub = args.stub
@@ -30,6 +36,27 @@ class UTILS {
                 assertion.add(vcf_files.isEmpty() ? 'No VCF files' : vcf_files.collect { file -> [ file.getName(), path(file.toString()).vcf.summary ] })
             } else {
                 assertion.add(vcf_files.isEmpty() ? 'No VCF files' : vcf_files.collect { file -> file.getName() + ":md5," + path(file.toString()).vcf.variantsMD5 })
+            }
+        }
+
+        // Always capture stdout and stderr for any WARN message
+        if (scenario.snapshot_ignoreWarning) {
+            assertion.add(filterNextflowOutput(workflow.stderr + workflow.stdout, include: ["WARN"], ignore: ["Creating env using", "Pulling Singularity image", "unable to stage foreign file", scenario.snapshot_ignoreWarning] ) ?: "No warnings")
+        } else {
+            assertion.add(filterNextflowOutput(workflow.stderr + workflow.stdout, include: ["WARN"], ignore: ["Creating env using", "Pulling Singularity image", "unable to stage foreign file"] ) ?: "No warnings")
+        }
+
+        if (scenario.snapshot) {
+            def workflow_std = []
+
+            scenario.snapshot.split(',').each { std ->
+                if (std in ['stderr', 'stdout']) { workflow_std.add(workflow."$std") }
+            }
+
+            if (scenario.snapshot_include) {
+                assertion.add(filterNextflowOutput(workflow_std.flatten(), ignore: ["Creating env using", "Pulling Singularity image", "unable to stage foreign file", scenario.snapshot_ignore], include:[scenario.snapshot_include]))
+            } else {
+                assertion.add(filterNextflowOutput(workflow_std.flatten(), ignore: ["Creating env using", "Pulling Singularity image", "unable to stage foreign file", scenario.snapshot_ignore]))
             }
         }
 
@@ -61,39 +88,24 @@ class UTILS {
             }
 
             then {
-                // Assert failure
+                // Assert failure/success, and fails early so we don't pollute console with massive diffs
                 if (scenario.failure) {
-                    // Early failure, so we don't pollute console with massive diffs
                     assert workflow.failed
-                    // Check stdout if specified
-                    if (scenario.stdout) {
-                        assertAll(
-                            { assert workflow.stdout.toString().contains(scenario.stdout) }
-                        )
-                    }
-                    // Check stderr if specified
-                    if (scenario.stderr) {
-                        { assert snapshot(
-                            workflow.stderr.toString().replaceAll(/\x1B\[[0-9;]*m/, '').replaceAll(/^\[/, '').replaceAll(/\]$/, '').replaceAll(/, /, ',').split(",").findAll { !it.matches(/.*Nextflow [0-9]+\.[0-9]+\.[0-9]+ is available.*/) }[scenario.stderr]
-                        ).match() }
-                    }
-                // Assert success
                 } else {
-                    // Early failure, so we don't pollute console with massive diffs
                     assert workflow.success
-                    assertAll(
-                        { assert snapshot(
-                            // Number of successful tasks
-                            workflow.trace.succeeded().size(),
-                            // All assertions based on the scenario
-                            *UTILS.get_assertion(no_vcf_md5sum: scenario.no_vcf_md5sum, outdir: params.outdir, stub: scenario.stub)
-                        ).match() }
-                    )
-                    // Check stdout if specified
-                    if (scenario.stdout) {
-                        assert workflow.stdout.toString().contains(scenario.stdout)
-                    }
                 }
+                assertAll(
+                    { assert snapshot(
+                        // Number of successful tasks
+                        workflow.trace.succeeded().size(),
+                        // All assertions based on the scenario
+                        *UTILS.get_assertion(
+                            outdir: params.outdir,
+                            scenario: scenario,
+                            workflow: workflow
+                        )
+                    ).match() }
+                )
             }
         }
     }
