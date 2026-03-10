@@ -3,6 +3,7 @@ lint:
     - .github/workflows/ci.yml
   files_unchanged:
     - .gitignore
+    - .github/CONTRIBUTING.md
     - assets/nf-core-variantprioritization_logo_light.png
     - docs/images/nf-core-variantprioritization_logo_dark.png
     - docs/images/nf-core-variantprioritization_logo_light.png

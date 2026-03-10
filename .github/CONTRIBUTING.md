@@ -82,6 +82,15 @@ If you wish to contribute a new step, please use the following coding standards:
 9. Update MultiQC config `assets/multiqc_config.yml` so relevant suffixes, file name clean up and module plots are in the appropriate order. If applicable, add a [MultiQC](https://https://multiqc.info/) module.
 10. Add a description of the output files and if relevant any appropriate images from the MultiQC report to `docs/output.md`.
 
+#### The metromap
+
+The metromap highlighting the pipeline was created using [nf-metro](https://github.com/pinin4fjords/nf-metro). It can be installed via conda and then the following commands can be used to render the map:
+
+```bash
+nf-metro render pipeline.mmd -o pipeline_dark.svg --theme nfcore --logo nf-core-variantprioritization_logo_dark.png --animate --x-spacing 50 --y-spacing 50
+nf-metro render pipeline.mmd -o pipeline_light.svg --theme light --logo nf-core-variantprioritization_logo_light.png --animate --x-spacing 50 --y-spacing 50
+```
+
 ### Default values
 
 Parameters should be initialised / defined with default values within the `params` scope in `nextflow.config`.
