@@ -1,0 +1,23 @@
+{
+    "-profile test --input tests/csv/duplicated_germline.csv": {
+        "content": [
+            {
+                
+            },
+            [
+                "pipeline_info"
+            ],
+            "No stable content",
+            "No VCF files",
+            "No warnings",
+            [
+                "Duplicate germline sample IDs found: HCC1395.HCC1395N. Intersection of calls is only implemented for somatic reporting. For germline calls, please provide unique sample IDs."
+            ]
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.2"
+        },
+        "timestamp": "2026-03-10T13:02:04.654026"
+    }
+}

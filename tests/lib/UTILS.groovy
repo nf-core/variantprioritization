@@ -97,7 +97,7 @@ class UTILS {
                 assertAll(
                     { assert snapshot(
                         // All assertions based on the scenario
-                        *UTILS.getAssertions(
+                        *UTILS.get_assertion(
                             outdir: params.outdir,
                             scenario: scenario,
                             workflow: workflow
