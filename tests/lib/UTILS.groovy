@@ -5,6 +5,12 @@ class UTILS {
         // Mandatory, as we always need an outdir
         def outdir = args.outdir
 
+        // Get scenario and extract all properties dynamically
+        def scenario = args.scenario ?: [:]
+
+        // Pass down workflow for std capture
+        def workflow = args.workflow
+
         // Use this args to run the test with stub
         // It will disable all assertions but versions and stable_name
         def stub = args.stub
@@ -30,6 +36,20 @@ class UTILS {
                 assertion.add(vcf_files.isEmpty() ? 'No VCF files' : vcf_files.collect { file -> [ file.getName(), path(file.toString()).vcf.summary ] })
             } else {
                 assertion.add(vcf_files.isEmpty() ? 'No VCF files' : vcf_files.collect { file -> file.getName() + ":md5," + path(file.toString()).vcf.variantsMD5 })
+            }
+        }
+
+        if (scenario.snapshot) {
+            def workflow_std = []
+
+            scenario.snapshot.split(',').each { std ->
+                if (std in ['stderr', 'stdout']) { workflow_std.add(workflow."$std") }
+            }
+
+            if (scenario.snapshot_include) {
+                assertion.add(filterNextflowOutput(workflow_std.flatten(), ignore: ["Creating env using", "Pulling Singularity image", "unable to stage foreign file", scenario.snapshot_ignore], include:[scenario.snapshot_include]))
+            } else {
+                assertion.add(filterNextflowOutput(workflow_std.flatten(), ignore: ["Creating env using", "Pulling Singularity image", "unable to stage foreign file", scenario.snapshot_ignore]))
             }
         }
 

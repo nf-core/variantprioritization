@@ -1,0 +1,25 @@
+def projectDir = new File('.').absolutePath
+
+nextflow_pipeline {
+
+    name "Test pipeline"
+    script "../main.nf"
+    tag "pipeline"
+    tag "ci_test"
+
+    def test_scenario = [
+        [
+            name: "-profile test --input tests/csv/duplicated_germline.csv",
+            params: [
+                input: "${projectDir}/tests/csv/duplicated_germline.csv"
+            ],
+            failure: true,
+            snapshot: 'stderr',
+        ],
+    ]
+
+    // Generate tests for each scenario
+    test_scenario.each { scenario ->
+        test(scenario.name, UTILS.get_test(scenario))
+    }
+}
