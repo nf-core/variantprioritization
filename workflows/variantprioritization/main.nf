@@ -48,8 +48,6 @@ workflow VARIANTPRIORITIZATION {
     def ch_pcgr_dir = REFERENCE_DATA.out.pcgr_dir
     def ch_vep_cache = REFERENCE_DATA.out.vep_cache
 
-    ch_versions = ch_versions.mix(REFERENCE_DATA.out.versions)
-
     //
     // SUBWORKFLOW: Preprocess VCF files
     //
