@@ -14,7 +14,9 @@ nextflow_pipeline {
                 input: "${projectDir}/tests/csv/duplicated_germline.csv"
             ],
             failure: true,
-            snapshot: 'stderr',
+            snapshot: 'stderr,stdout',
+            snapshot_ignore: 'Downloading plugin',
+            snapshot_include: 'Duplicate germline'
         ],
     ]
 
