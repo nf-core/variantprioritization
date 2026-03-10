@@ -96,6 +96,8 @@ class UTILS {
                 }
                 assertAll(
                     { assert snapshot(
+                        // Number of successful tasks
+                        workflow.trace.succeeded().size(),
                         // All assertions based on the scenario
                         *UTILS.get_assertion(
                             outdir: params.outdir,
