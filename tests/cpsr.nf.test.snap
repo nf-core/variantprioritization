@@ -1,7 +1,6 @@
 {
     "-profile test | CPSR": {
         "content": [
-            11,
             {
                 "BCFTOOLS_FILTER": {
                     "bcftools": 1.22
@@ -94,7 +93,8 @@
                 "gnomad_non_cancer.vcf.gz:md5,f99e849c822aea50002d9947289851a",
                 "gwas.vcf.gz:md5,146d63e3f86f2134f40df3935be74567",
                 "tcga.vcf.gz:md5,3e2b15b380d9a7d23cbb2222a4c07341"
-            ]
+            ],
+            "No warnings"
         ],
         "meta": {
             "nf-test": "0.9.2",
