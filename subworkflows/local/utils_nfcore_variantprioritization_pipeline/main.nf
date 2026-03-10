@@ -184,7 +184,7 @@ def validateGermlineSampleIds(rows) {
         .findAll { row -> toScalar(row[0].status) == 0 }
         .collect { row -> "${toScalar(row[0].patient)}.${toScalar(row[0].sample)}" }
 
-    def duplicates = germlineIds.countBy { it }.findAll { _k, v -> v > 1 }.keySet()
+    def duplicates = germlineIds.countBy { id -> id }.findAll { _k, v -> v > 1 }.keySet()
     if (duplicates) {
         error(
             "Duplicate germline sample IDs found: ${duplicates.join(', ')}. " + "Intersection of calls is only implemented for somatic reporting. " + "For germline calls, please provide unique sample IDs."
