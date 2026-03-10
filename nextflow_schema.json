@@ -169,6 +169,10 @@
                 "ignore_noncoding": {
                     "type": "boolean",
                     "description": "Ignore non-coding (non protein-altering) variants in CPSR report."
+                },
+                "vep_gencode_basic": {
+                    "type": "boolean",
+                    "description": "Consider basic GENCODE transcript set only with Variant Effect Predictor (VEP) (option '--gencode_basic' in VEP)."
                 }
             }
         },
