@@ -655,14 +655,32 @@
         }
     },
     "allOf": [
-        { "$ref": "#/$defs/input_output_options" },
-        { "$ref": "#/$defs/reference_options" },
-        { "$ref": "#/$defs/cpsr_options" },
-        { "$ref": "#/$defs/pcgr_options" },
-        { "$ref": "#/$defs/pcgrtumoronly_options" },
-        { "$ref": "#/$defs/variantfiltering_options" },
-        { "$ref": "#/$defs/vepparams_options" },
-        { "$ref": "#/$defs/institutional_config_options" },
-        { "$ref": "#/$defs/generic_options" }
+        {
+            "$ref": "#/$defs/input_output_options"
+        },
+        {
+            "$ref": "#/$defs/reference_options"
+        },
+        {
+            "$ref": "#/$defs/cpsr_options"
+        },
+        {
+            "$ref": "#/$defs/pcgr_options"
+        },
+        {
+            "$ref": "#/$defs/pcgrtumoronly_options"
+        },
+        {
+            "$ref": "#/$defs/variantfiltering_options"
+        },
+        {
+            "$ref": "#/$defs/vepparams_options"
+        },
+        {
+            "$ref": "#/$defs/institutional_config_options"
+        },
+        {
+            "$ref": "#/$defs/generic_options"
+        }
     ]
 }
