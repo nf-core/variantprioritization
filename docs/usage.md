@@ -91,6 +91,9 @@ nextflow run nf-core/variantprioritization \
   --genome GRCh38
 ```
 
+> [!WARNING]
+> `-profile conda` is not working with the CPSR and PCGR modules at the moment. We are working on a fix and hope to enable it in a future release.
+
 Note that the pipeline will create the following files in your working directory:
 
 ```bash

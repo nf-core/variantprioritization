@@ -79,6 +79,9 @@ nextflow run nf-core/variantprioritization \
 ```
 
 > [!WARNING]
+> `-profile conda` is not working with the CPSR and PCGR modules at the moment. We are working on a fix and hope to enable it in a future release.
+
+> [!WARNING]
 > Please provide pipeline parameters via the CLI or Nextflow `-params-file` option. Custom config files including those provided by the `-c` Nextflow option can be used to provide any configuration _**except for parameters**_; see [docs](https://nf-co.re/docs/usage/getting_started/configuration#custom-configuration-files).
 
 For more details and further functionality, please refer to the [usage documentation](https://nf-co.re/variantprioritization/usage) and the [parameter documentation](https://nf-co.re/variantprioritization/parameters).

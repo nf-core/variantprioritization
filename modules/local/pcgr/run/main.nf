@@ -4,8 +4,8 @@ process PCGR_RUN {
 
     conda "${moduleDir}/environment.yml"
     container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
-        ? 'docker.io/sigven/pcgr:2.2.1'
-        : 'docker.io/sigven/pcgr:2.2.1'}"
+        ? 'docker.io/sigven/pcgr:2.2.5'
+        : 'docker.io/sigven/pcgr:2.2.5'}"
 
     input:
     tuple val(meta), path(vcf), path(tbi), path(cna)
