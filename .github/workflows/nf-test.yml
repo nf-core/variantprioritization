@@ -68,15 +68,15 @@ jobs:
       fail-fast: false
       matrix:
         shard: ${{ fromJson(needs.nf-test-changes.outputs.shard) }}
-        profile: [docker, singularity]
+        profile: [conda, docker, singularity]
         isMain:
           - ${{ github.base_ref == 'master' || github.base_ref == 'main' }}
         # Exclude conda and singularity on dev
-        exclude:
-          - isMain: false
-            profile: "conda"
-          - isMain: false
-            profile: "singularity"
+        # exclude:
+        #   - isMain: false
+        #     profile: "conda"
+          # - isMain: false
+          #   profile: "singularity"
         NXF_VER:
           - "25.10.0"
           - "latest-everything"
