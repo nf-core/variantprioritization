@@ -5,7 +5,7 @@
 */
 include { REFERENCE_DATA         } from '../../subworkflows/local/reference_data'
 
-include { INPUT_PREPROCESSING      } from '../../subworkflows/local/input_preprocessing'
+include { INPUT_PREPROCESSING    } from '../../subworkflows/local/input_preprocessing'
 include { PREPARE_SOMATIC        } from '../../subworkflows/local/prepare_somatic'
 include { PCGR_RUN               } from '../../modules/local/pcgr/run'
 include { CPSR_RUN               } from '../../modules/local/cpsr/run'
