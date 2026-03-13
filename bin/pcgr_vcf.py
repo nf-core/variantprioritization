@@ -5,8 +5,6 @@ import pandas as pd
 from pysam import VariantFile
 import argparse
 
-# same as before, just make two similar functions for tumor-normal, tumor-only.
-
 
 def tumor_normal(sample_id, key_file, vcf_files, pcgr_header):
     key_df = pd.read_table(key_file, header=None, sep="\t")
@@ -29,7 +27,7 @@ def tumor_normal(sample_id, key_file, vcf_files, pcgr_header):
         "TAF",
     ]
 
-    # create dict of dataframes containing dataframes of the abpve fields.
+    # create dict of dataframes containing dataframes of the above fields.
     # strategy is to average TDP,NDP, TAF,NAF and append TAL from $meta.id_keys.txt
 
     vcf_dict = {}
@@ -49,7 +47,8 @@ def tumor_normal(sample_id, key_file, vcf_files, pcgr_header):
         subprocess.run(
             f"tail -n +2 {idx}.tmp > {idx}.tsv && rm {idx}.tmp", shell=True, check=True
         )
-        df = pd.read_table(f"{idx}.tsv", usecols=fields, low_memory=True, sep="\t")
+        df = pd.read_table(f"{idx}.tsv", usecols=fields,
+                           low_memory=True, sep="\t")
         df.index = pd.MultiIndex.from_arrays(df.values.T[(0, 1, 3, 4),])
         vcf_dict[idx] = df
 
@@ -147,7 +146,8 @@ def tumor_normal(sample_id, key_file, vcf_files, pcgr_header):
     avg_df["SAMPLE_ADN"] = avg_df["ADN"]
     # things got weird
     avg_df["TAL"] = avg_df["TAL"].astype("str")
-    avg_df["SAMPLE_AL"] = avg_df["TAL"].replace({v: k for k, v in algo_dict.items()})
+    avg_df["SAMPLE_AL"] = avg_df["TAL"].replace(
+        {v: k for k, v in algo_dict.items()})
 
     # format INFO i.e TAF=0.034;NAF=0;...
     avg_df["TAF"] = avg_df["TAF"].apply(lambda x: "{}{}".format("TAF=", x))
@@ -214,7 +214,8 @@ def tumor_only(sample_id, key_file, vcf_files, pcgr_header):
     key_df.index = pd.MultiIndex.from_arrays(key_df.values.T[(0, 1, 2, 3),])
 
     # stage fields we are interested in capturing
-    fields = ["CHROM", "POS", "ID", "REF", "ALT", "QUAL", "FILTER", "TDP", "ADT", "TAF"]
+    fields = ["CHROM", "POS", "ID", "REF", "ALT",
+              "QUAL", "FILTER", "TDP", "ADT", "TAF"]
 
     # create dict of dataframes containing dataframes of the abpve fields.
     # strategy is to average TDP,NDP, TAF,NAF and append TAL from $meta.id_keys.txt
@@ -236,7 +237,8 @@ def tumor_only(sample_id, key_file, vcf_files, pcgr_header):
         subprocess.run(
             f"tail -n +2 {idx}.tmp > {idx}.tsv && rm {idx}.tmp", shell=True, check=True
         )
-        df = pd.read_table(f"{idx}.tsv", usecols=fields, low_memory=True, sep="\t")
+        df = pd.read_table(f"{idx}.tsv", usecols=fields,
+                           low_memory=True, sep="\t")
         df.index = pd.MultiIndex.from_arrays(df.values.T[(0, 1, 3, 4),])
         vcf_dict[idx] = df
 
@@ -322,7 +324,8 @@ def tumor_only(sample_id, key_file, vcf_files, pcgr_header):
     avg_df["SAMPLE_ADT"] = avg_df["ADT"]
     # things got weird
     avg_df["TAL"] = avg_df["TAL"].astype("str")
-    avg_df["SAMPLE_AL"] = avg_df["TAL"].replace({v: k for k, v in algo_dict.items()})
+    avg_df["SAMPLE_AL"] = avg_df["TAL"].replace(
+        {v: k for k, v in algo_dict.items()})
 
     # format INFO i.e TAF=0.034;NAF=0;...
     avg_df["TAF"] = avg_df["TAF"].apply(lambda x: "{}{}".format("TAF=", x))
@@ -349,7 +352,8 @@ def tumor_only(sample_id, key_file, vcf_files, pcgr_header):
     avg_df[f"{sample_id}"] = avg_df[
         ["SAMPLE_GT", "SAMPLE_DPT", "SAMPLE_ADT", "SAMPLE_AL"]
     ].apply(lambda x: ":".join(x[x.notnull()]), axis=1)
-    avg_df = avg_df.drop(["SAMPLE_GT", "SAMPLE_DPT", "SAMPLE_ADT", "SAMPLE_AL"], axis=1)
+    avg_df = avg_df.drop(
+        ["SAMPLE_GT", "SAMPLE_DPT", "SAMPLE_ADT", "SAMPLE_AL"], axis=1)
 
     avg_df.to_csv("tmp.vcf", sep="\t", index=None, header=True)
     with (
@@ -375,7 +379,7 @@ def pcgr_ready_vcf(sample_id, key_file, vcf_files, pcgr_header):
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Reformat somatic CNA files for PCGR input."
+        description="Reformat somatic VCF files for PCGR input."
     )
     parser.add_argument(
         "-s", "--sample", required=True, help="Sample name (meta.id) for the output."
