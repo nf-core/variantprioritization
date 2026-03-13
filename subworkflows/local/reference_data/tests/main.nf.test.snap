@@ -21,12 +21,12 @@
                                     ".PCGR_BUNDLE_VERSION:md5,8be4bc2e52b81c51d90b8817a6786bbf",
                                     [
                                         [
-                                            "cgi.clinical.tsv.gz:md5,6abd38d2affab87a7820b72c49250b62",
-                                            "cgi.literature.tsv.gz:md5,4a56d61d9b383c4cbf72f6943810ff24",
-                                            "cgi.variant.tsv.gz:md5,b5ebdf408ba63b419bfe1f9175747623",
-                                            "civic.clinical.tsv.gz:md5,de61f7f85debfc7638f7b31f7fb90131",
-                                            "civic.literature.tsv.gz:md5,4a56d61d9b383c4cbf72f6943810ff24",
-                                            "civic.variant.tsv.gz:md5,8244e77527b781cfefc6f8ca18533d5f"
+                                            "cgi.clinical.tsv.gz:md5,ba6dd0b16aa61e9b99060c92a65b6b22",
+                                            "cgi.literature.tsv.gz:md5,8cc97544662e4e98eaa19652708aacdb",
+                                            "cgi.variant.tsv.gz:md5,822a1124e1aff89b0c43a813397c2a42",
+                                            "civic.clinical.tsv.gz:md5,b78f0a9084adcfbcd1c0d68017de21b9",
+                                            "civic.literature.tsv.gz:md5,6627f65d3755dcc6d2b1a399fc9d8b73",
+                                            "civic.variant.tsv.gz:md5,b950b79efb9b2dedbea4fb1f14719257"
                                         ]
                                     ],
                                     "chromsize.grch38.tsv:md5,042441fcbd45f706c2791b978d957d3e",
@@ -128,15 +128,15 @@
                                     [
                                         [
                                             [
-                                                "gene_transcript_xref.bed.gz:md5,c6d863f104fffb811d1b4ef740899c2f",
-                                                "gene_transcript_xref.bed.gz.tbi:md5,5fda2165e39c33fe76896eff6f5d5b4a",
+                                                "gene_transcript_xref.bed.gz:md5,42e8742d6896c58e5854788eb8ca07e7",
+                                                "gene_transcript_xref.bed.gz.tbi:md5,05220c75e3181442229158ba013ddef1",
                                                 "gene_transcript_xref.vcfanno.vcf_info_tags.txt:md5,e50485a720100177657582e327d5c867",
-                                                "gene_transcript_xref_pc_nopad.bed.gz:md5,d41d8cd98f00b204e9800998ecf8427e",
-                                                "gene_transcript_xref_pc_nopad.bed.gz.tbi:md5,dc55f38678651304de7e624cde641684"
+                                                "gene_transcript_xref_pc_nopad.bed.gz:md5,a52d00ed20bd4130e2753eeddfd6e9cd",
+                                                "gene_transcript_xref_pc_nopad.bed.gz.tbi:md5,bbc29a74451d12c3afc26a14515e8238"
                                             ],
                                             [
-                                                "0.bed.gz:md5,d41d8cd98f00b204e9800998ecf8427e",
-                                                "0.bed.gz.tbi:md5,dc55f38678651304de7e624cde641684",
+                                                "0.bed.gz:md5,aa2df770964ed4c6abfc21f50d16b3a7",
+                                                "0.bed.gz.tbi:md5,c86ef3f785360c30deec0c7c06929cf6",
                                                 "1.GREEN.bed.gz:md5,d41d8cd98f00b204e9800998ecf8427e",
                                                 "1.GREEN.bed.gz.tbi:md5,dc55f38678651304de7e624cde641684",
                                                 "1.bed.gz:md5,d41d8cd98f00b204e9800998ecf8427e",
@@ -191,8 +191,8 @@
                                                 "20.bed.gz.tbi:md5,dc55f38678651304de7e624cde641684",
                                                 "21.GREEN.bed.gz:md5,d41d8cd98f00b204e9800998ecf8427e",
                                                 "21.GREEN.bed.gz.tbi:md5,dc55f38678651304de7e624cde641684",
-                                                "21.bed.gz:md5,d41d8cd98f00b204e9800998ecf8427e",
-                                                "21.bed.gz.tbi:md5,dc55f38678651304de7e624cde641684",
+                                                "21.bed.gz:md5,f1f651b2486277883fa8c3018c7bc63a",
+                                                "21.bed.gz.tbi:md5,dac3b1c28683f6911fc5666ecb5f3d9f",
                                                 "22.GREEN.bed.gz:md5,d41d8cd98f00b204e9800998ecf8427e",
                                                 "22.GREEN.bed.gz.tbi:md5,dc55f38678651304de7e624cde641684",
                                                 "22.bed.gz:md5,d41d8cd98f00b204e9800998ecf8427e",
@@ -322,40 +322,44 @@
                                                 "gene_cpg.tsv.gz:md5,57aa9686d8a4d6c1b5ac5688c3120577"
                                             ],
                                             [
-                                                "gene_index.tsv.gz:md5,6bb7c3640f3e983d6469cb5b5bfa6540",
-                                                "gene_transcript_xref.tsv.gz:md5,67b06f08f5cdbbe9dcf18c8196786cba",
+                                                "gene_index.tsv.gz:md5,21ebf977533985b51baac91f7c4f6bb7",
+                                                "gene_transcript_xref.tsv.gz:md5,fd44ff02d813d60725e65e890f723b50",
                                                 "gene_transcript_xref_bedmap.tsv.gz:md5,7878b4d0430d2a0d6e6e4f3f81c5ef59",
                                                 "otp_rank.tsv.gz:md5,e5121b8c9772789cfe6d2966f86fb4f1"
                                             ],
                                             [
-                                                "gene_virtual_panel.tsv.gz:md5,a55a136d669d4801ba78705c703b1354"
+                                                "gene_virtual_panel.tsv.gz:md5,fe72b9feeeaae214debf3bbc7a6f8d56"
                                             ]
                                         ]
                                     ],
                                     [
                                         [
                                             [
-                                                "cytoband.bed.gz:md5,d41d8cd98f00b204e9800998ecf8427e",
-                                                "cytoband.bed.gz.tbi:md5,dc55f38678651304de7e624cde641684"
+                                                "cytoband.bed.gz:md5,0d27c23357bdbf59f1e4978d0fd854e3",
+                                                "cytoband.bed.gz.tbi:md5,3cd732ff0bbf49707dfc7d074f57d0e1"
                                             ],
                                             [
                                                 "gerp.bed.gz:md5,3f52555fcca7481af1f770eece506de2",
-                                                "gerp.bed.gz.tbi:md5,455a5f9fc55b5f3cedcaed80dcaef7b7"
+                                                "gerp.bed.gz.tbi:md5,455a5f9fc55b5f3cedcaed80dcaef7b7",
+                                                "gerp.vcfanno.vcf_info_tags.txt:md5,2a2f5b3be25120274cd5df9f299af11f"
                                             ],
                                             [
                                                 
                                             ],
                                             [
                                                 "rmsk.bed.gz:md5,893fe3a6397c4d58533cd262d73173e5",
-                                                "rmsk.bed.gz.tbi:md5,14051c5c2a2bd995e20efe12aee40764"
+                                                "rmsk.bed.gz.tbi:md5,14051c5c2a2bd995e20efe12aee40764",
+                                                "rmsk.vcfanno.vcf_info_tags.txt:md5,b92ed2124a575b3c8915ad8c260b6192"
                                             ],
                                             [
                                                 "simplerepeat.bed.gz:md5,6d543c11122f0366b8123c92322c11bf",
-                                                "simplerepeat.bed.gz.tbi:md5,b40e44d4493e2a1407f476d62a01ee09"
+                                                "simplerepeat.bed.gz.tbi:md5,b40e44d4493e2a1407f476d62a01ee09",
+                                                "simplerepeat.vcfanno.vcf_info_tags.txt:md5,7d79654ab1027eeac81700e759f0d5f4"
                                             ],
                                             [
                                                 "winmsk.bed.gz:md5,dd8a4bd24cdde35d2ad04b565ee59951",
-                                                "winmsk.bed.gz.tbi:md5,a581e1f177103dc2d25d538e32184146"
+                                                "winmsk.bed.gz.tbi:md5,a581e1f177103dc2d25d538e32184146",
+                                                "winmsk.vcfanno.vcf_info_tags.txt:md5,2d1a3a5ca0c7b0c4b3491b2e723fd189"
                                             ]
                                         ],
                                         [
@@ -370,6 +374,7 @@
                                         ],
                                         [
                                             [
+                                                "tcga_msi_classifier.html:md5,b81386bd9dd0e61244d266160eeb59ab",
                                                 "tcga_msi_classifier.rds:md5,be04323d63258d16e25aefaa1a06c5bc"
                                             ]
                                         ],
@@ -378,7 +383,7 @@
                                                 
                                             ],
                                             [
-                                                "cytoband.tsv.gz:md5,e5ee84a3ffbbe7c7ea370db3d62b2a1e"
+                                                "cytoband.tsv.gz:md5,427311d6aba6b4f4a9d05e8f6a82bef1"
                                             ],
                                             [
                                                 "grantham.tsv:md5,3cb246982ce91243a34447523820ef6a"
@@ -409,8 +414,8 @@
                                     ],
                                     [
                                         [
-                                            "phenotype_onco.tsv.gz:md5,47e6f1bb25e37852bfb0d78134ef7d7f",
-                                            "phenotype_umls.tsv.gz:md5,cbe153be03271d2adfb68e63014212ce"
+                                            "phenotype_onco.tsv.gz:md5,7849350b72d590940bfee66cdb8689b8",
+                                            "phenotype_umls.tsv.gz:md5,b12214af58d3689a9969acf443834c00"
                                         ]
                                     ],
                                     [
@@ -427,34 +432,43 @@
                                         ],
                                         [
                                             [
-                                                "clinvar.vcf.gz:md5,4004c7c1b4351db5e8f652ad977ae4ce",
-                                                "clinvar.vcf.gz.tbi:md5,08543a651b2d17988d108cd743ec5253",
-                                                "clinvar.vcf_varstats.tsv:md5,b3e1c0e534cc58364911b860457a979e"
+                                                "clinvar.vcf.gz:md5,a811a44f99c2d878ea3e7f46e8f4ce61",
+                                                "clinvar.vcf.gz.tbi:md5,d8093fcb5e19e628f99151d5a26a76b7",
+                                                "clinvar.vcf_varstats.tsv:md5,b3e1c0e534cc58364911b860457a979e",
+                                                "clinvar.vcfanno.vcf_info_tags.txt:md5,24a8b4278d7429f51d84bc5f07f9e31e"
                                             ],
                                             [
-                                                "dbmts.vcf.gz:md5,29d0d14634351e970b64dcab3f08175b",
-                                                "dbmts.vcf.gz.tbi:md5,460b6f5c682b38c01c6ca15aa4f57ddc",
-                                                "dbmts.vcf_varstats.tsv:md5,eb9d31aa90e811dbc736b87bdcd0eb0d"
+                                                "dbmts.vcf.gz:md5,5fc0d42195b740e5ee5531f8f2d41397",
+                                                "dbmts.vcf.gz.tbi:md5,2f75363843f1d7166ee63e5f84fbe349",
+                                                "dbmts.vcf_varstats.tsv:md5,eb9d31aa90e811dbc736b87bdcd0eb0d",
+                                                "dbmts.vcfanno.vcf_info_tags.txt:md5,ff304e244a1a21854f7b51e81bf6a291"
                                             ],
                                             [
-                                                "dbnsfp.vcf.gz:md5,c69d21bfbe66f2a5dde4df7cb91eaf80",
-                                                "dbnsfp.vcf.gz.tbi:md5,f5742bde7107fab40386241d6b98a6c1",
-                                                "dbnsfp.vcf_varstats.tsv:md5,572d6ad0a51ef6f2aa0f7a29ed242cda"
+                                                "dbnsfp.vcf.gz:md5,56fcffca9bd9be118bdcdec6f7a5b61f",
+                                                "dbnsfp.vcf.gz.tbi:md5,ef3aeb5d62219cda18806b5ebf704459",
+                                                "dbnsfp.vcf_varstats.tsv:md5,572d6ad0a51ef6f2aa0f7a29ed242cda",
+                                                "dbnsfp.vcfanno.vcf_info_tags.txt:md5,3f9423ad9302f5ed3b722efaa10b6d02"
                                             ],
                                             [
-                                                "gnomad_non_cancer.vcf.gz:md5,659f186e51f6a81301827c4e70684848",
-                                                "gnomad_non_cancer.vcf.gz.tbi:md5,0a1e32e387e37804572ca86e3ba893be",
-                                                "gnomad_non_cancer.vcf_varstats.tsv:md5,17504240c201b3771490928452d50128"
+                                                "gnomad_non_cancer.vcf.gz:md5,6335f3dc6a3f232afa8342b5fdbfc6e8",
+                                                "gnomad_non_cancer.vcf.gz.tbi:md5,58187f48acfc23d28206f08e2359bbee",
+                                                "gnomad_non_cancer.vcf_varstats.tsv:md5,17504240c201b3771490928452d50128",
+                                                "gnomad_non_cancer.vcfanno.vcf_info_tags.txt:md5,aa07db83720a31abfead2d362b062518"
                                             ],
                                             [
-                                                "gwas.vcf.gz:md5,7f0d49ad2b80f76c2cd960e977b27af7",
-                                                "gwas.vcf.gz.tbi:md5,4cb176febbc8c26d717a6c6e67b9c905",
-                                                "gwas.vcf_varstats.tsv:md5,c1c44f2357984f468684b2d06fc4f454"
+                                                "gwas.vcf.gz:md5,e2aada868aa87e8de61c69b92302b569",
+                                                "gwas.vcf.gz.tbi:md5,60517b604012ad3ee5dbb048978ced2d",
+                                                "gwas.vcf_varstats.tsv:md5,c1c44f2357984f468684b2d06fc4f454",
+                                                "gwas.vcfanno.vcf_info_tags.txt:md5,91e1173e27f512dc3fbecb7bdb95e050"
                                             ],
                                             [
-                                                "tcga.vcf.gz:md5,595a64c818dd4c4bfed8d851dd3c7f75",
-                                                "tcga.vcf.gz.tbi:md5,a68315666cef6528f9dee8012929ffe8",
-                                                "tcga.vcf_varstats.tsv:md5,650d2133f203e30fa4e12bce9dd96542"
+                                                "panel_of_normals.vcfanno.vcf_info_tags.txt:md5,da558a031991c94497c2617fd6f14da0"
+                                            ],
+                                            [
+                                                "tcga.vcf.gz:md5,40cc9a676d1fa7640df1792a2924a825",
+                                                "tcga.vcf.gz.tbi:md5,58c6d97000aa6e1360dcd50c7b41a1b1",
+                                                "tcga.vcf_varstats.tsv:md5,650d2133f203e30fa4e12bce9dd96542",
+                                                "tcga.vcfanno.vcf_info_tags.txt:md5,ba1332b53cdf4cb44924bb15dd10adec"
                                             ]
                                         ]
                                     ],
@@ -589,10 +603,6 @@
                         ]
                     ]
                 ],
-                "2": [
-                    "versions.yml:md5,b726ae14054e0541ef2fbc63d119a016",
-                    "versions.yml:md5,dc9e99e61d539fd92c71fe67c4abbd54"
-                ],
                 "pcgr_dir": [
                     [
                         [
@@ -612,12 +622,12 @@
                                     ".PCGR_BUNDLE_VERSION:md5,8be4bc2e52b81c51d90b8817a6786bbf",
                                     [
                                         [
-                                            "cgi.clinical.tsv.gz:md5,6abd38d2affab87a7820b72c49250b62",
-                                            "cgi.literature.tsv.gz:md5,4a56d61d9b383c4cbf72f6943810ff24",
-                                            "cgi.variant.tsv.gz:md5,b5ebdf408ba63b419bfe1f9175747623",
-                                            "civic.clinical.tsv.gz:md5,de61f7f85debfc7638f7b31f7fb90131",
-                                            "civic.literature.tsv.gz:md5,4a56d61d9b383c4cbf72f6943810ff24",
-                                            "civic.variant.tsv.gz:md5,8244e77527b781cfefc6f8ca18533d5f"
+                                            "cgi.clinical.tsv.gz:md5,ba6dd0b16aa61e9b99060c92a65b6b22",
+                                            "cgi.literature.tsv.gz:md5,8cc97544662e4e98eaa19652708aacdb",
+                                            "cgi.variant.tsv.gz:md5,822a1124e1aff89b0c43a813397c2a42",
+                                            "civic.clinical.tsv.gz:md5,b78f0a9084adcfbcd1c0d68017de21b9",
+                                            "civic.literature.tsv.gz:md5,6627f65d3755dcc6d2b1a399fc9d8b73",
+                                            "civic.variant.tsv.gz:md5,b950b79efb9b2dedbea4fb1f14719257"
                                         ]
                                     ],
                                     "chromsize.grch38.tsv:md5,042441fcbd45f706c2791b978d957d3e",
@@ -719,15 +729,15 @@
                                     [
                                         [
                                             [
-                                                "gene_transcript_xref.bed.gz:md5,c6d863f104fffb811d1b4ef740899c2f",
-                                                "gene_transcript_xref.bed.gz.tbi:md5,5fda2165e39c33fe76896eff6f5d5b4a",
+                                                "gene_transcript_xref.bed.gz:md5,42e8742d6896c58e5854788eb8ca07e7",
+                                                "gene_transcript_xref.bed.gz.tbi:md5,05220c75e3181442229158ba013ddef1",
                                                 "gene_transcript_xref.vcfanno.vcf_info_tags.txt:md5,e50485a720100177657582e327d5c867",
-                                                "gene_transcript_xref_pc_nopad.bed.gz:md5,d41d8cd98f00b204e9800998ecf8427e",
-                                                "gene_transcript_xref_pc_nopad.bed.gz.tbi:md5,dc55f38678651304de7e624cde641684"
+                                                "gene_transcript_xref_pc_nopad.bed.gz:md5,a52d00ed20bd4130e2753eeddfd6e9cd",
+                                                "gene_transcript_xref_pc_nopad.bed.gz.tbi:md5,bbc29a74451d12c3afc26a14515e8238"
                                             ],
                                             [
-                                                "0.bed.gz:md5,d41d8cd98f00b204e9800998ecf8427e",
-                                                "0.bed.gz.tbi:md5,dc55f38678651304de7e624cde641684",
+                                                "0.bed.gz:md5,aa2df770964ed4c6abfc21f50d16b3a7",
+                                                "0.bed.gz.tbi:md5,c86ef3f785360c30deec0c7c06929cf6",
                                                 "1.GREEN.bed.gz:md5,d41d8cd98f00b204e9800998ecf8427e",
                                                 "1.GREEN.bed.gz.tbi:md5,dc55f38678651304de7e624cde641684",
                                                 "1.bed.gz:md5,d41d8cd98f00b204e9800998ecf8427e",
@@ -782,8 +792,8 @@
                                                 "20.bed.gz.tbi:md5,dc55f38678651304de7e624cde641684",
                                                 "21.GREEN.bed.gz:md5,d41d8cd98f00b204e9800998ecf8427e",
                                                 "21.GREEN.bed.gz.tbi:md5,dc55f38678651304de7e624cde641684",
-                                                "21.bed.gz:md5,d41d8cd98f00b204e9800998ecf8427e",
-                                                "21.bed.gz.tbi:md5,dc55f38678651304de7e624cde641684",
+                                                "21.bed.gz:md5,f1f651b2486277883fa8c3018c7bc63a",
+                                                "21.bed.gz.tbi:md5,dac3b1c28683f6911fc5666ecb5f3d9f",
                                                 "22.GREEN.bed.gz:md5,d41d8cd98f00b204e9800998ecf8427e",
                                                 "22.GREEN.bed.gz.tbi:md5,dc55f38678651304de7e624cde641684",
                                                 "22.bed.gz:md5,d41d8cd98f00b204e9800998ecf8427e",
@@ -913,40 +923,44 @@
                                                 "gene_cpg.tsv.gz:md5,57aa9686d8a4d6c1b5ac5688c3120577"
                                             ],
                                             [
-                                                "gene_index.tsv.gz:md5,6bb7c3640f3e983d6469cb5b5bfa6540",
-                                                "gene_transcript_xref.tsv.gz:md5,67b06f08f5cdbbe9dcf18c8196786cba",
+                                                "gene_index.tsv.gz:md5,21ebf977533985b51baac91f7c4f6bb7",
+                                                "gene_transcript_xref.tsv.gz:md5,fd44ff02d813d60725e65e890f723b50",
                                                 "gene_transcript_xref_bedmap.tsv.gz:md5,7878b4d0430d2a0d6e6e4f3f81c5ef59",
                                                 "otp_rank.tsv.gz:md5,e5121b8c9772789cfe6d2966f86fb4f1"
                                             ],
                                             [
-                                                "gene_virtual_panel.tsv.gz:md5,a55a136d669d4801ba78705c703b1354"
+                                                "gene_virtual_panel.tsv.gz:md5,fe72b9feeeaae214debf3bbc7a6f8d56"
                                             ]
                                         ]
                                     ],
                                     [
                                         [
                                             [
-                                                "cytoband.bed.gz:md5,d41d8cd98f00b204e9800998ecf8427e",
-                                                "cytoband.bed.gz.tbi:md5,dc55f38678651304de7e624cde641684"
+                                                "cytoband.bed.gz:md5,0d27c23357bdbf59f1e4978d0fd854e3",
+                                                "cytoband.bed.gz.tbi:md5,3cd732ff0bbf49707dfc7d074f57d0e1"
                                             ],
                                             [
                                                 "gerp.bed.gz:md5,3f52555fcca7481af1f770eece506de2",
-                                                "gerp.bed.gz.tbi:md5,455a5f9fc55b5f3cedcaed80dcaef7b7"
+                                                "gerp.bed.gz.tbi:md5,455a5f9fc55b5f3cedcaed80dcaef7b7",
+                                                "gerp.vcfanno.vcf_info_tags.txt:md5,2a2f5b3be25120274cd5df9f299af11f"
                                             ],
                                             [
                                                 
                                             ],
                                             [
                                                 "rmsk.bed.gz:md5,893fe3a6397c4d58533cd262d73173e5",
-                                                "rmsk.bed.gz.tbi:md5,14051c5c2a2bd995e20efe12aee40764"
+                                                "rmsk.bed.gz.tbi:md5,14051c5c2a2bd995e20efe12aee40764",
+                                                "rmsk.vcfanno.vcf_info_tags.txt:md5,b92ed2124a575b3c8915ad8c260b6192"
                                             ],
                                             [
                                                 "simplerepeat.bed.gz:md5,6d543c11122f0366b8123c92322c11bf",
-                                                "simplerepeat.bed.gz.tbi:md5,b40e44d4493e2a1407f476d62a01ee09"
+                                                "simplerepeat.bed.gz.tbi:md5,b40e44d4493e2a1407f476d62a01ee09",
+                                                "simplerepeat.vcfanno.vcf_info_tags.txt:md5,7d79654ab1027eeac81700e759f0d5f4"
                                             ],
                                             [
                                                 "winmsk.bed.gz:md5,dd8a4bd24cdde35d2ad04b565ee59951",
-                                                "winmsk.bed.gz.tbi:md5,a581e1f177103dc2d25d538e32184146"
+                                                "winmsk.bed.gz.tbi:md5,a581e1f177103dc2d25d538e32184146",
+                                                "winmsk.vcfanno.vcf_info_tags.txt:md5,2d1a3a5ca0c7b0c4b3491b2e723fd189"
                                             ]
                                         ],
                                         [
@@ -961,6 +975,7 @@
                                         ],
                                         [
                                             [
+                                                "tcga_msi_classifier.html:md5,b81386bd9dd0e61244d266160eeb59ab",
                                                 "tcga_msi_classifier.rds:md5,be04323d63258d16e25aefaa1a06c5bc"
                                             ]
                                         ],
@@ -969,7 +984,7 @@
                                                 
                                             ],
                                             [
-                                                "cytoband.tsv.gz:md5,e5ee84a3ffbbe7c7ea370db3d62b2a1e"
+                                                "cytoband.tsv.gz:md5,427311d6aba6b4f4a9d05e8f6a82bef1"
                                             ],
                                             [
                                                 "grantham.tsv:md5,3cb246982ce91243a34447523820ef6a"
@@ -1000,8 +1015,8 @@
                                     ],
                                     [
                                         [
-                                            "phenotype_onco.tsv.gz:md5,47e6f1bb25e37852bfb0d78134ef7d7f",
-                                            "phenotype_umls.tsv.gz:md5,cbe153be03271d2adfb68e63014212ce"
+                                            "phenotype_onco.tsv.gz:md5,7849350b72d590940bfee66cdb8689b8",
+                                            "phenotype_umls.tsv.gz:md5,b12214af58d3689a9969acf443834c00"
                                         ]
                                     ],
                                     [
@@ -1018,34 +1033,43 @@
                                         ],
                                         [
                                             [
-                                                "clinvar.vcf.gz:md5,4004c7c1b4351db5e8f652ad977ae4ce",
-                                                "clinvar.vcf.gz.tbi:md5,08543a651b2d17988d108cd743ec5253",
-                                                "clinvar.vcf_varstats.tsv:md5,b3e1c0e534cc58364911b860457a979e"
+                                                "clinvar.vcf.gz:md5,a811a44f99c2d878ea3e7f46e8f4ce61",
+                                                "clinvar.vcf.gz.tbi:md5,d8093fcb5e19e628f99151d5a26a76b7",
+                                                "clinvar.vcf_varstats.tsv:md5,b3e1c0e534cc58364911b860457a979e",
+                                                "clinvar.vcfanno.vcf_info_tags.txt:md5,24a8b4278d7429f51d84bc5f07f9e31e"
                                             ],
                                             [
-                                                "dbmts.vcf.gz:md5,29d0d14634351e970b64dcab3f08175b",
-                                                "dbmts.vcf.gz.tbi:md5,460b6f5c682b38c01c6ca15aa4f57ddc",
-                                                "dbmts.vcf_varstats.tsv:md5,eb9d31aa90e811dbc736b87bdcd0eb0d"
+                                                "dbmts.vcf.gz:md5,5fc0d42195b740e5ee5531f8f2d41397",
+                                                "dbmts.vcf.gz.tbi:md5,2f75363843f1d7166ee63e5f84fbe349",
+                                                "dbmts.vcf_varstats.tsv:md5,eb9d31aa90e811dbc736b87bdcd0eb0d",
+                                                "dbmts.vcfanno.vcf_info_tags.txt:md5,ff304e244a1a21854f7b51e81bf6a291"
                                             ],
                                             [
-                                                "dbnsfp.vcf.gz:md5,c69d21bfbe66f2a5dde4df7cb91eaf80",
-                                                "dbnsfp.vcf.gz.tbi:md5,f5742bde7107fab40386241d6b98a6c1",
-                                                "dbnsfp.vcf_varstats.tsv:md5,572d6ad0a51ef6f2aa0f7a29ed242cda"
+                                                "dbnsfp.vcf.gz:md5,56fcffca9bd9be118bdcdec6f7a5b61f",
+                                                "dbnsfp.vcf.gz.tbi:md5,ef3aeb5d62219cda18806b5ebf704459",
+                                                "dbnsfp.vcf_varstats.tsv:md5,572d6ad0a51ef6f2aa0f7a29ed242cda",
+                                                "dbnsfp.vcfanno.vcf_info_tags.txt:md5,3f9423ad9302f5ed3b722efaa10b6d02"
                                             ],
                                             [
-                                                "gnomad_non_cancer.vcf.gz:md5,659f186e51f6a81301827c4e70684848",
-                                                "gnomad_non_cancer.vcf.gz.tbi:md5,0a1e32e387e37804572ca86e3ba893be",
-                                                "gnomad_non_cancer.vcf_varstats.tsv:md5,17504240c201b3771490928452d50128"
+                                                "gnomad_non_cancer.vcf.gz:md5,6335f3dc6a3f232afa8342b5fdbfc6e8",
+                                                "gnomad_non_cancer.vcf.gz.tbi:md5,58187f48acfc23d28206f08e2359bbee",
+                                                "gnomad_non_cancer.vcf_varstats.tsv:md5,17504240c201b3771490928452d50128",
+                                                "gnomad_non_cancer.vcfanno.vcf_info_tags.txt:md5,aa07db83720a31abfead2d362b062518"
                                             ],
                                             [
-                                                "gwas.vcf.gz:md5,7f0d49ad2b80f76c2cd960e977b27af7",
-                                                "gwas.vcf.gz.tbi:md5,4cb176febbc8c26d717a6c6e67b9c905",
-                                                "gwas.vcf_varstats.tsv:md5,c1c44f2357984f468684b2d06fc4f454"
+                                                "gwas.vcf.gz:md5,e2aada868aa87e8de61c69b92302b569",
+                                                "gwas.vcf.gz.tbi:md5,60517b604012ad3ee5dbb048978ced2d",
+                                                "gwas.vcf_varstats.tsv:md5,c1c44f2357984f468684b2d06fc4f454",
+                                                "gwas.vcfanno.vcf_info_tags.txt:md5,91e1173e27f512dc3fbecb7bdb95e050"
                                             ],
                                             [
-                                                "tcga.vcf.gz:md5,595a64c818dd4c4bfed8d851dd3c7f75",
-                                                "tcga.vcf.gz.tbi:md5,a68315666cef6528f9dee8012929ffe8",
-                                                "tcga.vcf_varstats.tsv:md5,650d2133f203e30fa4e12bce9dd96542"
+                                                "panel_of_normals.vcfanno.vcf_info_tags.txt:md5,da558a031991c94497c2617fd6f14da0"
+                                            ],
+                                            [
+                                                "tcga.vcf.gz:md5,40cc9a676d1fa7640df1792a2924a825",
+                                                "tcga.vcf.gz.tbi:md5,58c6d97000aa6e1360dcd50c7b41a1b1",
+                                                "tcga.vcf_varstats.tsv:md5,650d2133f203e30fa4e12bce9dd96542",
+                                                "tcga.vcfanno.vcf_info_tags.txt:md5,ba1332b53cdf4cb44924bb15dd10adec"
                                             ]
                                         ]
                                     ],
@@ -1179,17 +1203,13 @@
                             ]
                         ]
                     ]
-                ],
-                "versions": [
-                    "versions.yml:md5,b726ae14054e0541ef2fbc63d119a016",
-                    "versions.yml:md5,dc9e99e61d539fd92c71fe67c4abbd54"
                 ]
             }
         ],
         "meta": {
-            "nf-test": "0.9.2",
-            "nextflow": "25.04.6"
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.2"
         },
-        "timestamp": "2025-12-04T14:26:28.939132888"
+        "timestamp": "2026-03-13T16:43:45.753203"
     }
 }
