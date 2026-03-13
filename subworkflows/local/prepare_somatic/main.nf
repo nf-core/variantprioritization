@@ -51,9 +51,7 @@ workflow PREPARE_SOMATIC {
 
     INTERSECT_VCF(per_sample_somatic_vcfs)
 
-    sample_vcfs_keys = INTERSECT_VCF.out.variant_tool_map
-        .join(per_sample_somatic_vcfs)
-        .map { meta, keys, _meta2, vcfs, tbis -> [meta, keys, vcfs, tbis] }
+    sample_vcfs_keys = INTERSECT_VCF.out.variant_tool_map.join(per_sample_somatic_vcfs)
 
     PCGR_PREPAREVCF(sample_vcfs_keys, pcgr_header.collect())
 
