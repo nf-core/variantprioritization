@@ -5,7 +5,7 @@
 */
 include { REFERENCE_DATA         } from '../../subworkflows/local/reference_data'
 
-include { FILE_PREPROCESSING      } from '../../subworkflows/local/file_preprocessing'
+include { INPUT_PREPROCESSING      } from '../../subworkflows/local/input_preprocessing'
 include { PREPARE_SOMATIC        } from '../../subworkflows/local/prepare_somatic'
 include { PCGR_RUN               } from '../../modules/local/pcgr/run'
 include { CPSR_RUN               } from '../../modules/local/cpsr/run'
@@ -51,7 +51,7 @@ workflow VARIANTPRIORITIZATION {
     //
     // SUBWORKFLOW: Preprocess VCF files
     //
-    FILE_PREPROCESSING(
+    INPUT_PREPROCESSING(
         ch_samplesheet,
         fasta,
     )
@@ -60,8 +60,8 @@ workflow VARIANTPRIORITIZATION {
     // SUBWORKFLOW: Format input files for somatic analyses
     //
     PREPARE_SOMATIC(
-        FILE_PREPROCESSING.out.normalised_somatic,
-        FILE_PREPROCESSING.out.ch_cna_files,
+        INPUT_PREPROCESSING.out.normalised_somatic,
+        INPUT_PREPROCESSING.out.ch_cna_files,
     )
 
     //
@@ -77,7 +77,7 @@ workflow VARIANTPRIORITIZATION {
     // SUBWORKFLOW: cpsr
     //
     CPSR_RUN(
-        FILE_PREPROCESSING.out.normalised_germline,
+        INPUT_PREPROCESSING.out.normalised_germline,
         ch_pcgr_dir.collect(),
         ch_vep_cache.collect()
     )
