@@ -8,6 +8,7 @@ nextflow_workflow {
     tag "subworkflows_"
     tag "subworkflows/reference_data"
     tag "pcgr/getref"
+    tag "ci_test"
 
     test("20250314 - 113") {
 
