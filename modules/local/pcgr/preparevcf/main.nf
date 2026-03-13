@@ -8,20 +8,28 @@ process PCGR_PREPAREVCF {
         : 'community.wave.seqera.io/library/pysam_vcf2tsvpy_numpy_pandas_python:eb0ee661861e1b56'}"
 
     input:
-    tuple val(meta), path(keys), path(vcf), path(tbi)
+    tuple val(meta), path(keys), path(vcfs), path(tbis)
     path pcgr_header
 
     output:
     tuple val(meta), path("${prefix}.vcf.gz"), path("${prefix}.vcf.gz.tbi"), emit: vcf
-    tuple val("${task.process}"), val('python'),  eval("python --version | cut -d' ' -f2"), topic: versions, emit: versions_python
+    tuple val("${task.process}"), val('numpy'), eval("python -c 'import numpy; print(numpy.__version__)'"), topic: versions, emit: versions_numpy
+    tuple val("${task.process}"), val('pandas'), eval("python -c 'import pandas; print(pandas.__version__)'"), topic: versions, emit: versions_pandas
+    tuple val("${task.process}"), val('pysam'), eval("python -c 'import pysam; print(pysam.__version__)'"), topic: versions, emit: versions_pysam
+    tuple val("${task.process}"), val('python'), eval("python --version | cut -d' ' -f2"), topic: versions, emit: versions_python
+    tuple val("${task.process}"), val('vcf2tsvpy'), eval("vcf2tsvpy --version  | cut -d' ' -f2"), topic: versions, emit: versions_vcf2tsvpy
 
     when:
     task.ext.when == null || task.ext.when
 
     script:
     prefix = task.ext.prefix ?: "${meta.id}"
+    def vcf_args = (vcfs instanceof List ? vcfs : [vcfs]).collect { input_vcf -> "--vcf ${input_vcf}" }.join(' \\\n        ')
     """
     pcgr_vcf.py \\
-        --sample ${prefix}
+        --sample ${prefix} \\
+        --keys ${keys} \\
+        ${vcf_args} \\
+        --pcgr-header ${pcgr_header}
     """
 }
