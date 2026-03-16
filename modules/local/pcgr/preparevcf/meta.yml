@@ -46,16 +46,6 @@ output:
           type: file
           description: Tabix index for PCGR-ready VCF
           pattern: "*.vcf.gz.tbi"
-  versions_python:
-    - - ${task.process}:
-          type: string
-          description: The process the version was collected from
-      - python:
-          type: string
-          description: The tool name
-      - "python --version | cut -d' ' -f2":
-          type: string
-          description: The command used to obtain the version
   versions_numpy:
     - - ${task.process}:
           type: string
@@ -86,6 +76,16 @@ output:
       - "python -c 'import pysam; print(pysam.__version__)'":
           type: string
           description: The command used to obtain the version
+  versions_python:
+    - - ${task.process}:
+          type: string
+          description: The process the version was collected from
+      - python:
+          type: string
+          description: The tool name
+      - "python --version | cut -d' ' -f2":
+          type: string
+          description: The command used to obtain the version
   versions_vcf2tsvpy:
     - - ${task.process}:
           type: string
@@ -93,7 +93,7 @@ output:
       - vcf2tsvpy:
           type: string
           description: The tool name
-      - "python -c 'import vcf2tsvpy; print(vcf2tsvpy.__version__)'":
+      - "vcf2tsvpy --version  | cut -d' ' -f2":
           type: string
           description: The command used to obtain the version
 topics:
