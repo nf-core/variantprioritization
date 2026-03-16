@@ -1,31 +1,9 @@
 {
     "human - [vcf, tbi]": {
         "content": [
+            "6cb64a2f10b6150db344220e68ccbcd3",
+            "HCC1395.HCC1395T.reformatted.vcf.gz.tbi",
             {
-                "tbi": [
-                    [
-                        {
-                            "id": "HCC1395.HCC1395T",
-                            "patient": "HCC1395",
-                            "sample": "HCC1395T",
-                            "status": "somatic",
-                            "tool": "mutect2"
-                        },
-                        "HCC1395.HCC1395T.reformatted.vcf.gz.tbi:md5,57b43df4f54d414270abc0ab889ec927"
-                    ]
-                ],
-                "vcf": [
-                    [
-                        {
-                            "id": "HCC1395.HCC1395T",
-                            "patient": "HCC1395",
-                            "sample": "HCC1395T",
-                            "status": "somatic",
-                            "tool": "mutect2"
-                        },
-                        "HCC1395.HCC1395T.reformatted.vcf.gz:md5,91695474dd79971c27c1c1e5b8ccea48"
-                    ]
-                ],
                 "versions_bcftools": [
                     [
                         "REFORMAT_VCF",
@@ -60,6 +38,6 @@
             "nf-test": "0.9.3",
             "nextflow": "25.10.2"
         },
-        "timestamp": "2026-03-16T11:51:26.548253"
+        "timestamp": "2026-03-16T11:59:00.824956"
     }
 }

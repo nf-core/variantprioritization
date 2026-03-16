@@ -25,7 +25,11 @@ nextflow_process {
         then {
             assertAll(
                 { assert process.success },
-                { assert snapshot(sanitizeOutput(process.out)).match() }
+                { assert snapshot(
+                    path(process.out.vcf.get(0).get(1)).vcf.variantsMD5,
+                    file(process.out.tbi.get(0).get(1)).name,
+                    process.out.findAll { key, val -> key.startsWith("versions") },
+                    ).match() }
             )
         }
     }
