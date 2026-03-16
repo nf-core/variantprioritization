@@ -9,6 +9,14 @@ import argparse
 import subprocess
 
 
+def _sort_key_frame(frame):
+    frame = frame.copy()
+    frame[1] = pd.to_numeric(frame[1], errors="raise")
+    return frame.sort_values(by=[0, 1, 2, 3, 4], kind="mergesort").reset_index(
+        drop=True
+    )
+
+
 def intersect_variants(input_dir, output_file, sample_files, tool_names):
 
     input_path = Path(input_dir)
@@ -22,8 +30,6 @@ def intersect_variants(input_dir, output_file, sample_files, tool_names):
             "Length mismatch between --sample_files and --tool_names: "
             f"{len(sample_files)} vs {len(tool_names)}"
         )
-
-    print(sample_files)
 
     if not sample_files:
         raise ValueError(f"No VCF files found in input directory: {input_dir}")
@@ -116,8 +122,8 @@ def intersect_variants(input_dir, output_file, sample_files, tool_names):
         # chr1    3866080 C       T       freebayes
         # chr1    3866080 C       T       freebayes
         frame = frame.drop_duplicates()
-        # Sort by chromosome and position for reproducible output
-        frame = frame.sort_values(by=[0, 1]).reset_index(drop=True)
+        # Sort deterministically across all output columns
+        frame = _sort_key_frame(frame)
         frame.to_csv(output_file, sep="\t", index=None, header=None)
 
     else:
@@ -128,12 +134,14 @@ def intersect_variants(input_dir, output_file, sample_files, tool_names):
             stdout=subprocess.PIPE,
             text=True,
         )
-        with open(output_file, "w") as out_fh:
-            for line in result.stdout.splitlines():
-                fields = line.split("\t")
-                out_fh.write(
-                    f"{fields[0]}\t{fields[1]}\t{fields[3]}\t{fields[4]}\t{tool_map[0]}\n"
-                )
+        records = []
+        for line in result.stdout.splitlines():
+            fields = line.split("\t")
+            records.append([fields[0], fields[1], fields[3], fields[4], tool_map[0]])
+
+        frame = pd.DataFrame(records)
+        frame = _sort_key_frame(frame)
+        frame.to_csv(output_file, sep="\t", index=None, header=None)
 
 
 def main():
