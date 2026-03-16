@@ -27,7 +27,7 @@ workflow PREPARE_SOMATIC {
     REFORMAT_VCF(vcf_files)
     REFORMAT_CNA(cna_files)
 
-    vcf_ch = REFORMAT_VCF.out.vcf
+    vcf_ch = REFORMAT_VCF.out.vcf.join(REFORMAT_VCF.out.tbi)
     cna_ch = REFORMAT_CNA.out.cna
 
     // Intersect somatic variants
