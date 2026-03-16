@@ -637,6 +637,10 @@
                     "default": "https://raw.githubusercontent.com/nf-core/test-datasets/",
                     "hidden": true
                 },
+                "modules_testdata_base_path": {
+                    "type": "string",
+                    "default": "https://raw.githubusercontent.com/nf-core/test-datasets/"
+                },
                 "trace_report_suffix": {
                     "type": "string",
                     "fa_icon": "far calendar",
