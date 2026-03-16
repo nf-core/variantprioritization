@@ -7,21 +7,41 @@ nextflow_workflow {
     tag "subworkflows"
     tag "subworkflows_"
     tag "subworkflows/prepare_somatic"
-    tag "pcgr/getref"
+    tag "reformat/vcf"
+    tag "reformat/cna"
+    tag "intersect/vcf"
+    tag "pcgr/preparevcf"
     tag "ci_test"
 
-    test("20250314 - 113") {
+    test("human - vcf,cna") {
 
         when {
             workflow {
                 """
-                input[0] = 'GRCh38'
-                input[1] = false
-                input[2] = '20250314'
-                input[3] = 'https://github.com/nf-core/test-datasets/raw/refs/heads/variantprioritization/reference/pcgr_ref_grch38_chr22.tar.gz'
-                input[4] = 'https://github.com/nf-core/test-datasets/raw/refs/heads/variantprioritization/reference/vep_cache_113_GRCh38_chr22.tar.gz'
-                input[5] = '113'
-                input[6] = 'homo_sapiens'
+                params.cna_analysis = true
+                input[0] = channel.of(
+                    [
+                        [id:'HCC1395.HCC1395T.mutect2', patient:'HCC1395', sample:'HCC1395T', status:'somatic', tool:'mutect2'],
+                        file(params.pipelines_testdata_base_path + 'test_data/HCC1395T_vs_HCC1395N.mutect2.filtered_chr22.vcf.gz', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'test_data/HCC1395T_vs_HCC1395N.mutect2.filtered_chr22.vcf.gz.tbi', checkIfExists: true)
+                    ],
+                    [
+                        [id:'HCC1395.HCC1395T.strelka_snv', patient:'HCC1395', sample:'HCC1395T', status:'somatic', tool:'strelka_snv'],
+                        file(params.pipelines_testdata_base_path + 'test_data/HCC1395T_vs_HCC1395N.strelka.somatic_snvs_chr22.vcf.gz', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'test_data/HCC1395T_vs_HCC1395N.strelka.somatic_snvs_chr22.vcf.gz.tbi', checkIfExists: true)
+                    ],
+                    [
+                        [id:'HCC1395.HCC1395T.strelka_indel', patient:'HCC1395', sample:'HCC1395T', status:'somatic', tool:'strelka_indel'],
+                        file(params.pipelines_testdata_base_path + 'test_data/HCC1395T_vs_HCC1395N.strelka.somatic_indels_chr22.vcf.gz', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'test_data/HCC1395T_vs_HCC1395N.strelka.somatic_indels_chr22.vcf.gz.tbi', checkIfExists: true)
+                    ]
+                )
+                input[1] = channel.of(
+                    [
+                        [patient:'HCC1395', sample:'HCC1395T', status:'somatic'],
+                        file(params.pipelines_testdata_base_path + 'test_data/HCC1395T_vs_HCC1395N.segments_chr22.txt', checkIfExists: true)
+                    ]
+                )
                 """
             }
         }

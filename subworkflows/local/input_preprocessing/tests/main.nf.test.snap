@@ -1,0 +1,121 @@
+{
+    "human - single - [vcf,[],cna]": {
+        "content": [
+            {
+                "ch_cna_files": [
+                    [
+                        {
+                            "patient": "HCC1395",
+                            "status": "somatic",
+                            "sample": "HCC1395T"
+                        },
+                        "/nf-core/test-datasets/refs/heads/variantprioritization/test_data/HCC1395T_vs_HCC1395N.segments_chr22.txt"
+                    ]
+                ],
+                "normalised_germline": [
+                    
+                ],
+                "normalised_somatic": [
+                    [
+                        {
+                            "id": "HCC1395.HCC1395T",
+                            "patient": "HCC1395",
+                            "sample": "HCC1395T",
+                            "status": "somatic",
+                            "bgzip_vcf": false,
+                            "tabix_vcf": false
+                        },
+                        "HCC1395.HCC1395T.norm.filtered.vcf.gz:md5,769a14d022d0161973428eff67005508",
+                        "HCC1395.HCC1395T.norm.filtered.vcf.gz.tbi:md5,decf1d44c0b76d6e4e3a258125bb308c"
+                    ]
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.2"
+        },
+        "timestamp": "2026-03-16T14:33:01.855558"
+    },
+    "human - multi - [vcf.gz,tbi,[]]": {
+        "content": [
+            {
+                "ch_cna_files": [
+                    [
+                        {
+                            "patient": "HCC1395",
+                            "status": "somatic",
+                            "sample": "HCC1395T"
+                        },
+                        [
+                            
+                        ]
+                    ],
+                    [
+                        {
+                            "patient": "NA12878",
+                            "status": "germline",
+                            "sample": "deepvariant_calls"
+                        },
+                        [
+                            
+                        ]
+                    ],
+                    [
+                        {
+                            "patient": "NA12878",
+                            "status": "germline",
+                            "sample": "haplotypecaller_calls"
+                        },
+                        [
+                            
+                        ]
+                    ]
+                ],
+                "normalised_germline": [
+                    [
+                        {
+                            "id": "NA12878.deepvariant",
+                            "patient": "NA12878",
+                            "sample": "deepvariant_calls",
+                            "status": "germline",
+                            "tool": "deepvariant"
+                        },
+                        "NA12878.deepvariant.norm.filtered.vcf.gz:md5,76d36f3766817c8ec3871f55a0d9dfa8",
+                        "NA12878.deepvariant.norm.filtered.vcf.gz.tbi:md5,2a34997f600a699a188d9b6d95e90810"
+                    ],
+                    [
+                        {
+                            "id": "NA12878.haplotypecaller",
+                            "patient": "NA12878",
+                            "sample": "haplotypecaller_calls",
+                            "status": "germline",
+                            "tool": "haplotypecaller"
+                        },
+                        "NA12878.haplotypecaller.norm.filtered.vcf.gz:md5,fac2acbb8a7f0f0bd2932690dc1cd25d",
+                        "NA12878.haplotypecaller.norm.filtered.vcf.gz.tbi:md5,96b51911fac09ba5ccc6c04398a36c49"
+                    ]
+                ],
+                "normalised_somatic": [
+                    [
+                        {
+                            "id": "HCC1395.HCC1395T",
+                            "patient": "HCC1395",
+                            "sample": "HCC1395T",
+                            "status": "somatic",
+                            "bgzip_vcf": true,
+                            "tabix_vcf": true
+                        },
+                        "HCC1395.HCC1395T.norm.filtered.vcf.gz:md5,b0d01fe63ebf2795e55af10f443d0583",
+                        "HCC1395.HCC1395T.norm.filtered.vcf.gz.tbi:md5,6d3d7e8352d7c528176840a249fbb382"
+                    ]
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.2"
+        },
+        "timestamp": "2026-03-16T14:33:20.973934"
+    }
+}

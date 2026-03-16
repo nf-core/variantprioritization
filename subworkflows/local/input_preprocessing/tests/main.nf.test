@@ -1,0 +1,81 @@
+nextflow_workflow {
+
+    name "Test Subworkflow INPUT_PREPROCESSING"
+    script "../main.nf"
+    workflow "INPUT_PREPROCESSING"
+
+    tag "subworkflows"
+    tag "subworkflows_"
+    tag "subworkflows/input_preprocessing"
+    tag "bcftools/filter"
+    tag "bcftools/norm"
+    tag "tabix/bgziptabix"
+    tag "tabix/tabix"
+    tag "ci_test"
+
+    test("human - single - [vcf,[],cna]") {
+        when {
+            workflow {
+                """
+                input[0] = channel.of(
+                    [
+                        [id:'HCC1395.HCC1395T', patient:'HCC1395', sample:'HCC1395T', status:'somatic', bgzip_vcf:false, tabix_vcf:false],
+                        file(params.pipelines_testdata_base_path + 'test_data/HCC1395T_vs_HCC1395N.mutect2.filtered_chr22.vcf', checkIfExists: true),
+                        [],
+                        file(params.pipelines_testdata_base_path + 'test_data/HCC1395T_vs_HCC1395N.segments_chr22.txt', checkIfExists: true)
+                    ]
+                )
+                input[1] = channel
+                    .fromPath(params.modules_testdata_base_path + 'genomics/homo_sapiens/genome/chr22/sequence/chr22_23800000-23980000.fa', checkIfExists: true)
+                    .map { it -> [[id: it.baseName], it] }
+                    .collect()
+                """
+            }
+        }
+        then {
+            assert workflow.success
+            assertAll(
+                { assert snapshot(sanitizeOutput(workflow.out)).match() }
+            )
+        }
+    }
+
+    test("human - multi - [vcf.gz,tbi,[]]") {
+        when {
+            workflow {
+                """
+                input[0] = channel.of(
+                    [
+                        [id:'HCC1395.HCC1395T', patient:'HCC1395', sample:'HCC1395T', status:'somatic', bgzip_vcf:true, tabix_vcf:true],
+                        file(params.pipelines_testdata_base_path + 'test_data/HCC1395T_vs_HCC1395N.mutect2.filtered_chr22.vcf.gz', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'test_data/HCC1395T_vs_HCC1395N.mutect2.filtered_chr22.vcf.gz.tbi', checkIfExists: true),
+                        []
+                    ],
+                    [
+                        [id:'NA12878.deepvariant', patient:'NA12878', sample:'deepvariant_calls', status:'germline', tool:'deepvariant'],
+                        file(params.pipelines_testdata_base_path + 'test_data_cpsr/NA12878.deepvariant.chr22.vcf.gz', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'test_data_cpsr/NA12878.deepvariant.chr22.vcf.gz.tbi', checkIfExists: true),
+                        []
+                    ],
+                    [
+                        [id:'NA12878.haplotypecaller', patient:'NA12878', sample:'haplotypecaller_calls', status:'germline', tool:'haplotypecaller'],
+                        file(params.pipelines_testdata_base_path + 'test_data_cpsr/NA12878.haplotypecaller.chr22.vcf.gz', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'test_data_cpsr/NA12878.haplotypecaller.chr22.vcf.gz.tbi', checkIfExists: true),
+                        []
+                    ]
+                )
+                input[1] = channel
+                    .fromPath(params.modules_testdata_base_path + 'genomics/homo_sapiens/genome/chr22/sequence/chr22_23800000-23980000.fa', checkIfExists: true)
+                    .map { it -> [[id: it.baseName], it] }
+                    .collect()
+                """
+            }
+        }
+        then {
+            assert workflow.success
+            assertAll(
+                { assert snapshot(sanitizeOutput(workflow.out)).match() }
+            )
+        }
+    }
+}

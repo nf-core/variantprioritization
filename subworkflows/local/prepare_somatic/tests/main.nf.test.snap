@@ -1,0 +1,25 @@
+{
+    "human - vcf,cna": {
+        "content": [
+            {
+                "pcgr_ready_vcf": [
+                    [
+                        {
+                            "patient": "HCC1395",
+                            "status": "somatic",
+                            "sample": "HCC1395T"
+                        },
+                        "HCC1395.HCC1395T.vcf.gz:md5,8ada368bfd803173f137851b4a0d4748",
+                        "HCC1395.HCC1395T.vcf.gz.tbi:md5,e204d710d4ea7c8b5496b4ddabfb1c92",
+                        "HCC1395T.reformatted.allelic_cna.tsv:md5,17d7fc79d8e60ac5f9b3dc007c33b97d"
+                    ]
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.2"
+        },
+        "timestamp": "2026-03-16T14:26:00.284614"
+    }
+}
