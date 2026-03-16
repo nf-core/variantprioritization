@@ -25,7 +25,7 @@ nextflow_workflow {
                         [id:'HCC1395.HCC1395T', patient:'HCC1395', sample:'HCC1395T', status:'somatic', bgzip_vcf:false, tabix_vcf:false],
                         file(params.pipelines_testdata_base_path + 'test_data/HCC1395T_vs_HCC1395N.mutect2.filtered_chr22.vcf', checkIfExists: true),
                         [],
-                        file("${projectDir}/tests/data/reformat/HCC1395T.reformatted.allelic_cna.tsv", checkIfExists: true)
+                        file(params.pipelines_testdata_base_path + 'module_data/preparevcf/HCC1395T.reformatted.allelic_cna.tsv', checkIfExists: true)
                     ]
                 )
                 input[1] = channel
