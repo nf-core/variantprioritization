@@ -1,3 +1,5 @@
+def projectDir = new File('.').absolutePath
+
 nextflow_workflow {
 
     name "Test Subworkflow INPUT_PREPROCESSING"
@@ -22,7 +24,7 @@ nextflow_workflow {
                         [id:'HCC1395.HCC1395T', patient:'HCC1395', sample:'HCC1395T', status:'somatic', bgzip_vcf:false, tabix_vcf:false],
                         file(params.pipelines_testdata_base_path + 'test_data/HCC1395T_vs_HCC1395N.mutect2.filtered_chr22.vcf', checkIfExists: true),
                         [],
-                        file(params.pipelines_testdata_base_path + 'test_data/HCC1395T_vs_HCC1395N.segments_chr22.txt', checkIfExists: true)
+                        file("${projectDir}/tests/data/reformat/HCC1395T.reformatted.allelic_cna.tsv", checkIfExists: true)
                     ]
                 )
                 input[1] = channel
@@ -35,7 +37,11 @@ nextflow_workflow {
         then {
             assert workflow.success
             assertAll(
-                { assert snapshot(sanitizeOutput(workflow.out)).match() }
+                { assert snapshot(
+                    file(workflow.out.normalised_somatic.get(0).get(1)).getName() + ":md5," + path(file(workflow.out.normalised_somatic.get(0).get(1)).toString()).vcf.variantsMD5,
+                    file(workflow.out.normalised_somatic.get(0).get(2)).name,
+                    file(workflow.out.ch_cna_files.get(0).get(1)).name + ":md5," + path(file(workflow.out.ch_cna_files.get(0).get(1)).toString()).md5
+                    ).match() }
             )
         }
     }
@@ -74,7 +80,14 @@ nextflow_workflow {
         then {
             assert workflow.success
             assertAll(
-                { assert snapshot(sanitizeOutput(workflow.out)).match() }
+                { assert snapshot(
+                    file(workflow.out.normalised_germline.get(0).get(1)).getName() + ":md5," + path(file(workflow.out.normalised_germline.get(0).get(1)).toString()).vcf.variantsMD5,
+                    file(workflow.out.normalised_germline.get(0).get(2)).name,
+                    file(workflow.out.normalised_germline.get(1).get(1)).getName() + ":md5," + path(file(workflow.out.normalised_germline.get(1).get(1)).toString()).vcf.variantsMD5,
+                    file(workflow.out.normalised_germline.get(1).get(2)).name,
+                    file(workflow.out.normalised_somatic.get(0).get(1)).getName() + ":md5," + path(file(workflow.out.normalised_somatic.get(0).get(1)).toString()).vcf.variantsMD5,
+                    file(workflow.out.normalised_somatic.get(0).get(2)).name,
+                    ).match() }
             )
         }
     }
