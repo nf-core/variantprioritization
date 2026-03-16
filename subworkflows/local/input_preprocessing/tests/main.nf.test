@@ -19,6 +19,7 @@ nextflow_workflow {
         when {
             workflow {
                 """
+                params.cna_analysis = true
                 input[0] = channel.of(
                     [
                         [id:'HCC1395.HCC1395T', patient:'HCC1395', sample:'HCC1395T', status:'somatic', bgzip_vcf:false, tabix_vcf:false],
