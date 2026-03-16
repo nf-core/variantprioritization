@@ -41,7 +41,7 @@ nextflow_workflow {
                 { assert snapshot(
                     file(workflow.out.normalised_somatic.get(0).get(1)).getName() + ":md5," + path(file(workflow.out.normalised_somatic.get(0).get(1)).toString()).vcf.variantsMD5,
                     file(workflow.out.normalised_somatic.get(0).get(2)).name,
-                    file(workflow.out.ch_cna_files.get(0).get(1)).name + ":md5," + path(file(workflow.out.ch_cna_files.get(0).get(1)).toString()).md5
+                    workflow.out.ch_cna_files.get(0).get(1)
                     ).match() }
             )
         }
