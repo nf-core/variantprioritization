@@ -11,9 +11,12 @@ process REFORMAT_VCF {
     tuple val(meta), path(vcf), path(tbi)
 
     output:
-    tuple val(meta), path("${prefix}.vcf.gz"), path("${prefix}.vcf.gz.tbi"), emit: vcf
-    tuple val("${task.process}"), val('python'),   eval("python --version | cut -d' ' -f2"), topic: versions, emit: versions_python
+    tuple val(meta), path("${prefix}.vcf.gz"), emit: vcf
+    tuple val(meta), path("${prefix}.vcf.gz.tbi"), emit: tbi, optional: true
     tuple val("${task.process}"), val('bcftools'), eval("bcftools --version | sed '1!d; s/^.*bcftools //'"), topic: versions, emit: versions_bcftools
+    tuple val("${task.process}"), val('pandas'), eval("python -c 'import pandas; print(pandas.__version__)'"), topic: versions, emit: versions_pandas
+    tuple val("${task.process}"), val('pysam'), eval("python -c 'import pysam; print(pysam.__version__)'"), topic: versions, emit: versions_pysam
+    tuple val("${task.process}"), val('python'), eval("python --version | cut -d' ' -f2"), topic: versions, emit: versions_python
 
     when:
     task.ext.when == null || task.ext.when
@@ -25,6 +28,6 @@ process REFORMAT_VCF {
     reformat_vcf.py \\
         --tool ${tool} \\
         --input ${vcf} \\
-        --output ${prefix}.vcf
+        --output ${prefix}.vcf.gz
     """
 }
