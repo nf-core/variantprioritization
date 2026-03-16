@@ -40,7 +40,8 @@ workflow PREPARE_SOMATIC {
         var.patient = meta.patient
         var.status = meta.status
         var.sample = meta.sample
-        return [var, vcf, tbi, meta.tool]
+        def tool = meta.tool?.startsWith('strelka') ? 'strelka' : meta.tool
+        return [var, vcf, tbi, tool]
     }
 
     per_sample_somatic_vcfs = per_sample_somatic
