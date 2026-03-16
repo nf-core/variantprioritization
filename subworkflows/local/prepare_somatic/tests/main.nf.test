@@ -48,7 +48,11 @@ nextflow_workflow {
         then {
             assert workflow.success
             assertAll(
-                { assert snapshot(sanitizeOutput(workflow.out)).match() }
+                { assert snapshot(
+                    file(workflow.out.pcgr_ready_vcf.get(0).get(1)).getName() + ":md5," + path(file(workflow.out.pcgr_ready_vcf.get(0).get(1)).toString()).vcf.variantsMD5,
+                    file(workflow.out.pcgr_ready_vcf.get(0).get(2)).name,
+                    file(workflow.out.pcgr_ready_vcf.get(0).get(3)).name + ":md5," + path(file(workflow.out.pcgr_ready_vcf.get(0).get(3)).toString()).md5
+                    ).match() }
             )
         }
     }

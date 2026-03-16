@@ -28,7 +28,7 @@ workflow PREPARE_SOMATIC {
     REFORMAT_CNA(cna_files)
 
     vcf_ch = REFORMAT_VCF.out.vcf.join(REFORMAT_VCF.out.tbi)
-    cna_ch = REFORMAT_CNA.out.cna
+    cna_ch = params.cna_analysis ? REFORMAT_CNA.out.cna : channel.empty()
 
     // Intersect somatic variants
     // create master TSV file with variant <-> tool mapping
@@ -54,10 +54,12 @@ workflow PREPARE_SOMATIC {
 
     PCGR_PREPAREVCF(sample_vcfs_keys, pcgr_header.collect())
 
-    emit:
-    pcgr_ready_vcf = params.cna_analysis
-        ? PCGR_PREPAREVCF.out.vcf.join(cna_ch)
-        : PCGR_PREPAREVCF.out.vcf.map { meta, vcf, tbi ->
-            return [meta, vcf, tbi, []]
+    pcgr_ready_vcf = PCGR_PREPAREVCF.out.vcf
+        .join(cna_ch, remainder: true)
+        .map { meta, vcf, tbi, cna ->
+            [meta, vcf, tbi, cna ?: []]
         }
+
+    emit:
+    pcgr_ready_vcf
 }
