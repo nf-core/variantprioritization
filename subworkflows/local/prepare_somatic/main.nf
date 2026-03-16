@@ -28,7 +28,7 @@ workflow PREPARE_SOMATIC {
     REFORMAT_VCF(vcf_files)
     REFORMAT_CNA(cna_files)
 
-    vcf_ch = REFORMAT_VCF.out.vcf
+    vcf_ch = REFORMAT_VCF.out.vcf.join(REFORMAT_VCF.out.tbi)
     cna_ch = REFORMAT_CNA.out.cna
 
     // Intersect somatic variants
@@ -51,7 +51,6 @@ workflow PREPARE_SOMATIC {
 
     INTERSECT_VCF(per_sample_somatic_vcfs)
 
-    // merge mapping key back with sample VCFs, produce PCGR ready VCFs.
     sample_vcfs_keys = INTERSECT_VCF.out.variant_tool_map.join(per_sample_somatic_vcfs)
 
     PCGR_PREPAREVCF(sample_vcfs_keys, pcgr_header.collect())

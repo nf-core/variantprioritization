@@ -11,8 +11,12 @@ process REFORMAT_CNA {
     tuple val(meta), path(cna)
 
     output:
-    tuple val(meta), path("${prefix}.*.tsv"), emit: cna
-    tuple val("${task.process}"), val('python'),  eval("python --version | cut -d' ' -f2"), topic: versions, emit: versions_python
+    tuple val(meta), path("${prefix}.tsv"), emit: cna
+    tuple val("${task.process}"), val('numpy'), eval("python -c 'import numpy; print(numpy.__version__)'"), topic: versions, emit: versions_numpy
+    tuple val("${task.process}"), val('pandas'), eval("python -c 'import pandas; print(pandas.__version__)'"), topic: versions, emit: versions_pandas
+    tuple val("${task.process}"), val('pysam'), eval("python -c 'import pysam; print(pysam.__version__)'"), topic: versions, emit: versions_pysam
+    tuple val("${task.process}"), val('python'), eval("python --version | cut -d' ' -f2"), topic: versions, emit: versions_python
+    tuple val("${task.process}"), val('vcf2tsvpy'), eval("vcf2tsvpy --version  | cut -d' ' -f2"), topic: versions, emit: versions_vcf2tsvpy
 
     when:
     task.ext.when == null || task.ext.when
@@ -22,6 +26,6 @@ process REFORMAT_CNA {
     """
     reformat_cna.py \\
         --input ${cna} \\
-        --sample ${prefix}
+        --out ${prefix}
     """
 }
