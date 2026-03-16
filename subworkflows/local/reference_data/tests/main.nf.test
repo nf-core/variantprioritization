@@ -8,6 +8,7 @@ nextflow_workflow {
     tag "subworkflows_"
     tag "subworkflows/reference_data"
     tag "pcgr/getref"
+    tag "ci_test"
 
     test("20250314 - 113") {
 
@@ -27,9 +28,7 @@ nextflow_workflow {
         then {
             assert workflow.success
             assertAll(
-                { assert snapshot(
-                    workflow.out
-                ).match() }
+                { assert snapshot(sanitizeOutput(workflow.out)).match() }
             )
         }
     }
