@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# Licence: MIT
 
 import numpy as np
 import pandas as pd
