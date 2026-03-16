@@ -1,5 +1,5 @@
 {
-    "human - vcf.gz": {
+    "human - single - vcf.gz": {
         "content": [
             {
                 "variant_tool_map": [
@@ -7,7 +7,64 @@
                         {
                             "id": "HCC1395.HCC1395T",
                             "patient": "HCC1395",
-                            "sample": "HCC1395T"
+                            "sample": "HCC1395T",
+                            "tools": [
+                                "mutect2"
+                            ]
+                        },
+                        "HCC1395.HCC1395T_keys.txt:md5,37bc7fff29553d6b544f1f25c72bbdf7"
+                    ]
+                ],
+                "versions_bcftools": [
+                    [
+                        "INTERSECT_VCF",
+                        "bcftools",
+                        "1.22"
+                    ]
+                ],
+                "versions_pandas": [
+                    [
+                        "INTERSECT_VCF",
+                        "pandas",
+                        "2.3.3"
+                    ]
+                ],
+                "versions_pysam": [
+                    [
+                        "INTERSECT_VCF",
+                        "pysam",
+                        "0.23.3"
+                    ]
+                ],
+                "versions_python": [
+                    [
+                        "INTERSECT_VCF",
+                        "python",
+                        "3.10.19"
+                    ]
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.2"
+        },
+        "timestamp": "2026-03-16T14:48:29.89561"
+    },
+    "human - multiple - vcf.gz": {
+        "content": [
+            {
+                "variant_tool_map": [
+                    [
+                        {
+                            "id": "HCC1395.HCC1395T",
+                            "patient": "HCC1395",
+                            "sample": "HCC1395T",
+                            "tools": [
+                                "mutect2",
+                                "strelka",
+                                "strelka"
+                            ]
                         },
                         "HCC1395.HCC1395T_keys.txt:md5,6c4b64e70a705e3c90517189a7cd3963"
                     ]
@@ -46,6 +103,6 @@
             "nf-test": "0.9.3",
             "nextflow": "25.10.2"
         },
-        "timestamp": "2026-03-16T12:34:06.149"
+        "timestamp": "2026-03-16T14:46:38.923454"
     }
 }

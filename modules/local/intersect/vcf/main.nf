@@ -22,9 +22,15 @@ process INTERSECT_VCF {
 
     script:
     prefix = task.ext.prefix ?: "${meta.id}"
+    def vcfList = vcfs instanceof List ? vcfs : [vcfs]
+    def toolList = meta.tools instanceof List ? meta.tools : [meta.tools]
+    def vcfFiles = vcfList.collect { vcfFile -> new File(vcfFile.toString()).name }.join(',')
+    def toolNames = toolList.collect { toolName -> toolName.toString() }.join(',')
     """
     isec_vcfs.py \\
         --input_dir inputs \\
+        --sample_files ${vcfFiles} \\
+        --tool_names ${toolNames} \\
         --output ${prefix}_keys.txt
     """
 }

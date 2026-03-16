@@ -40,18 +40,24 @@ workflow PREPARE_SOMATIC {
         var.patient = meta.patient
         var.status = meta.status
         var.sample = meta.sample
-        return [var, vcf, tbi]
+        return [var, vcf, tbi, meta.tool]
     }
 
     per_sample_somatic_vcfs = per_sample_somatic
-        .map { var, vcf, tbi ->
-            return [var, vcf, tbi]
+        .map { var, vcf, tbi, tool ->
+            return [var, vcf, tbi, tool]
         }
         .groupTuple()
 
-    INTERSECT_VCF(per_sample_somatic_vcfs)
+    per_sample_somatic_with_tools = per_sample_somatic_vcfs.map { meta, vcfs, tbis, tools ->
+        [meta + [tools: tools], vcfs, tbis]
+    }
 
-    sample_vcfs_keys = INTERSECT_VCF.out.variant_tool_map.join(per_sample_somatic_vcfs)
+    INTERSECT_VCF(per_sample_somatic_with_tools)
+
+    sample_vcfs_keys = INTERSECT_VCF.out.variant_tool_map
+        .join(per_sample_somatic_vcfs)
+        .map { meta, keys, vcfs, tbis, _tools -> [meta, keys, vcfs, tbis] }
 
     PCGR_PREPAREVCF(sample_vcfs_keys, pcgr_header.collect())
 

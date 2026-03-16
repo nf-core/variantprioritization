@@ -9,7 +9,7 @@ import argparse
 import subprocess
 
 
-def intersect_variants(input_dir, output_file):
+def intersect_variants(input_dir, output_file, sample_files, tool_names):
 
     input_path = Path(input_dir)
     if not input_path.exists() or not input_path.is_dir():
@@ -17,16 +17,23 @@ def intersect_variants(input_dir, output_file):
             f"Input directory does not exist or is not a directory: {input_dir}"
         )
 
-    sample_files = sorted(
-        file.name
-        for file in input_path.iterdir()
-        if file.is_file()
-        and (file.name.endswith(".vcf") or file.name.endswith(".vcf.gz"))
-    )
+    if len(sample_files) != len(tool_names):
+        raise ValueError(
+            "Length mismatch between --sample_files and --tool_names: "
+            f"{len(sample_files)} vs {len(tool_names)}"
+        )
+
     print(sample_files)
 
     if not sample_files:
         raise ValueError(f"No VCF files found in input directory: {input_dir}")
+
+    missing_vcfs = [name for name in sample_files if not (input_path / name).is_file()]
+    if missing_vcfs:
+        raise FileNotFoundError(
+            "Expected staged VCF files are missing in input_dir: "
+            + ", ".join(missing_vcfs)
+        )
 
     tbi_files = {
         file.name
@@ -39,12 +46,7 @@ def intersect_variants(input_dir, output_file):
                 f"Missing index for {vcf_name}: expected {vcf_name}.tbi in {input_dir}"
             )
 
-    tool_names = {}
-    for idx, file in enumerate(sample_files):
-        tool = file.split(".")[2]  # change this if you change prefix
-        if tool.split("_")[0] == "strelka":
-            tool = "strelka"
-        tool_names[idx] = tool
+    tool_map = {idx: tool for idx, tool in enumerate(tool_names)}
 
     if len(sample_files) > 1:
         for idx, _x in enumerate(sample_files):
@@ -100,7 +102,7 @@ def intersect_variants(input_dir, output_file):
             for idx, val in enumerate(code):
                 if val != "0":
                     grab_index.append(int(idx))
-            bytes_2_tal = {k: tool_names[k] for k in grab_index if k in tool_names}
+            bytes_2_tal = {k: tool_map[k] for k in grab_index if k in tool_map}
             bytes_2_tal = ",".join(
                 sorted(bytes_2_tal.values())
             )  # Sort tool names alphabetically
@@ -130,14 +132,14 @@ def intersect_variants(input_dir, output_file):
             for line in result.stdout.splitlines():
                 fields = line.split("\t")
                 out_fh.write(
-                    f"{fields[0]}\t{fields[1]}\t{fields[3]}\t{fields[4]}\t{tool_names[0]}\n"
+                    f"{fields[0]}\t{fields[1]}\t{fields[3]}\t{fields[4]}\t{tool_map[0]}\n"
                 )
 
 
 def main():
     # Argument parsing using argparse
     parser = argparse.ArgumentParser(
-        description="Reformat somatic CNA files for PCGR input."
+        description="Intersect somatic VCF files for PCGR input."
     )
     parser.add_argument(
         "--input_dir",
@@ -145,13 +147,26 @@ def main():
         help="Directory containing staged input VCF and TBI files.",
     )
     parser.add_argument(
+        "--sample_files",
+        required=True,
+        help="Comma-separated staged VCF basenames in deterministic order.",
+    )
+    parser.add_argument(
+        "--tool_names",
+        required=True,
+        help="Comma-separated tool names matching --sample_files order.",
+    )
+    parser.add_argument(
         "-o", "--output", required=True, help="Output key mapping filename."
     )
 
     args = parser.parse_args()
 
-    # Call reformat_cna function with arguments
-    intersect_variants(args.input_dir, args.output)
+    # Call intersect_variants function with arguments
+    sample_files = [Path(item).name for item in args.sample_files.split(",") if item]
+    tool_names = [item for item in args.tool_names.split(",") if item]
+
+    intersect_variants(args.input_dir, args.output, sample_files, tool_names)
 
 
 if __name__ == "__main__":

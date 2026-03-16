@@ -16,7 +16,7 @@ input:
         type: map
         description: |
           Groovy Map containing grouped sample information
-          e.g. [ id:'patient.sample', patient:'patient', sample:'sample', status:'somatic' ]
+            e.g. [ id:'patient.sample', patient:'patient', sample:'sample', status:'somatic', tools:['mutect2','strelka'] ]
     - vcfs:
         type: file
         description: Grouped input VCF file(s) staged for intersection
