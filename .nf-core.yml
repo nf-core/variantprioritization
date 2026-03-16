@@ -4,6 +4,7 @@ lint:
   files_unchanged:
     - .gitignore
     - .github/CONTRIBUTING.md
+    - assets/email_template.html
     - assets/nf-core-variantprioritization_logo_light.png
     - docs/images/nf-core-variantprioritization_logo_dark.png
     - docs/images/nf-core-variantprioritization_logo_light.png
@@ -20,4 +21,4 @@ template:
   outdir: .
   skip_features:
     - fastqc
-  version: "1.0"
+  version: "1.0.0"
