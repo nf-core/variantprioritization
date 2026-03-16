@@ -1,15 +1,17 @@
 #!/usr/bin/env python3
 
+#####################################################################################################################
+# Inspired by: @gudeqing
+# https://github.com/sigven/pcgr/issues/136#issuecomment-919273152
+# Built upon by @BarryDigby to handle Strelka, Freebayes, Mutect2 VCF files.
+# Licence: MIT
+#####################################################################################################################
+
 from pysam import VariantFile
 import os
 import argparse
 import sys
 
-#####################################################################################################################
-# Inspired by: @gudeqing
-# https://github.com/sigven/pcgr/issues/136#issuecomment-919273152
-# Built upon by @BarryDigby to handle Strelka, Freebayes, Mutect2 VCF files.
-#####################################################################################################################
 def mutect2_vaf(record, sample_idx):
     VAF = record.samples[sample_idx]["AF"][0]
     VAF = VAF if VAF is not None else 0

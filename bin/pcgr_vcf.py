@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
+# Licence: MIT
 
 import subprocess
+from pathlib import Path
 import pandas as pd
 from pysam import VariantFile
 import argparse
@@ -47,8 +49,7 @@ def tumor_normal(sample_id, key_file, vcf_files, pcgr_header):
         subprocess.run(
             f"tail -n +2 {idx}.tmp > {idx}.tsv && rm {idx}.tmp", shell=True, check=True
         )
-        df = pd.read_table(f"{idx}.tsv", usecols=fields,
-                           low_memory=True, sep="\t")
+        df = pd.read_table(f"{idx}.tsv", usecols=fields, low_memory=True, sep="\t")
         df.index = pd.MultiIndex.from_arrays(df.values.T[(0, 1, 3, 4),])
         vcf_dict[idx] = df
 
@@ -146,8 +147,7 @@ def tumor_normal(sample_id, key_file, vcf_files, pcgr_header):
     avg_df["SAMPLE_ADN"] = avg_df["ADN"]
     # things got weird
     avg_df["TAL"] = avg_df["TAL"].astype("str")
-    avg_df["SAMPLE_AL"] = avg_df["TAL"].replace(
-        {v: k for k, v in algo_dict.items()})
+    avg_df["SAMPLE_AL"] = avg_df["TAL"].replace({v: k for k, v in algo_dict.items()})
 
     # format INFO i.e TAF=0.034;NAF=0;...
     avg_df["TAF"] = avg_df["TAF"].apply(lambda x: "{}{}".format("TAF=", x))
@@ -209,13 +209,12 @@ def tumor_normal(sample_id, key_file, vcf_files, pcgr_header):
     subprocess.run(["tabix", f"{sample_id}.vcf.gz"], check=True)
 
 
-def tumor_only(sample_id, key_file, vcf_files, pcgr_header):
+def tumor_only(sample_id, key_file, vcf_files, tbi_files, pcgr_header):
     key_df = pd.read_table(key_file, header=None, sep="\t")
     key_df.index = pd.MultiIndex.from_arrays(key_df.values.T[(0, 1, 2, 3),])
 
     # stage fields we are interested in capturing
-    fields = ["CHROM", "POS", "ID", "REF", "ALT",
-              "QUAL", "FILTER", "TDP", "ADT", "TAF"]
+    fields = ["CHROM", "POS", "ID", "REF", "ALT", "QUAL", "FILTER", "TDP", "ADT", "TAF"]
 
     # create dict of dataframes containing dataframes of the abpve fields.
     # strategy is to average TDP,NDP, TAF,NAF and append TAL from $meta.id_keys.txt
@@ -237,8 +236,7 @@ def tumor_only(sample_id, key_file, vcf_files, pcgr_header):
         subprocess.run(
             f"tail -n +2 {idx}.tmp > {idx}.tsv && rm {idx}.tmp", shell=True, check=True
         )
-        df = pd.read_table(f"{idx}.tsv", usecols=fields,
-                           low_memory=True, sep="\t")
+        df = pd.read_table(f"{idx}.tsv", usecols=fields, low_memory=True, sep="\t")
         df.index = pd.MultiIndex.from_arrays(df.values.T[(0, 1, 3, 4),])
         vcf_dict[idx] = df
 
@@ -324,8 +322,7 @@ def tumor_only(sample_id, key_file, vcf_files, pcgr_header):
     avg_df["SAMPLE_ADT"] = avg_df["ADT"]
     # things got weird
     avg_df["TAL"] = avg_df["TAL"].astype("str")
-    avg_df["SAMPLE_AL"] = avg_df["TAL"].replace(
-        {v: k for k, v in algo_dict.items()})
+    avg_df["SAMPLE_AL"] = avg_df["TAL"].replace({v: k for k, v in algo_dict.items()})
 
     # format INFO i.e TAF=0.034;NAF=0;...
     avg_df["TAF"] = avg_df["TAF"].apply(lambda x: "{}{}".format("TAF=", x))
@@ -352,8 +349,7 @@ def tumor_only(sample_id, key_file, vcf_files, pcgr_header):
     avg_df[f"{sample_id}"] = avg_df[
         ["SAMPLE_GT", "SAMPLE_DPT", "SAMPLE_ADT", "SAMPLE_AL"]
     ].apply(lambda x: ":".join(x[x.notnull()]), axis=1)
-    avg_df = avg_df.drop(
-        ["SAMPLE_GT", "SAMPLE_DPT", "SAMPLE_ADT", "SAMPLE_AL"], axis=1)
+    avg_df = avg_df.drop(["SAMPLE_GT", "SAMPLE_DPT", "SAMPLE_ADT", "SAMPLE_AL"], axis=1)
 
     avg_df.to_csv("tmp.vcf", sep="\t", index=None, header=True)
     with (
@@ -377,6 +373,70 @@ def pcgr_ready_vcf(sample_id, key_file, vcf_files, pcgr_header):
             tumor_only(sample_id, key_file, vcf_files, pcgr_header)
 
 
+def resolve_vcf_files(vcf_dir=None, vcfs=None):
+    if vcf_dir:
+        vcf_path = Path(vcf_dir)
+        if not vcf_path.exists() or not vcf_path.is_dir():
+            raise FileNotFoundError(
+                f"VCF directory does not exist or is not a directory: {vcf_dir}"
+            )
+        vcf_files = sorted(
+            str(path)
+            for path in vcf_path.iterdir()
+            if path.is_file()
+            and (path.name.endswith(".vcf") or path.name.endswith(".vcf.gz"))
+        )
+    else:
+        vcf_files = vcfs or []
+
+    if not vcf_files:
+        raise ValueError(
+            "No input VCF files found. Provide --vcf-dir with *.vcf/*.vcf.gz files or one or more --vcf arguments."
+        )
+
+    return vcf_files
+
+
+def resolve_tbi_files(tbi_dir=None, tbis=None):
+    if tbi_dir:
+        tbi_path = Path(tbi_dir)
+        if not tbi_path.exists() or not tbi_path.is_dir():
+            raise FileNotFoundError(
+                f"TBI directory does not exist or is not a directory: {tbi_dir}"
+            )
+        tbi_files = sorted(
+            str(path)
+            for path in tbi_path.iterdir()
+            if path.is_file() and path.name.endswith(".tbi")
+        )
+    else:
+        tbi_files = tbis or []
+
+    return tbi_files
+
+
+def validate_tbi_availability(vcf_files, tbi_files):
+    available_tbis = set(tbi_files)
+    available_tbis.update(
+        f"{vcf}.tbi" for vcf in vcf_files if Path(f"{vcf}.tbi").is_file()
+    )
+
+    missing_tbis = []
+    for vcf in vcf_files:
+        if vcf.endswith(".vcf.gz"):
+            expected_tbi = f"{vcf}.tbi"
+            if expected_tbi not in available_tbis:
+                missing_tbis.append(expected_tbi)
+
+    if missing_tbis:
+        missing = "\n - ".join(missing_tbis)
+        raise FileNotFoundError(
+            "Missing tabix index file(s) for compressed VCF input(s):\n"
+            f" - {missing}\n"
+            "Ensure .vcf.gz and .vcf.gz.tbi are staged side-by-side or provide --tbi/--tbi-dir."
+        )
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="Reformat somatic VCF files for PCGR input."
@@ -395,8 +455,22 @@ def main():
         "--vcf",
         action="append",
         dest="vcfs",
-        required=True,
         help="Input VCF file. Repeat --vcf for multiple files.",
+    )
+    parser.add_argument(
+        "--vcf-dir",
+        help="Directory containing input VCF files (*.vcf or *.vcf.gz).",
+    )
+    parser.add_argument(
+        "-t",
+        "--tbi",
+        action="append",
+        dest="tbis",
+        help="Input TBI file. Repeat --tbi for multiple files.",
+    )
+    parser.add_argument(
+        "--tbi-dir",
+        help="Directory containing input TBI index files (*.tbi).",
     )
     parser.add_argument(
         "--pcgr-header", required=True, help="Path to header template file."
@@ -404,7 +478,11 @@ def main():
 
     args = parser.parse_args()
 
-    pcgr_ready_vcf(args.sample, args.keys, args.vcfs, args.pcgr_header)
+    vcf_files = resolve_vcf_files(args.vcf_dir, args.vcfs)
+    tbi_files = resolve_tbi_files(args.tbi_dir, args.tbis)
+    validate_tbi_availability(vcf_files, tbi_files)
+
+    pcgr_ready_vcf(args.sample, args.keys, vcf_files, args.pcgr_header)
 
 
 if __name__ == "__main__":

@@ -24,6 +24,10 @@ input:
         type: file
         description: Input VCF file(s) to convert to PCGR format
         pattern: "*.{vcf,vcf.gz}"
+    - tbis:
+      type: file
+      description: Tabix index file(s) corresponding to compressed input VCF files
+      pattern: "*.tbi"
   - - pcgr_header:
         type: file
         description: Header template prepended to output VCF

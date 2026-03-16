@@ -8,7 +8,7 @@ process PCGR_PREPAREVCF {
         : 'community.wave.seqera.io/library/pysam_vcf2tsvpy_numpy_pandas_python:eb0ee661861e1b56'}"
 
     input:
-    tuple val(meta), path(keys), path(vcfs), path(tbis)
+    tuple val(meta), path(keys), path(vcfs, stageAs: 'inputs/*'), path(tbis, stageAs: 'inputs/*')
     path pcgr_header
 
     output:
@@ -24,12 +24,12 @@ process PCGR_PREPAREVCF {
 
     script:
     prefix = task.ext.prefix ?: "${meta.id}"
-    def vcf_args = (vcfs instanceof List ? vcfs : [vcfs]).collect { input_vcf -> "--vcf ${input_vcf}" }.join(' \\\n        ')
     """
     pcgr_vcf.py \\
         --sample ${prefix} \\
         --keys ${keys} \\
-        ${vcf_args} \\
+        --vcf-dir inputs/ \
+        --tbi-dir inputs/ \
         --pcgr-header ${pcgr_header}
     """
 }
