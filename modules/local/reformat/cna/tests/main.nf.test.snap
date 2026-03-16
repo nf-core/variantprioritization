@@ -10,7 +10,7 @@
                             "sample": "HCC1395T",
                             "status": "somatic"
                         },
-                        "HCC1395T.reformatted.tsv:md5,17d7fc79d8e60ac5f9b3dc007c33b97d"
+                        "HCC1395T.reformatted.allelic_cna.tsv:md5,17d7fc79d8e60ac5f9b3dc007c33b97d"
                     ]
                 ],
                 "versions_numpy": [
@@ -54,6 +54,6 @@
             "nf-test": "0.9.3",
             "nextflow": "25.10.2"
         },
-        "timestamp": "2026-03-16T11:37:15.121909"
+        "timestamp": "2026-03-16T11:52:02.282385"
     }
 }

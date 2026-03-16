@@ -11,7 +11,7 @@
                             "status": "somatic",
                             "tool": "mutect2"
                         },
-                        "HCC1395.HCC1395T.reformatted.vcf.gz.tbi:md5,247153576c2fd3e840084ab9cbcbc92c"
+                        "HCC1395.HCC1395T.reformatted.vcf.gz.tbi:md5,57b43df4f54d414270abc0ab889ec927"
                     ]
                 ],
                 "vcf": [
@@ -23,7 +23,7 @@
                             "status": "somatic",
                             "tool": "mutect2"
                         },
-                        "HCC1395.HCC1395T.reformatted.vcf.gz:md5,503ecbf5d27a8284e959098bc17644f1"
+                        "HCC1395.HCC1395T.reformatted.vcf.gz:md5,91695474dd79971c27c1c1e5b8ccea48"
                     ]
                 ],
                 "versions_bcftools": [
@@ -60,6 +60,6 @@
             "nf-test": "0.9.3",
             "nextflow": "25.10.2"
         },
-        "timestamp": "2026-03-16T11:37:49.552577"
+        "timestamp": "2026-03-16T11:51:26.548253"
     }
 }
