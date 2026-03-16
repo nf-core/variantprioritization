@@ -11,6 +11,8 @@
                 },
                 "INTERSECT_VCF": {
                     "bcftools": 1.22,
+                    "pandas": "2.3.3",
+                    "pysam": "0.23.3",
                     "python": "3.10.19"
                 },
                 "PCGR_PREPAREVCF": {
