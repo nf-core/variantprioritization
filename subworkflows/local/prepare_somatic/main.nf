@@ -23,7 +23,6 @@ workflow PREPARE_SOMATIC {
     main:
     pcgr_header = channel.fromPath("${projectDir}/bin/pcgr_header.txt", checkIfExists: true)
 
-
     // Reformat input files
     REFORMAT_VCF(vcf_files)
     REFORMAT_CNA(cna_files)
