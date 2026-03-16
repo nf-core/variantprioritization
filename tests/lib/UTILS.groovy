@@ -25,6 +25,8 @@ class UTILS {
         // vcf_files: All vcf files
         def vcf_files = getAllFilesFromDir(outdir, include: ['**/*.vcf{,.gz}'])
 
+        def keys = getAllFilesFromDir(outdir, include: ['**/*_keys.txt'])
+
         def assertion = []
 
         assertion.add(removeFromYamlMap("${outdir}/pipeline_info/nf_core_variantprioritization_software_mqc_versions.yml", "Workflow"))
@@ -32,6 +34,7 @@ class UTILS {
 
         if (!stub) {
             assertion.add(stable_content.isEmpty() ? 'No stable content' : stable_content)
+            assertion.add(keys.isEmpty() ? 'No keys files' : keys.collect { file -> file.readLines() })
             if (no_vcf_md5sum) {
                 assertion.add(vcf_files.isEmpty() ? 'No VCF files' : vcf_files.collect { file -> [ file.getName(), path(file.toString()).vcf.summary ] })
             } else {
