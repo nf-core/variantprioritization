@@ -14,6 +14,8 @@
                 },
                 "INTERSECT_VCF": {
                     "bcftools": 1.22,
+                    "pandas": "2.3.3",
+                    "pysam": "0.23.3",
                     "python": "3.10.19"
                 },
                 "PCGR_GETREF": {
@@ -22,16 +24,26 @@
                     "tar": 1.35
                 },
                 "PCGR_PREPAREVCF": {
-                    "python": "3.10.19"
+                    "numpy": "2.2.6",
+                    "pandas": "2.3.3",
+                    "pysam": "0.23.3",
+                    "python": "3.10.19",
+                    "vcf2tsvpy": "0.6.1"
                 },
                 "PCGR_RUN": {
                     "pcgr": "2.2.5"
                 },
                 "REFORMAT_CNA": {
-                    "python": "3.10.19"
+                    "numpy": "2.2.6",
+                    "pandas": "2.3.3",
+                    "pysam": "0.23.3",
+                    "python": "3.10.19",
+                    "vcf2tsvpy": "0.6.1"
                 },
                 "REFORMAT_VCF": {
                     "bcftools": 1.22,
+                    "pandas": "2.3.3",
+                    "pysam": "0.23.3",
                     "python": "3.10.19"
                 },
                 "TABIX_TABIX": {
@@ -122,14 +134,14 @@
             [
                 "NA12878.NA12878N.cpsr.grch38.classification.tsv.gz:md5,8fde60fb2205d1049c56b6d38778897f",
                 "NA12878.NA12878N.cpsr.grch38.pass.tsv.gz:md5,c60e6b8eb49e561fb7ef82b205ef7786",
-                "HCC1395.HCC1395T_keys.txt:md5,e19e65f037b6f055584c89d89b63147e",
+                "HCC1395.HCC1395T_keys.txt:md5,51d7d1d0c0d5d73552068d84737327c1",
                 "HCC1395T.reformatted.allelic_cna.tsv:md5,f8e64f39bfc6cf7e7b6b9727c25be962",
                 "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f",
                 "HCC1395.HCC1395T.pcgr.grch38.cna_gene.tsv.gz:md5,d36b253b9fb55000ae5b4828e98ebd29",
                 "HCC1395.HCC1395T.pcgr.grch38.cna_gene_ann.tsv.gz:md5,3ddc52e37c0e51da1e62c3a383b34d92",
                 "HCC1395.HCC1395T.pcgr.grch38.cna_segment.tsv.gz:md5,8c9625abab7494b988a81bfb6c9c7e19",
                 "HCC1395.HCC1395T.pcgr.grch38.maf:md5,c8b7f72570a11aeb3148f38cf82909c7",
-                "HCC1395.HCC1395T.pcgr.grch38.msigs.tsv.gz:md5,3eb7bf8bbedd0bc1d1550ea10b09a97e",
+                "HCC1395.HCC1395T.pcgr.grch38.msigs.tsv.gz:md5,f357eb0d3ff0e552f6d9ca3583177f07",
                 "HCC1395.HCC1395T.pcgr.grch38.pass.tsv.gz:md5,acd25d1e523255f08a5eb9af5f7dd3ba",
                 "HCC1395.HCC1395T.pcgr.grch38.snv_indel_ann.tsv.gz:md5,56b43f8741d00e0c76e7e7e9b0fc5a39",
                 "HCC1395.HCC1395T.pcgr.grch38.tmb.tsv:md5,b8b74e5d24ebe9e590c3432fec658866"
@@ -157,12 +169,13 @@
                 "gnomad_non_cancer.vcf.gz:md5,54a6e8f80ff9d0ce82e032eed225620c",
                 "gwas.vcf.gz:md5,5b712af021605a25e0d5d063aec221ee",
                 "tcga.vcf.gz:md5,46e5416d624c4b47cb89f8f89320a6e"
-            ]
+            ],
+            "No warnings"
         ],
         "meta": {
             "nf-test": "0.9.3",
             "nextflow": "25.10.4"
         },
-        "timestamp": "2026-03-10T14:37:57.974202739"
+        "timestamp": "2026-03-16T16:55:54.376042687"
     }
 }
