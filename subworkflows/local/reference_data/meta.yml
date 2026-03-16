@@ -8,6 +8,7 @@ keywords:
   - cache
 components:
   - pcgr/getref
+  - untar
 input:
   - genome:
       type: string
@@ -49,12 +50,6 @@ output:
         Channel containing VEP cache directories.
         Structure: [ path(vep_cache) ]
       pattern: "*"
-  - versions:
-      type: file
-      description: |
-        File containing software versions
-        Structure: [ path(versions.yml) ]
-      pattern: "versions.yml"
 authors:
   - "@famosab"
 maintainers:
