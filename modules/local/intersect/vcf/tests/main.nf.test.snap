@@ -1,0 +1,51 @@
+{
+    "human - vcf.gz": {
+        "content": [
+            {
+                "variant_tool_map": [
+                    [
+                        {
+                            "id": "HCC1395.HCC1395T",
+                            "patient": "HCC1395",
+                            "sample": "HCC1395T"
+                        },
+                        "HCC1395.HCC1395T_keys.txt:md5,6c4b64e70a705e3c90517189a7cd3963"
+                    ]
+                ],
+                "versions_bcftools": [
+                    [
+                        "INTERSECT_VCF",
+                        "bcftools",
+                        "1.22"
+                    ]
+                ],
+                "versions_pandas": [
+                    [
+                        "INTERSECT_VCF",
+                        "pandas",
+                        "2.3.3"
+                    ]
+                ],
+                "versions_pysam": [
+                    [
+                        "INTERSECT_VCF",
+                        "pysam",
+                        "0.23.3"
+                    ]
+                ],
+                "versions_python": [
+                    [
+                        "INTERSECT_VCF",
+                        "python",
+                        "3.10.19"
+                    ]
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.2"
+        },
+        "timestamp": "2026-03-16T12:34:06.149"
+    }
+}

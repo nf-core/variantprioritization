@@ -8,21 +8,23 @@ process INTERSECT_VCF {
         : 'community.wave.seqera.io/library/bcftools_pysam_pandas_python:6b813c53a7ef4ede'}"
 
     input:
-    tuple val(meta), path(vcf), path(tbi)
+    tuple val(meta), path(vcfs, stageAs: 'inputs/*'), path(tbis, stageAs: 'inputs/*')
 
     output:
     tuple val(meta), path("${prefix}_keys.txt"), emit: variant_tool_map
-    tuple val("${task.process}"), val('python'),  eval("python --version | cut -d' ' -f2"), topic: versions, emit: versions_python
     tuple val("${task.process}"), val('bcftools'), eval("bcftools --version | sed '1!d; s/^.*bcftools //'"), topic: versions, emit: versions_bcftools
+    tuple val("${task.process}"), val('pandas'), eval("python -c 'import pandas; print(pandas.__version__)'"), topic: versions, emit: versions_pandas
+    tuple val("${task.process}"), val('pysam'), eval("python -c 'import pysam; print(pysam.__version__)'"), topic: versions, emit: versions_pysam
+    tuple val("${task.process}"), val('python'), eval("python --version | cut -d' ' -f2"), topic: versions, emit: versions_python
 
     when:
     task.ext.when == null || task.ext.when
 
     script:
-    // meta.sample, toggle using modules.config
     prefix = task.ext.prefix ?: "${meta.id}"
     """
     isec_vcfs.py \\
-        --sample ${prefix}
+        --input_dir inputs \\
+        --output ${prefix}_keys.txt
     """
 }
