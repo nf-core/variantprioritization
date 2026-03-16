@@ -55,7 +55,7 @@ Input VCFs are optionally bgzipped and indexed, then normalized and filtered per
 - `custom/intersect_vcf/`
   - `{sample}_keys.txt`: table mapping each variant to the set of callers that support it (column 5 lists caller names). Used to propagate caller provenance into downstream VCFs.
 - `custom/reformat/`
-  - `{sample}.{caller}.reformatted.vcf.gz` and `.tbi`: caller VCFs rewritten by `reformat_vcf.py` to add INFO tags such as `TDP`, `NAF`, `TAF`, `ADT`, `ADN`, and caller codes (`TAL`/`AL`). Tumor/normal order is auto-detected and reheadered accordingly.
+  - `{sample}.{caller}.reformatted.vcf.gz` and `.tbi`: caller VCFs rewritten by `reformat_vcf.py` to add INFO tags such as `TDP`, `NAF`, `TAF`, `ADT`, `ADN`, and caller codes (`TAL`/`AL`). Tumor/normal order is auto-detected and the header is updated accordingly.
   - `{sample}.reformatted.allelic_cna.tsv`: allele-specific CNA table created from CNVkit or ASCAT input via `reformat_cna.py` (`Chromosome`, `Start`, `End`, `nMajor`, `nMinor`).
 - `custom/pcgr_ready_vcf/`
   - `{sample}.vcf.gz` and `.tbi`: unified somatic VCF built by combining reformatted caller VCFs and the `{sample}_keys.txt` caller map. This file is ready for PCGR.
