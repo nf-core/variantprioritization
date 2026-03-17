@@ -56,11 +56,11 @@ workflow PREPARE_SOMATIC {
 
     INTERSECT_VCF(per_sample_somatic_with_tools)
 
-    intersect_variant_tool_map = INTERSECT_VCF.out.variant_tool_map.map { meta, keys ->
-        [meta.subMap(['patient', 'status', 'sample']), keys]
-    }
 
-    sample_vcfs_keys = intersect_variant_tool_map
+    sample_vcfs_keys = INTERSECT_VCF.out.variant_tool_map
+        .map { meta, keys ->
+            [meta.subMap(['patient', 'status', 'sample']), keys]
+        }
         .join(per_sample_somatic_vcfs)
         .map { meta, keys, vcfs, tbis, _tools -> [meta, keys, vcfs, tbis] }
 
