@@ -3,36 +3,76 @@
 
 import os
 import glob
-import re
+from pathlib import Path
 import pandas as pd
 import argparse
+import subprocess
 
 
-def intersect_variants(sample):
+def _sort_key_frame(frame):
+    frame = frame.copy()
+    frame[1] = pd.to_numeric(frame[1], errors="raise")
+    return frame.sort_values(by=[0, 1, 2, 3, 4], kind="mergesort").reset_index(
+        drop=True
+    )
 
-    sample_id = sample
-    suffixes = (".cns", ".tbi")
-    r = re.compile(f"{sample_id}*")
-    sample_files = os.listdir("./")
-    sample_files = list(filter(r.match, sample_files))
-    sample_files = [file for file in sample_files if not file.endswith(suffixes)]
-    sample_files = sorted(sample_files)  # Sort for reproducible tool ordering
-    print(sample_files)
 
-    tool_names = {}
-    for idx, file in enumerate(sample_files):
-        tool = file.split(".")[2]  # change this if you change prefix
-        if tool.split("_")[0] == "strelka":
-            tool = "strelka"
-        tool_names[idx] = tool
+def intersect_variants(input_dir, output_file, sample_files, tool_names):
+
+    input_path = Path(input_dir)
+    if not input_path.exists() or not input_path.is_dir():
+        raise FileNotFoundError(
+            f"Input directory does not exist or is not a directory: {input_dir}"
+        )
+
+    if len(sample_files) != len(tool_names):
+        raise ValueError(
+            "Length mismatch between --sample_files and --tool_names: "
+            f"{len(sample_files)} vs {len(tool_names)}"
+        )
+
+    if not sample_files:
+        raise ValueError(f"No VCF files found in input directory: {input_dir}")
+
+    missing_vcfs = [name for name in sample_files if not (input_path / name).is_file()]
+    if missing_vcfs:
+        raise FileNotFoundError(
+            "Expected staged VCF files are missing in input_dir: "
+            + ", ".join(missing_vcfs)
+        )
+
+    tbi_files = {
+        file.name
+        for file in input_path.iterdir()
+        if file.is_file() and file.name.endswith(".tbi")
+    }
+    for vcf_name in sample_files:
+        if vcf_name.endswith(".vcf.gz") and f"{vcf_name}.tbi" not in tbi_files:
+            raise FileNotFoundError(
+                f"Missing index for {vcf_name}: expected {vcf_name}.tbi in {input_dir}"
+            )
+
+    tool_map = {idx: tool for idx, tool in enumerate(tool_names)}
 
     if len(sample_files) > 1:
-
-        for idx, x in enumerate(sample_files):
+        for idx, _x in enumerate(sample_files):
             idx = idx + 1  # cant use 0 for -n
-            os.system(f'bcftools isec -c none -n={idx} -p {idx} {" ".join(str(x) for x in sample_files)}')
+            subprocess.run(
+                [
+                    "bcftools",
+                    "isec",
+                    "-c",
+                    "none",
+                    f"-n={idx}",
+                    "-p",
+                    str(idx),
+                    *sample_files,
+                ],
+                cwd=input_dir,
+                check=True,
+            )
 
-        pattern = "./**/sites.txt"
+        pattern = f"{input_dir}/**/sites.txt"
         fn_size = {}
         file_list = glob.glob(pattern, recursive=True)
         for file in file_list:
@@ -40,11 +80,19 @@ def intersect_variants(sample):
             fn_size[file] = file_size
         # remove sites.txt files that are empty
         fn_size = {key: val for key, val in fn_size.items() if val != 0}
-        file_list = list(fn_size.keys())
+        file_list = sorted(fn_size.keys())
+
+        if not file_list:
+            raise ValueError(
+                "No non-empty sites.txt files produced by bcftools isec. "
+                "Check staged VCF/TBI pairs in --input_dir."
+            )
 
         li = []
         for filename in file_list:
-            df = pd.read_table(filename, sep="\t", header=None, converters={4: str})  # preserve leading zeros
+            df = pd.read_table(
+                filename, sep="\t", header=None, converters={4: str}
+            )  # preserve leading zeros
             li.append(df)
 
         frame = pd.concat(li, axis=0, ignore_index=True)
@@ -60,37 +108,73 @@ def intersect_variants(sample):
             for idx, val in enumerate(code):
                 if val != "0":
                     grab_index.append(int(idx))
-            bytes_2_tal = {k: tool_names[k] for k in grab_index if k in tool_names}
-            bytes_2_tal = ",".join(sorted(bytes_2_tal.values()))  # Sort tool names alphabetically
+            bytes_2_tal = {k: tool_map[k] for k in grab_index if k in tool_map}
+            bytes_2_tal = ",".join(
+                sorted(bytes_2_tal.values())
+            )  # Sort tool names alphabetically
             convert_column.append(bytes_2_tal)
 
-        assert len(convert_column) == len(frame), f"bytes to TAL section failed - length of list != length DF"
+        assert len(convert_column) == len(frame), (
+            "bytes to TAL section failed - length of list != length DF"
+        )
         frame[4] = convert_column
         # I noticed duplicate rows in the output file during testing. Worrying as I'm not sure how they got there...
         # chr1    3866080 C       T       freebayes
         # chr1    3866080 C       T       freebayes
         frame = frame.drop_duplicates()
-        # Sort by chromosome and position for reproducible output
-        frame = frame.sort_values(by=[0, 1]).reset_index(drop=True)
-        frame.to_csv(f"{sample}_keys.txt", sep="\t", index=None, header=None)
+        # Sort deterministically across all output columns
+        frame = _sort_key_frame(frame)
+        frame.to_csv(output_file, sep="\t", index=None, header=None)
 
     else:
-
-        os.system(
-            f'bcftools view {sample_files[0]} -G -H | awk -v OFS="\t" \'{{print $1, $2, $4, $5, "{tool_names[0]}"}}\' > {sample}_keys.txt'
+        single_vcf = input_path / sample_files[0]
+        result = subprocess.run(
+            ["bcftools", "view", str(single_vcf), "-G", "-H"],
+            check=True,
+            stdout=subprocess.PIPE,
+            text=True,
         )
+        records = []
+        for line in result.stdout.splitlines():
+            fields = line.split("\t")
+            records.append([fields[0], fields[1], fields[3], fields[4], tool_map[0]])
+
+        frame = pd.DataFrame(records)
+        frame = _sort_key_frame(frame)
+        frame.to_csv(output_file, sep="\t", index=None, header=None)
 
 
 def main():
     # Argument parsing using argparse
-    parser = argparse.ArgumentParser(description="Reformat somatic CNA files for PCGR input.")
-    parser.add_argument("-s", "--sample", required=True, help="Sample name (meta.id) for the output.")
+    parser = argparse.ArgumentParser(
+        description="Intersect somatic VCF files for PCGR input."
+    )
+    parser.add_argument(
+        "--input_dir",
+        required=True,
+        help="Directory containing staged input VCF and TBI files.",
+    )
+    parser.add_argument(
+        "--sample_files",
+        required=True,
+        help="Comma-separated staged VCF basenames in deterministic order.",
+    )
+    parser.add_argument(
+        "--tool_names",
+        required=True,
+        help="Comma-separated tool names matching --sample_files order.",
+    )
+    parser.add_argument(
+        "-o", "--output", required=True, help="Output key mapping filename."
+    )
 
     args = parser.parse_args()
 
+    # Call intersect_variants function with arguments
+    sample_files = [Path(item).name for item in args.sample_files.split(",") if item]
+    tool_names = [item for item in args.tool_names.split(",") if item]
 
-    # Call reformat_cna function with arguments
-    intersect_variants(args.sample)
+    intersect_variants(args.input_dir, args.output, sample_files, tool_names)
 
 
 if __name__ == "__main__":

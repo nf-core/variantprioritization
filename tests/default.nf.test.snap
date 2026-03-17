@@ -11,25 +11,27 @@
                 },
                 "INTERSECT_VCF": {
                     "bcftools": 1.22,
+                    "pandas": "2.3.3",
+                    "pysam": "0.23.3",
                     "python": "3.10.19"
                 },
                 "PCGR_PREPAREVCF": {
-                    "numpy": "2.2.6",    
-                    "pandas": "2.3.3",   
-                    "pysam": "0.23.3",   
-                    "python": "3.10.19", 
-                    "vcf2tsvpy": "0.6.1" 
+                    "numpy": "2.2.6",
+                    "pandas": "2.3.3",
+                    "pysam": "0.23.3",
+                    "python": "3.10.19",
+                    "vcf2tsvpy": "0.6.1"
                 },
                 "PCGR_RUN": {
                     "pcgr": "2.2.5"
                 },
                 "REFORMAT_CNA": {
-                    "numpy": "2.2.6",    
+                    "numpy": "2.2.6",
                     "pandas": "2.3.3",
                     "pysam": "0.23.3",
-                    "python": "3.10.19", 
-                    "vcf2tsvpy": "0.6.1" 
-                },                       
+                    "python": "3.10.19",
+                    "vcf2tsvpy": "0.6.1"
+                },
                 "REFORMAT_VCF": {
                     "bcftools": 1.22,
                     "pandas": "2.3.3",
@@ -110,7 +112,7 @@
                 "tabix/HCC1395T_vs_HCC1395N.strelka.somatic_snvs_chr22.vcf.gz.tbi"
             ],
             [
-                "HCC1395.HCC1395T_keys.txt:md5,6c4b64e70a705e3c90517189a7cd3963",
+                "HCC1395.HCC1395T_keys.txt:md5,48416a5b08a9baff4eced54f1a97bc15",
                 "HCC1395T.reformatted.allelic_cna.tsv:md5,17d7fc79d8e60ac5f9b3dc007c33b97d",
                 "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f",
                 "HCC1395.HCC1395T.pcgr.grch38.cna_gene.tsv.gz:md5,677104ede29a45fdc3697b2ddbb9512e",
@@ -147,6 +149,6 @@
             "nf-test": "0.9.3",
             "nextflow": "25.10.4"
         },
-        "timestamp": "2026-03-10T14:26:12.577328549"
+        "timestamp": "2026-03-16T16:43:39.062675595"
     }
 }
