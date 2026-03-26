@@ -339,7 +339,7 @@
                 }
             }
         },
-        "pcgrtumoronly_options": {
+        "pcgr_tumoronly_options": {
             "title": "PCGR tumor-only options",
             "type": "object",
             "description": "Additional filtering options for tumor-only somatic interpretation.",
@@ -468,7 +468,7 @@
                 }
             }
         },
-        "vepparams_options": {
+        "vep_params_options": {
             "title": "VEP options",
             "type": "object",
             "description": "Runtime and annotation behavior options for Ensembl VEP.",

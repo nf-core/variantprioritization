@@ -106,6 +106,12 @@ I am interested in adding compatability for additional variant calling tools and
 
 ## Citations
 
+You can cite the variantprioritization zenodo record for a specific version using the following doi:
+
+An extensive list of references for the tools used by the pipeline can be found in the [`CITATIONS.md`](CITATIONS.md) file.
+
+This pipeline mainly uses CPSR and PCGR to prioritize variants:
+
 > **Cancer Predisposition Sequencing Reporter (CPSR): A flexible variant report engine for high-throughput germline screening in cancer**
 > Nakken S, Saveliev V, Hofmann O, Møller P, Myklebost O, Hovig E.
 >
@@ -116,11 +122,15 @@ I am interested in adding compatability for additional variant calling tools and
 >
 > _Bioinformatics._ 2018 May 15;34(10):1778-1780. doi: [10.1093/bioinformatics/btx817](https://doi.org/10.1093%2Fbioinformatics%2Fbtx817)
 
+This pipeline builds ontop of [nf-core/sarek](https://github.com/nf-core/sarek) output:
+
 > **Sarek: A portable workflow for whole-genome sequencing analysis of germline and somatic variants**
 > Garcia M, Juhos S, Larsson M, Olason PI, Martin M, Eisfeldt J, DiLorenzo S, Sandgren J, Díaz De Ståhl T, Ewels P, Wirta V, Nistér M, Käller M, Nystedt B.
 >
 > _F1000Res._ 2020 Jan 29;9:63. doi: [10.12688/f1000research.16665.2](https://doi.org/10.12688%2Ff1000research.16665.2)
 
-> **The nf-core framework for community-curated bioinformatics pipelines.**
+You can cite the nf-core publication as follows:
+
+> Philip Ewels, Alexander Peltzer, Sven Fillinger, Harshil Patel, Johannes Alneberg, Andreas Wilm, Maxime Ulysse Garcia, Paolo Di Tommaso & Sven Nahnsen.
 >
-> Philip Ewels, Alexander Peltzer, Sven Fillinger, Harshil Patel, Johannes Aln
+> _Nat Biotechnol._ 2020 Feb 13. doi: [10.1038/s41587-020-0439-x](https://dx.doi.org/10.1038/s41587-020-0439-x).
