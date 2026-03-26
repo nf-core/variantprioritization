@@ -679,13 +679,13 @@
             "$ref": "#/$defs/pcgr_options"
         },
         {
-            "$ref": "#/$defs/pcgrtumoronly_options"
+            "$ref": "#/$defs/pcgr_tumoronly_options"
         },
         {
             "$ref": "#/$defs/variantfiltering_options"
         },
         {
-            "$ref": "#/$defs/vepparams_options"
+            "$ref": "#/$defs/vep_params_options"
         },
         {
             "$ref": "#/$defs/institutional_config_options"
