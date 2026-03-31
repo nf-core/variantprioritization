@@ -90,15 +90,13 @@ For more details and further functionality, please refer to the [usage documenta
 
 ## Credits
 
-nf-core/variantprioritization was originally written by @yussab and @matbonfanti. @famosab joined to adapt the pipeline to nf-core standards towards a first release.
+nf-core/variantprioritization was originally written by @barrydigby, @yussab and @matbonfanti. @famosab joined to adapt the pipeline to nf-core standards towards a first release.
 
 We thank the following people for their extensive assistance in the development of this pipeline:
 
 - [Peter Diakumis](https://github.com/pdiakumis)
 
 - [Sigve Nakken](https://github.com/sigven)
-
-- [Barry Digby](https://github.com/BarryDigby)
 
 ## Contributions and Support
 
