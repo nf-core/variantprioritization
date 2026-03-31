@@ -5,7 +5,7 @@ process CPSR_RUN {
     conda "${moduleDir}/environment.yml"
     container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
         ? 'oras://ghcr.io/sigven/pcgr:2.2.5.singularity'
-        : 'docker.io/sigven/pcgr:2.2.5'}"
+        : 'nf-core/pcgr:2.2.5'}"
 
     input:
     tuple val(meta), path(vcf), path(tbi)
