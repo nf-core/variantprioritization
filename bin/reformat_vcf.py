@@ -150,6 +150,41 @@ vcf_formats = {
     ],
 }
 
+# --- Flexible Mutect2 detection ---
+mutect2_required_formats = {
+    "AD",
+    "AF",
+    "DP",
+    "F1R2",
+    "F2R1",
+    "GQ",
+    "GT",
+    "PGT",
+    "PID",
+    "PL",
+    "PS",
+    "SB",
+}
+
+mutect2_optional_formats = {
+    "FAD",
+}
+
+def detect_vcf_format(header_formats):
+    formats_set = set(header_formats)
+
+    # Flexible Mutect2 detection (allow optional FAD)
+    if mutect2_required_formats.issubset(formats_set):
+        extra = formats_set - mutect2_required_formats - mutect2_optional_formats
+        if not extra:
+            return "mutect2_vaf"
+
+    # Original strict matching for other callers
+    for key, value in vcf_formats.items():
+        if set(value) == formats_set:
+            return key
+
+    raise ValueError(f"FORMAT combination {list(header_formats)} not recognized.")
 
 def tumor_normal(output_file, tool):
     with VariantFile("tmp_.vcf") as fr:
@@ -183,19 +218,7 @@ def tumor_normal(output_file, tool):
         )
         samples = list(header.samples)
         formats = list(header.formats)
-        # fnc_str = list(vcf_formats.keys())[list(vcf_formats.values()).index(list(formats))]
-        # start
-        formats_set = set(formats)
-        found_key = None
-
-        for key, value in vcf_formats.items():
-            if set(value) == formats_set:
-                found_key = key
-                break
-
-        if found_key is None:
-            raise ValueError(f"FORMAT combination {list(formats)} not recognized.")
-        fnc_str = found_key
+        fnc_str = detect_vcf_format(formats)
         # end
         header.formats.add(
             "AL",
@@ -291,9 +314,7 @@ def tumor_only(output_file, tool):
         )
         samples = list(header.samples)
         formats = list(header.formats)
-        fnc_str = list(vcf_formats.keys())[
-            list(vcf_formats.values()).index(list(formats))
-        ]
+        fnc_str = detect_vcf_format(formats)
         header.formats.add(
             "AL",
             number=".",
