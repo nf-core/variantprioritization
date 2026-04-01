@@ -93,7 +93,6 @@ nf-core/variantprioritization was originally written by @barrydigby, @yussab and
 We thank the following people for their extensive assistance in the development of this pipeline:
 
 - [Peter Diakumis](https://github.com/pdiakumis)
-
 - [Sigve Nakken](https://github.com/sigven)
 
 ## Contributions and Support
