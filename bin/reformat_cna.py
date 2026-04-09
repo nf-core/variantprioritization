@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# Licence: MIT
 
 import numpy as np
 import pandas as pd
@@ -6,7 +7,7 @@ import argparse
 import os
 import sys
 
-def reformat_cna(input_file, sample_name):
+def reformat_cna(input_file, filename):
     # Read the input file
     df = pd.read_csv(input_file, sep='\t')  # Adjust sep if needed
 
@@ -54,7 +55,7 @@ def reformat_cna(input_file, sample_name):
     result = df_renamed[['Chromosome', 'Start', 'End', 'nMajor', 'nMinor']]
 
     # Output filename
-    output_file = f"{sample_name}.allelic_cna.tsv"
+    output_file = f"{filename}.tsv"
 
     # Write to file
     result.to_csv(output_file, sep='\t', index=False)
@@ -64,7 +65,7 @@ def main():
     # Argument parsing
     parser = argparse.ArgumentParser(description="Convert CNVkit .call.cns to PCGR allele-specific format.")
     parser.add_argument("-i", "--input", required=True, help="CNVkit .call.cns input file (tab-delimited).")
-    parser.add_argument("-s", "--sample", required=True, help="Sample name (used for output filename).")
+    parser.add_argument("-s", "--out", required=True, help="Output filename.")
 
     args = parser.parse_args()
 
@@ -74,7 +75,7 @@ def main():
         sys.exit(1)
 
     # Process CNA file
-    reformat_cna(args.input, args.sample)
+    reformat_cna(args.input, args.out)
 
 if __name__ == "__main__":
     main()

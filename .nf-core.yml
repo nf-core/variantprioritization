@@ -1,12 +1,13 @@
 lint:
-  files_exist:
-    - .github/workflows/ci.yml
   files_unchanged:
     - .gitignore
+    - .github/CONTRIBUTING.md
+    - assets/email_template.html
     - assets/nf-core-variantprioritization_logo_light.png
     - docs/images/nf-core-variantprioritization_logo_dark.png
     - docs/images/nf-core-variantprioritization_logo_light.png
-nf_core_version: 3.3.2
+  nf_test_content: false
+nf_core_version: 3.5.2
 repository_type: pipeline
 template:
   author: "@yussab"
@@ -16,5 +17,6 @@ template:
   name: variantprioritization
   org: nf-core
   outdir: .
-  skip_features: []
-  version: 1.0.0dev
+  skip_features:
+    - fastqc
+  version: "1.0.0"
