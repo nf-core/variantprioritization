@@ -14,3 +14,4 @@ reference/*
 **/*.fa
 modules/nf-core/**/tests/
 subworkflows/nf-core/**/tests/
+.lineage/
