@@ -16,16 +16,16 @@ nextflow_process {
                 """
                 input[0] = [
                     [id:'HCC1395.HCC1395T', patient:'HCC1395', sample:'HCC1395T'],
-                    file("https://github.com/nf-core/test-datasets/raw/refs/heads/variantprioritization/module_data/preparevcf/HCC1395.HCC1395T_keys.txt", checkIfExists: true),
+                    file("https://raw.githubusercontent.com/nf-core/test-datasets/variantprioritization/module_data/preparevcf/HCC1395.HCC1395T_keys.txt", checkIfExists: true),
                     [
-                        file("https://github.com/nf-core/test-datasets/raw/refs/heads/variantprioritization/module_data/preparevcf/HCC1395.HCC1395T.mutect2.reformatted.vcf.gz", checkIfExists: true),
-                        file("https://github.com/nf-core/test-datasets/raw/refs/heads/variantprioritization/module_data/preparevcf/HCC1395.HCC1395T.strelka_indel.reformatted.vcf.gz", checkIfExists: true),
-                        file("https://github.com/nf-core/test-datasets/raw/refs/heads/variantprioritization/module_data/preparevcf/HCC1395.HCC1395T.strelka_snv.reformatted.vcf.gz", checkIfExists: true)
+                        file("https://raw.githubusercontent.com/nf-core/test-datasets/variantprioritization/module_data/preparevcf/HCC1395.HCC1395T.mutect2.reformatted.vcf.gz", checkIfExists: true),
+                        file("https://raw.githubusercontent.com/nf-core/test-datasets/variantprioritization/module_data/preparevcf/HCC1395.HCC1395T.strelka_indel.reformatted.vcf.gz", checkIfExists: true),
+                        file("https://raw.githubusercontent.com/nf-core/test-datasets/variantprioritization/module_data/preparevcf/HCC1395.HCC1395T.strelka_snv.reformatted.vcf.gz", checkIfExists: true)
                     ],
                     [
-                        file("https://github.com/nf-core/test-datasets/raw/refs/heads/variantprioritization/module_data/preparevcf/HCC1395.HCC1395T.mutect2.reformatted.vcf.gz.tbi", checkIfExists: true),
-                        file("https://github.com/nf-core/test-datasets/raw/refs/heads/variantprioritization/module_data/preparevcf/HCC1395.HCC1395T.strelka_indel.reformatted.vcf.gz.tbi", checkIfExists: true),
-                        file("https://github.com/nf-core/test-datasets/raw/refs/heads/variantprioritization/module_data/preparevcf/HCC1395.HCC1395T.strelka_snv.reformatted.vcf.gz.tbi", checkIfExists: true)
+                        file("https://raw.githubusercontent.com/nf-core/test-datasets/variantprioritization/module_data/preparevcf/HCC1395.HCC1395T.mutect2.reformatted.vcf.gz.tbi", checkIfExists: true),
+                        file("https://raw.githubusercontent.com/nf-core/test-datasets/variantprioritization/module_data/preparevcf/HCC1395.HCC1395T.strelka_indel.reformatted.vcf.gz.tbi", checkIfExists: true),
+                        file("https://raw.githubusercontent.com/nf-core/test-datasets/variantprioritization/module_data/preparevcf/HCC1395.HCC1395T.strelka_snv.reformatted.vcf.gz.tbi", checkIfExists: true)
                     ]
                 ]
                 input[1] = "${projectDir}/bin/pcgr_header.txt"

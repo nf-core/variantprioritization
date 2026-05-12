@@ -3,7 +3,7 @@
         "content": [
             "HCC1395.HCC1395T.norm.filtered.vcf.gz:md5,5c3ec863c8997ca460cc114885f804c4",
             "HCC1395.HCC1395T.norm.filtered.vcf.gz.tbi",
-            "/nf-core/test-datasets/refs/heads/variantprioritization/module_data/preparevcf/HCC1395T.reformatted.allelic_cna.tsv"
+            "/nf-core/test-datasets/variantprioritization/module_data/preparevcf/HCC1395T.reformatted.allelic_cna.tsv"
         ],
         "meta": {
             "nf-test": "0.9.3",
