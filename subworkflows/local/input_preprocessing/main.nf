@@ -25,7 +25,7 @@ workflow INPUT_PREPROCESSING {
 
     ch_cna_files = ch_samplesheet
         .map { meta, _vcf, _tbi, cna ->
-            [meta.subMap(['patient', 'status', 'sample']), cna]
+            [meta.subMap(['patient', 'status', 'sample', 'sex']), cna]
         }
         .distinct()
 

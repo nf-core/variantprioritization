@@ -51,6 +51,7 @@ The workflow accepts as input a `samplesheet.csv` file containing the paths to S
 | sample  | Designates the sample ID; must be unique. A patient may have multiple samples e.g a paired tumor-normal, tumor-only. |
 | vcf     | Full path to VCF file(s)                                                                                             |
 | cna     | Full path to segment file                                                                                            |
+| sex     | The patient's sex                                                                                                    |
 
 An example of a valid samplesheet is given below:
 
