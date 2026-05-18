@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- [#94](https://github.com/nf-core/variantprioritization/pull/94) - added optional column 'sex' to samplesheet
+
 ### Changed
 
 - [#93](https://github.com/nf-core/variantprioritization/pull/93) - Template update for nf-core/tools v4.0.2 (@HomoPolyethylen)
