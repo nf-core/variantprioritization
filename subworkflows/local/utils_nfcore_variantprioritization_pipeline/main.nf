@@ -312,6 +312,9 @@ def processSamplesheet(row) {
         tbi = file(tbi)
     }
 
+    // set default values for meta fields from optional samplesheet columns
+    meta.sex = meta.sex ?: 'UNKNOWN'
+
     // Return processed row
     return [meta, vcf, tbi, cna]
 }

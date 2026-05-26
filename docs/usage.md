@@ -27,6 +27,7 @@ The PCGR / CPSR implementation runs based on the input: If the samplesheet conta
 Optionally (somatic analysis only), you can provide:
 
 - `cna`: Path to a CNA segments file (required for somatic rows when `--cna_analysis` is enabled)
+- `sex`: the patients sex: `MALE`, `FEAMLE`, `UNKNOWN` (default)
 
 ```bash
 --input '[path to samplesheet file]'

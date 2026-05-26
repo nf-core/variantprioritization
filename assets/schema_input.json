@@ -23,6 +23,13 @@
                 "errorMessage": "Sample name must be provided and cannot contain spaces",
                 "meta": ["sample"]
             },
+            "sex": {
+                "type": "string",
+                "description": "The patient's sex",
+                "enum": ["MALE", "FEMALE", "UNKNOWN"],
+                "default": "UNKNOWN",
+                "meta": ["sex"]
+            },
             "vcf": {
                 "type": "string",
                 "format": "file-path",
