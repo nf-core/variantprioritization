@@ -412,42 +412,42 @@
             "properties": {
                 "filter_haplotypecaller": {
                     "type": "string",
-                    "default": "-i\\'FORMAT/DP>10\\",
+                    "default": "-i'FORMAT/DP>10'",
                     "description": "Filtering expression for HaplotypeCaller VCF records."
                 },
                 "filter_deepvariant": {
                     "type": "string",
-                    "default": "-i\\'FORMAT/DP>10\\",
+                    "default": "-i'FORMAT/DP>10'",
                     "description": "Filtering expression for DeepVariant VCF records."
                 },
                 "filter_strelka_variants": {
                     "type": "string",
-                    "default": "-i\\'FORMAT/DP>10\\",
+                    "default": "-i'FORMAT/DP>10'",
                     "description": "Filtering expression for combined Strelka variant records."
                 },
                 "filter_freebayes_germline": {
                     "type": "string",
-                    "default": "-i\\'FORMAT/DP>10\\",
+                    "default": "-i'FORMAT/DP>10'",
                     "description": "Filtering expression for FreeBayes germline VCF records."
                 },
                 "filter_mutect2": {
                     "type": "string",
-                    "default": "-i\\'FORMAT/DP>10\\",
+                    "default": "-i'FORMAT/DP>10'",
                     "description": "Filtering expression for Mutect2 VCF records."
                 },
                 "filter_freebayes_somatic": {
                     "type": "string",
-                    "default": "-i\\'FORMAT/DP>10\\",
+                    "default": "-i'FORMAT/DP>10'",
                     "description": "Filtering expression for FreeBayes somatic VCF records."
                 },
                 "filter_strelka_indels": {
                     "type": "string",
-                    "default": "-i\\'FORMAT/DP>10\\",
+                    "default": "-i'FORMAT/DP>10'",
                     "description": "Filtering expression for Strelka INDEL records."
                 },
                 "filter_strelka_snvs": {
                     "type": "string",
-                    "default": "-i\\'FORMAT/DP>10\\",
+                    "default": "-i'FORMAT/DP>10'",
                     "description": "Filtering expression for Strelka SNV records."
                 }
             }
