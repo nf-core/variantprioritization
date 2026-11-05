@@ -9,7 +9,6 @@ testing*
 *.pyc
 bin/
 .nf-test/
-*.snap
 ro-crate-metadata.json
 modules/nf-core/
 subworkflows/nf-core/
